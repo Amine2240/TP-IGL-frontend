@@ -1,0 +1,17 @@
+<div class=" bg-blue-50 w-fit py-3 flex-grow-0">
+  <!-- <div class=" flex items-center place-content-center">
+    <img src="assets/images/logo.svg" alt="logo" srcset="">
+    <p class=" text-xl font-bold ml-3">Medi<span class=" text-blue-500">Care</span></p>
+  </div> -->
+
+  <ul class="">
+    <li *ngFor="let link of navigationLinks" class=" text-center my-2 mb-5">
+      <a [routerLink]="link.path"
+      routerLinkActive="active"
+        class=" w-full block capitalize cursor-pointer bg-blue-200 px-5 py-3 text-xl text-blue-800 font-semibold rounded-md hover:bg-blue-400 hover:text-white transition-all "
+        >{{link.label}}
+      </a>
+    </li>
+
+  </ul>
+</div>
