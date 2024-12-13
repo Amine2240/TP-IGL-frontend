@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { NavigationEnd, RouterLink } from '@angular/router';
+import { NavigationEnd, RouterLink, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sidebardpi',
   standalone: true,
-  imports: [CommonModule , RouterLink],
+  imports: [CommonModule , RouterModule, RouterLink],
   templateUrl: './sidebardpi.component.html',
   styleUrl: './sidebardpi.component.scss'
 })
@@ -20,14 +20,5 @@ export class SidebardpiComponent {
     {id : 4, path: 'certificat', label: 'Certificat Médicale' },
     {id : 5, path: 'decompte-frais', label: 'Décompte des Frais' },
   ];
-  // currentPath:string = 'informations-patient';
-  // constructor(private router:Router){
-  //   this.router.events.subscribe(event => {
-  //     if (event instanceof NavigationEnd) {
-  //       this.currentPath = event.urlAfterRedirects; // Update currentPath on route change
-  //     }
-  //   });
-    
-  // }
 
 }
