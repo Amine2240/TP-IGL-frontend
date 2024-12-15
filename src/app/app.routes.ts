@@ -19,5 +19,9 @@ export const routes: Routes = [
 
     ] 
   },
+  {
+    path: 'formpatient',
+    loadComponent : () => import('./pages/formpatient/formpatient.component').then(m => m.FormpatientComponent)
+  },
   
 ];

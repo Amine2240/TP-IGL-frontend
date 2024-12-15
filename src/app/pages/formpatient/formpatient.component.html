@@ -1,0 +1,187 @@
+<div class=" mx-10 mt-5 flex flex-col">
+  <div class=" text-white bg-blue-600 mb-3 p-5 rounded-lg">
+    <p class=" text-center text-xl capitalize font-semibold">
+      formulaire patient
+    <p>
+
+
+  </div>
+  <section>
+    <div class=" bg-blue-200 p-2 rounded-md mb-5">
+      <p class=" text-blue-700 font-semibold">Informations Personnelles</p>
+    </div>
+    <div class=" flex">
+      <div class=" w-[50%]">
+        <div class=" flex mb-3  ">
+          <p class=" font-semibold">Nom: </p>
+          <input type="text" name="" id="" class=" w-full ml-3 border-b-2 focus:outline-none border-blue-300 h-7">
+        </div>
+        <div class=" flex mb-3 ">
+          <p class=" font-semibold">date de naissance: </p>
+          <input type="date" name="" id="" class=" w-full ml-3 border-b-2 focus:outline-none border-blue-300 h-7">
+        </div>
+        <div class=" flex mb-3 ">
+          <p class=" font-semibold">Numéro de sécurité sociale (NSS): </p>
+          <input type="number" name="" id="" class=" w-full ml-3 border-b-2 focus:outline-none border-blue-300 h-7">
+        </div>
+      </div>
+      <div class=" ml-10 flex-grow">
+        <div class=" flex w-full mb-3">
+          <p class=" font-semibold text-nowrap">Prénom : </p>
+          <input type="text" name="" id="" class=" w-full ml-3 border-b-2 focus:outline-none border-blue-300 h-7">
+        </div>
+        <div class=" flex w-full mb-3 ">
+          <p class=" font-semibold text-nowrap">Adresse : </p>
+          <input type="email" name="" id="" class=" w-full ml-3 border-b-2 focus:outline-none border-blue-300 h-7">
+        </div>
+        <div class=" flex w-full mb-3">
+          <p class=" font-semibold text-nowrap">Telephone : </p>
+          <input type="number" name="" id="" class=" w-full ml-3 border-b-2 focus:outline-none border-blue-300 h-7">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class=" bg-blue-200 p-2 rounded-md mb-5">
+      <p class=" text-blue-700 font-semibold">Informations Administratives</p>
+    </div>
+    <div class=" flex place-content-between">
+
+      <div class=" flex mb-3 w-[50%]">
+        <p class=" font-semibold">Nom de la mutuelle : </p>
+        <input type="text" name="" id="" class=" w-full ml-3 border-b-2 focus:outline-none border-blue-300 h-7">
+      </div>
+      <div class=" flex mb-3">
+        <p class=" font-semibold">Numéro identification : </p>
+        <input type="date" name="" id="" class=" w-[500px] ml-3 border-b-2 focus:outline-none border-blue-300 h-7">
+      </div>
+    </div>
+
+
+  </section>
+
+  <section>
+    <div class=" bg-blue-200 p-2 rounded-md mb-5">
+      <p class=" text-blue-700 font-semibold">Personne à contacter</p>
+    </div>
+    <div class=" flex">
+      <div class=" flex mb-3 w-[50%] ">
+        <p class=" font-semibold ">Nom: </p>
+        <input type="text" name="" id="" class=" w-full ml-3 border-b-2 focus:outline-none border-blue-300 h-7">
+      </div>
+      <div class=" flex mb-3 w-[50%]">
+        <p class=" font-semibold ">Prénom: </p>
+        <input type="text" name="" id="" class="w-full ml-3 border-b-2 focus:outline-none border-blue-300 h-7">
+      </div>
+    </div>
+    <div class=" flex mb-3 w-full ">
+      <p class=" font-semibold ">Téléphone: </p>
+      <input type="text" name="" id="" class=" w-full ml-3 border-b-2 focus:outline-none border-blue-300 h-7">
+    </div>
+
+
+  </section>
+
+  <section>
+    <div class=" bg-blue-200 p-2 rounded-md mb-5">
+      <p class=" text-blue-700 font-semibold">Historique médicale</p>
+    </div>
+    <div class=" flex place-content-between">
+      <p>le patient est-il sous traitement médical actuellement?</p>
+
+      <div *ngFor="let trait of soustraitementList">
+        <input type="radio" [checked]="trait.checked" name="soustraitement" [id]="trait.label">
+        <label [for]="trait.label">{{trait.label}} </label>
+
+      </div>
+    </div>
+    <hr class=" border-blue-500 border-1 my-2">
+    <div class=" flex flex-col">
+      <p>le patient souffre-t-il d'une ou plusieurs maladies?</p>
+      <div class=" flex">
+        <div *ngFor="let maladie of maladiesList" class=" text-xl m-5">
+          <input type="checkbox" [checked]="maladie.checked" [name]="maladie.label" [id]="maladie.label">
+          <label [for]="maladie.label">{{maladie.label}}</label>
+
+        </div>
+      </div>
+    </div>
+    <hr class=" border-blue-500 border-1 my-2">
+    <div>
+      <p>le patient a-t-il des allérgies connues ?</p>
+      <div *ngFor="let allergie of allergiesList">
+        <p>
+          {{allergie.nom}} :
+        </p>
+
+        <div *ngFor="let allergieType of allergie.list">
+          <input type="checkbox" [checked]="allergieType.checked" [name]="allergieType.label" id="allergieType.label">
+          <label for="allergieType.label">{{allergieType.label}}</label>
+
+        </div>
+        <hr class=" border-blue-500 border-1 my-2">
+
+      </div>
+    </div>
+    <div>
+      <p>le patient a-t-il subi des interventions chirurgicales ?</p>
+      <div *ngFor="let intervention of interventionsList">
+        <input type="checkbox" [checked]="intervention.checked" [name]="intervention.label" id="intervention.label">
+        <label for="intervention.label">{{intervention.label}}</label>
+
+      </div>
+
+    </div>
+    <hr class=" border-blue-500 border-1 my-2">
+    <div>
+      <p>le patient a-t-il reçu des vaccinations ?</p>
+      <div *ngFor="let elem of vaccinationsList">
+        <input type="radio" [checked]="elem.checked" name="vaccin" [id]="elem.label">
+        <label [for]="elem.label">{{elem.label}} </label>
+
+      </div>
+    </div>
+    <hr class=" border-blue-500 border-1 my-2">
+
+
+  </section>
+
+  <section>
+    <div class=" bg-blue-200 p-2 rounded-md mb-5">
+      <p class=" text-blue-700 font-semibold">Fichiers attachés</p>
+    </div>
+    <div class=" flex place-content-around">
+      <div>
+        <div class=" rounded-full w-40 h-40 bg-blue-200 mx-auto overflow-hidden mb-5">
+          <img [src]="photoPatientPreview" alt="Image Preview" *ngIf="photoPatientPreview"
+            class=" h-auto border rounded" />
+        </div>
+        <label for="imageInput"
+          class=" cursor-pointer bg-blue-400 text-white capitalize px-5 py-3 m-3 rounded-lg">attacher photo
+          patient</label>
+        <input type="file" id="imageInput" (change)="onFileSelected($event,'patient')" accept="image/*"
+          class=" hidden" />
+
+
+      </div>
+      <div>
+        <div class=" rounded-full w-40 h-40 bg-blue-200 mx-auto overflow-hidden mb-5">
+          <img [src]="photoCodeQrPreview" alt="Image Preview" *ngIf="photoCodeQrPreview"
+            class=" h-auto border rounded" />
+        </div>
+        <label for="codeqrInput"
+          class=" cursor-pointer bg-blue-400 text-white capitalize px-5 py-3 m-3 rounded-lg">attacher codeQR
+          patient</label>
+        <input type="file" id="codeqrInput" (change)="onFileSelected($event,'codeQr')" accept="image/*"
+          class=" hidden" />
+      </div>
+
+    </div>
+
+  </section>
+  <button class=" text-center bg-blue-500 text-white capitalize px-5 py-3 m-3 rounded-lg w-40 mx-auto">
+    creer patient
+  </button>
+
+</div>
