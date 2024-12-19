@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { DpiComponent } from "./pages/dpi/dpi.component";
 import { NavbarComponent } from "./components/navbar/navbar.component";
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-root',

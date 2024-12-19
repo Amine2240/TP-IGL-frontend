@@ -1,15 +1,42 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 
+interface Item {
+  id : number;
+  checked : boolean;
+  label: string;
+}
+
+interface Maladie {
+  id : number;
+  checked : boolean;
+  label: string;
+}
+
+interface AllergieType {
+  id : number;
+  checked : boolean;
+  label: string;
+}
+
+interface Allergie {
+  id : number;
+  nom: string;
+  list: AllergieType[];
+}
 @Component({
   selector: 'app-formpatient',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule , FormsModule , ReactiveFormsModule],
   templateUrl: './formpatient.component.html',
   styleUrl: './formpatient.component.scss'
 })
+
+
 export class FormpatientComponent {
-  public soustraitementList = [
+  
+  public soustraitementList : Item[] = [
     {
       id :0,
       checked : true,
@@ -21,10 +48,8 @@ export class FormpatientComponent {
       label: 'Non'
     }
   ]
-  constructor() {
-    this.soustraitementList[1].checked = !this.soustraitementList[0].checked;
-  }
-  public maladiesList = [
+
+  public maladiesList : Maladie[] = [
     {
       id :0,
       checked : false,
@@ -62,10 +87,10 @@ export class FormpatientComponent {
       label: 'Autre'
     }
   ]
-  public allergiesList = [
+  public allergiesList : Allergie[] = [
     {
       id : 0,
-      nom : "alergie aux médicaments",
+      nom : "allergie aux médicaments",
       list : [
         {
           id : 0,
@@ -94,7 +119,7 @@ export class FormpatientComponent {
     },
     {
       id : 1,
-      nom : "alergie alimentaire",
+      nom : "allergie alimentaire",
       list : [
         {
           id : 0,
@@ -123,7 +148,7 @@ export class FormpatientComponent {
     },
     {
       id : 2,
-      nom : "alergie environnementale",
+      nom : "allergie environnementale",
       list : [
         {
           id : 0,
@@ -150,7 +175,7 @@ export class FormpatientComponent {
     }
   ]
 
-  public interventionsList = [
+  public interventionsList :Item[] = [
     {
       id : 0,
       
@@ -177,7 +202,7 @@ export class FormpatientComponent {
     }
   ]
 
-  public vaccinationsList = [
+  public vaccinationsList : Item[] = [
     {
       id : 0,
       
@@ -191,42 +216,62 @@ export class FormpatientComponent {
       label : "Non",
     }
   ]
-  public patient = {
-    nom: '',
-    prenom: '',
-    dateNaissance: '',
-    adresse: '',
-    telephone: '',
-    email: '',
-    soustraitement: '',
-    nomMedecin: '',
-    prenomMedecin: '',
-    adresseMedecin: '',
-    telephoneMedecin: '',
-    emailMedecin: '',
+public perosonneAcontacter = {
+    nom : "",
+    prenom : '',
+    telephone : 0
   }
+  patientForm: FormGroup;
+  // we use constructor instead of formcontrol for clean code 
+  constructor(private fb: FormBuilder) {
+    this.patientForm = this.fb.group({
+      // Text inputs
+      nom: ['', Validators.required],
+      prenom: ['', Validators.required],
+      adresse: ['', Validators.required],
+
+      // Date input
+      dateNaissance: ['', Validators.required],
+
+      // Number inputs
+      nss: ['', [Validators.required, Validators.min(1)]],
+      telephone: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
+      numIdentification: ['', Validators.required],
+
+      mutuelle: ['', Validators.required],
+
+      // Radio buttons
+      sousTraitement: ['', Validators.required],
+      vaccine: ['', Validators.required],
+
+      // Checkboxes
+      maladies: this.fb.array([]), // Dynamically track selected items
+      allergies: this.fb.array([]), 
+      interventions: this.fb.array([]),
+      
+
+      personneAconntacterNom: ['', Validators.required],
+      personneAconntacterPrenom: ['', Validators.required],
+      personneAconntacterTelephone: ['', Validators.required],
+      
+      photoPatient : [''],
+      codeqr : ['', Validators.required]
+    });
+  }
+
+  
+  
   public submitForm(): void {
-    console.log(this.patient);
-  }
-  public resetForm(): void {
-    this.patient = {
-      nom: '',
-      prenom: '',
-      dateNaissance: '',
-      adresse: '',
-      telephone: '',
-      email: '',
-      soustraitement: '',
-      nomMedecin: '',
-      prenomMedecin: '',
-      adresseMedecin: '',
-      telephoneMedecin: '',
-      emailMedecin: '',
+    if (this.patientForm.valid) {
+      console.log('Form submitted!', this.patientForm.value);
+      // console.log("patient : ", this.patient);
+      
     }
   }
-  public cancelForm(): void {
-    this.resetForm();
+  public resetForm(): void {
+    this.patientForm.reset();
   }
+
   public saveForm(): void {
     this.submitForm();
     this.resetForm();
@@ -253,10 +298,15 @@ export class FormpatientComponent {
       reader.onload = () => {
         if (type == 'patient') {
           this.photoPatientPreview = reader.result;
+          // this.patient.photo = this.photoPatientPreview;
+          this.patientForm.get('photo')?.setValue(this.photoPatientPreview);
+
           
         }
         if (type == 'codeQr') {
           this.photoCodeQrPreview = reader.result;
+          // this.patient.codeqr = this.photoCodeQrPreview;
+          this.patientForm.get('codeqr')?.setValue(this.photoCodeQrPreview);
           
         }
 
@@ -266,5 +316,43 @@ export class FormpatientComponent {
     }
   }
 
+  // public patient = {
+  //   id : 0,
+  //   nom: '',
+  //   prenom: '',
+  //   dateNaissance: Date,
+  //   nss : 0 , 
+  //   adresse : '',
+  //   telephone : 0,
+  //   mutuelle : "",
+  //   numIdentification : 0,
+  //   personneAconntacter : this.perosonneAcontacter,
+  //   sousTraitement : false,
+  //   maladies  : [] as Maladie[],
+  //   allergies : [] as AllergieType[],
+  //   interventions : [] as Item[],
+  //   vaccine : false,
+  //   photo : this.photoPatientPreview,
+  //   codeqr : this.photoCodeQrPreview
+  // } 
+
+  onCheckboxChange(event: Event, formArrayName: string, value: Allergie | Maladie | Item): void {
+    const formArray = this.patientForm.get(formArrayName) as FormArray;
+    const isChecked = (event.target as HTMLInputElement).checked;
+
+    if (isChecked) {
+      formArray.push(this.fb.control(value));
+    } else {
+      const index = formArray.controls.findIndex((control) => control.value === value);
+      if (index !== -1) {
+        formArray.removeAt(index);
+      }
+    }
+  }
+
+  onRadioboxChange(event: Event, formControlName: string): void {
+    const selectedValue = (event.target as HTMLInputElement).value;
+    this.patientForm.get(formControlName)?.setValue(selectedValue);
+  }
 
 }
