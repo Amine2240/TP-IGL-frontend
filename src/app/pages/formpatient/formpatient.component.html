@@ -6,40 +6,61 @@
 
 
   </div>
-  <form [formGroup]="patientForm" (ngSubmit)="saveForm()">
+  <form [formGroup]="patientForm" (ngSubmit)="saveForm()" class=" flex flex-col w-full">
     <section>
       <div class=" bg-blue-200 p-2 rounded-md mb-5">
         <p class=" text-blue-700 font-semibold">Informations Personnelles</p>
       </div>
-      <div class=" flex">
-        <div class=" w-[50%]">
+      <div class=" flex flex-wrap">
+        <div class=" md:w-[50%] md:flex-grow-0 flex-grow">
+          <p *ngIf="patientForm.get('nom')?.invalid && patientForm.get('nom')?.touched" class="text-red-500">
+            Nom is required*
+          </p>
           <div class=" flex mb-3  ">
+
             <p class=" font-semibold">Nom: </p>
             <input type="text" formControlName="nom" name="nom" id="nom"
               class=" w-full ml-3 border-b-2 focus:outline-none border-blue-300 h-7">
           </div>
+          <p *ngIf="patientForm.get('dateNaissance')?.invalid && patientForm.get('dateNaissance')?.touched"
+            class="text-red-500">
+            dateNaissance is required*
+          </p>
           <div class=" flex mb-3 ">
             <p class=" font-semibold">date de naissance: </p>
             <input type="date" formControlName="dateNaissance" name="" id=""
               class=" w-full ml-3 border-b-2 focus:outline-none border-blue-300 h-7">
           </div>
+          <p *ngIf="patientForm.get('nss')?.invalid && patientForm.get('nss')?.touched" class="text-red-500">
+            NSS is required*
+          </p>
           <div class=" flex mb-3 ">
             <p class=" font-semibold">Numéro de sécurité sociale (NSS): </p>
             <input type="number" formControlName="nss" name="" id=""
               class=" w-full ml-3 border-b-2 focus:outline-none border-blue-300 h-7">
           </div>
         </div>
-        <div class=" ml-10 flex-grow">
+        <div class=" md:ml-10 flex-grow">
+          <p *ngIf="patientForm.get('prenom')?.invalid && patientForm.get('prenom')?.touched" class="text-red-500">
+            Prenom is required*
+          </p>
           <div class=" flex w-full mb-3">
             <p class=" font-semibold text-nowrap">Prénom : </p>
             <input type="text" formControlName="prenom" name="" id=""
               class=" w-full ml-3 border-b-2 focus:outline-none border-blue-300 h-7">
           </div>
+          <p *ngIf="patientForm.get('adresse')?.invalid && patientForm.get('adresse')?.touched" class="text-red-500">
+            Adresse is required*
+          </p>
           <div class=" flex w-full mb-3 ">
             <p class=" font-semibold text-nowrap">Adresse : </p>
             <input type="text" formControlName="adresse" name="" id=""
               class=" w-full ml-3 border-b-2 focus:outline-none border-blue-300 h-7">
           </div>
+          <p *ngIf="patientForm.get('telephone')?.invalid && patientForm.get('telephone')?.touched"
+            class="text-red-500">
+            telephone is required*
+          </p>
           <div class=" flex w-full mb-3">
             <p class=" font-semibold text-nowrap">Telephone : </p>
             <input type="number" formControlName="telephone" name="" id=""
@@ -53,17 +74,23 @@
       <div class=" bg-blue-200 p-2 rounded-md mb-5">
         <p class=" text-blue-700 font-semibold">Informations Administratives</p>
       </div>
-      <div class=" flex place-content-between">
-
-        <div class=" flex mb-3 w-[50%]">
+      <div class=" flex place-content-between flex-wrap">
+        <p *ngIf="patientForm.get('mutuelle')?.invalid && patientForm.get('mutuelle')?.touched" class="text-red-500">
+          mutuelle is required*
+        </p>
+        <div class=" flex mb-3 md:w-[50%] w-full lg:flex-grow-0 flex-grow">
           <p class=" font-semibold">Nom de la mutuelle : </p>
           <input type="text" formControlName="mutuelle" name="" id=""
             class=" w-full ml-3 border-b-2 focus:outline-none border-blue-300 h-7">
         </div>
-        <div class=" flex mb-3">
+        <p *ngIf="patientForm.get('numIdentification')?.invalid && patientForm.get('numIdentification')?.touched"
+          class="text-red-500">
+          numIdentification is required*
+        </p>
+        <div class=" flex mb-3 sm:w-fit w-full flex-grow">
           <p class=" font-semibold">Numéro identification : </p>
           <input type="number" formControlName="numIdentification" name="" id=""
-            class=" w-[500px] ml-3 border-b-2 focus:outline-none border-blue-300 h-7">
+            class=" w-full ml-3 border-b-2 focus:outline-none border-blue-300 h-7">
         </div>
       </div>
 
@@ -74,18 +101,30 @@
       <div class=" bg-blue-200 p-2 rounded-md mb-5">
         <p class=" text-blue-700 font-semibold">Personne à contacter</p>
       </div>
-      <div class=" flex">
-        <div class=" flex mb-3 w-[50%] ">
+      <div class=" flex flex-wrap">
+        <p *ngIf="patientForm.get('personneAconntacterNom')?.invalid && patientForm.get('personneAconntacterNom')?.touched"
+          class="text-red-500">
+          personne à contacterNom is required*
+        </p>
+        <div class=" flex mb-3 md:w-[50%] w-full ">
           <p class=" font-semibold ">Nom: </p>
           <input type="text" formControlName="personneAconntacterNom" name="" id=""
             class=" w-full ml-3 border-b-2 focus:outline-none border-blue-300 h-7">
         </div>
-        <div class=" flex mb-3 w-[50%]">
+        <p *ngIf="patientForm.get('personneAconntacterPrenom')?.invalid && patientForm.get('personneAconntacterPrenom')?.touched"
+          class="text-red-500">
+          personneAconntacterPrenom is required*
+        </p>
+        <div class=" flex mb-3 md:w-[50%] w-full">
           <p class=" font-semibold ">Prénom: </p>
           <input type="text" formControlName="personneAconntacterPrenom" name="" id=""
             class="w-full ml-3 border-b-2 focus:outline-none border-blue-300 h-7">
         </div>
       </div>
+      <p *ngIf="patientForm.get('personneAconntacterTelephone')?.invalid && patientForm.get('personneAconntacterTelephone')?.touched"
+        class="text-red-500">
+        personneAconntacterTelephone is required*
+      </p>
       <div class=" flex mb-3 w-full ">
         <p class=" font-semibold ">Téléphone: </p>
         <input type="text" formControlName="personneAconntacterTelephone" name="" id=""
@@ -99,9 +138,11 @@
       <div class=" bg-blue-200 p-2 rounded-md mb-5">
         <p class=" text-blue-700 font-semibold">Historique médicale</p>
       </div>
-      <div class=" flex place-content-between">
-        <p>le patient est-il sous traitement médical actuellement?</p>
-
+      <div class=" flex place-content-between flex-wrap">
+        <p>le patient est-il sous traitement médical actuellement? </p>
+        <p *ngIf="patientForm.get('sousTraitement')?.invalid" class="text-red-500">
+          sousTraitement is required*
+        </p>
         <div *ngFor="let trait of soustraitementList">
           <!-- [checked]="patient.sousTraitement === trait.checked" -->
           <input type="radio" formControlName="sousTraitement" [value]="trait.checked" name="sousTraitement"
@@ -113,7 +154,7 @@
       <hr class=" border-blue-500 border-1 my-2">
       <div class=" flex flex-col">
         <p>le patient souffre-t-il d'une ou plusieurs maladies?</p>
-        <div class=" flex">
+        <div class=" flex flex-wrap">
           <div *ngFor="let maladie of maladiesList" class=" text-xl m-5">
             <!-- [checked]="patient.maladies.includes(maladie)" -->
             <input type="checkbox" (change)="onCheckboxChange($event,'maladies',maladie)" [value]="maladie"
@@ -155,12 +196,13 @@
       </div>
       <hr class=" border-blue-500 border-1 my-2">
       <div>
+        <p *ngIf="patientForm.get('vaccine')?.invalid" class="text-red-500">
+          vaccine is required*
+        </p>
         <p>le patient a-t-il reçu des vaccinations ?</p>
         <div *ngFor="let elem of vaccinationsList">
           <!-- [checked]=" patient.vaccine == elem.checked" -->
-          <input type="radio" 
-        
-           formControlName="vaccine" [value]="elem.checked" name="vaccine" [id]="elem.label">
+          <input type="radio" formControlName="vaccine" [value]="elem.checked" name="vaccine" [id]="elem.label">
           <label [for]="elem.label">{{elem.label}} </label>
 
         </div>
@@ -174,16 +216,19 @@
       <div class=" bg-blue-200 p-2 rounded-md mb-5">
         <p class=" text-blue-700 font-semibold">Fichiers attachés</p>
       </div>
-      <div class=" flex place-content-around">
-        <div>
+      <div class=" flex place-content-around flex-wrap">
+        <div class=" sm:mb-0 mb-10">
           <div class=" rounded-full w-40 h-40 bg-blue-200 mx-auto overflow-hidden mb-5">
             <img [src]="photoPatientPreview" alt="Image Preview" *ngIf="photoPatientPreview"
               class=" h-auto border rounded" />
           </div>
+          <p *ngIf="patientForm.get('photoPatient')?.invalid" class="text-red-500 mb-3 ml-3">
+            photoPatient is required*
+          </p>
           <label for="imageInput"
             class=" cursor-pointer bg-blue-400 text-white capitalize px-5 py-3 m-3 rounded-lg">attacher photo
             patient</label>
-          <input type="file" id="imageInput" formControlName="photoPatient" (change)="onFileSelected($event,'patient')" accept="image/*"
+          <input type="file" id="imageInput" (change)="onFileSelected($event,'patient')" accept="image/*"
             class=" hidden" />
 
 
@@ -193,10 +238,13 @@
             <img [src]="photoCodeQrPreview" alt="Image Preview" *ngIf="photoCodeQrPreview"
               class=" h-auto border rounded" />
           </div>
+          <p *ngIf="patientForm.get('codeqr')?.invalid" class="text-red-500 mb-3 ml-3">
+            codeQrPatient is required*
+          </p>
           <label for="codeqrInput"
             class=" cursor-pointer bg-blue-400 text-white capitalize px-5 py-3 m-3 rounded-lg">attacher codeQR
             patient</label>
-          <input type="file" id="codeqrInput" formControlName="codeqr" (change)="onFileSelected($event,'codeQr')" accept="image/*"
+          <input type="file" id="codeqrInput" (change)="onFileSelected($event,'codeQr')" accept="image/*"
             class=" hidden" />
         </div>
 
@@ -204,16 +252,17 @@
 
     </section>
     <!-- <pre>{{ patientForm.value | json }}</pre> -->
-    <p>Form Valid: {{ patientForm.valid }}</p>
-    <button type="submit" [disabled]="patientForm.invalid"
-      class=" text-center disabled:bg-blue-300 bg-blue-500 text-white capitalize px-5 py-3 m-3 rounded-lg w-40 mx-auto">
-      creer patient
-    </button>
-    <button type="button" (click)="resetForm()"
-    class=" text-center bg-gray-300 text-white capitalize px-5 py-3 m-3 rounded-lg w-40 mx-auto"
-    >
-      reset form
-    </button>
+    <section class=" mx-auto mt-10 p-0 sm:block flex flex-col items-center">
+
+      <button type="submit" [disabled]="patientForm.invalid"
+        class=" text-center disabled:bg-blue-300 bg-blue-500 text-white capitalize px-5 py-3 m-3 rounded-lg w-40 ">
+        creer patient
+      </button>
+      <button type="button" (click)="resetForm()"
+        class=" text-center bg-gray-300 text-white capitalize px-5 py-3 m-3 rounded-lg w-40 ">
+        reset form
+      </button>
+    </section>
   </form>
 
 </div>

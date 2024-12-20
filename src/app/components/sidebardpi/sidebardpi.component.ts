@@ -20,5 +20,10 @@ export class SidebardpiComponent {
     {id : 4, path: 'certificat', label: 'Certificat Médicale' },
     {id : 5, path: 'decompte-frais', label: 'Décompte des Frais' },
   ];
+  public sideBarBool = false;
+  public toggleSidebar() {
+    this.sideBarBool = !this.sideBarBool;
+    
+  }
 
 }

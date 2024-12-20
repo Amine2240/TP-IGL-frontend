@@ -254,7 +254,7 @@ public perosonneAcontacter = {
       personneAconntacterPrenom: ['', Validators.required],
       personneAconntacterTelephone: ['', Validators.required],
       
-      photoPatient : [''],
+      photoPatient : ['', Validators.required],
       codeqr : ['', Validators.required]
     });
   }
@@ -299,7 +299,7 @@ public perosonneAcontacter = {
         if (type == 'patient') {
           this.photoPatientPreview = reader.result;
           // this.patient.photo = this.photoPatientPreview;
-          this.patientForm.get('photo')?.setValue(this.photoPatientPreview);
+          this.patientForm.get('photoPatient')?.setValue(this.photoPatientPreview);
 
           
         }
