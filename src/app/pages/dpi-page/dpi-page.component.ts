@@ -2,19 +2,22 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';  // Import CommonModule
 import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas'
+
 import { SidebarComponent } from "../../components/sidebar/sidebar.component"; // Correct import
+import { FormsModule } from '@angular/forms';
+
 
 @Component({
   selector: 'app-dpi-page',
   standalone: true,
-  imports: [CommonModule, SidebarComponent],  // Add CommonModule here
+  imports: [FormsModule ,CommonModule, SidebarComponent],  // Add CommonModule here
   templateUrl: './dpi-page.component.html',
   styleUrls: ['./dpi-page.component.scss']
 })
 export class DpiPageComponent {
   // Define isMedecinVisible to toggle visibility of médecin's info
   isMedecinVisible: boolean = false;
-
+  isEditMode = false;
   // Données du patient
   dpiData = {
     nom: 'Dupont',
@@ -70,5 +73,29 @@ export class DpiPageComponent {
     doc.text('Hello, World!', 10, 10);
     doc.save('simple-test.pdf');
   }
+
+  logout(): void {
+    console.log('Médecin déconnecté');
+    // Add logout logic here
+    this.isMedecinVisible = false;}
+
+    toggleEditMode(): void {
+      if (this.isEditMode) {
+        // Ici, vous pouvez ajouter une logique pour sauvegarder les modifications, comme envoyer les données à un backend.
+        console.log('Données sauvegardées :', this.dpiData);
+      }
+      this.isEditMode = !this.isEditMode;
+    }
+
+    // Fonction pour changer l'image
+  onImageChange(event: any): void {
+    const file = event.target.files[0];  // Récupère le fichier sélectionné
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.dpiData.photo = e.target.result;  // Met à jour l'image avec le fichier choisi
+      };
+      reader.readAsDataURL(file);  // Lis le fichier comme une URL de données
+    }}
   
 }

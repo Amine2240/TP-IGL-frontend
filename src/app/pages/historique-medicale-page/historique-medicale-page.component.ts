@@ -86,7 +86,7 @@ export class HistoriqueMedicalePageComponent {
       doc.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
 
       // Save the PDF
-      doc.save('patient-info.pdf');
+      doc.save('historique-info.pdf');
     });
   }
   downloadSimplePdf() {
@@ -95,4 +95,20 @@ export class HistoriqueMedicalePageComponent {
     doc.save('simple-test.pdf');
   }
   
+  addItem(section: keyof typeof this.historiqueData): void {
+    // Ensure the section corresponds to a modifiable array
+    if (Array.isArray(this.historiqueData[section])) {
+      const newItem = prompt(`Ajouter un nouvel élément à la section ${section}:`);
+      if (newItem) {
+        (this.historiqueData[section] as string[]).push(newItem);
+      }
+    } else {
+      console.error(`Section "${section}" is not an array and cannot accept new items.`);
+    }
+  }
+  
+  logout(): void {
+    console.log('Médecin déconnecté');
+    // Add logout logic here
+    this.isMedecinVisible = false;}
 }

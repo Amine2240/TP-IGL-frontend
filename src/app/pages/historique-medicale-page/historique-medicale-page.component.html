@@ -2,34 +2,60 @@
   <!-- Main Content -->
   <main class="w-3/4 p-6">
     <app-top-right-section
-    [qrCode]="historiqueData.qrCode"
-    (downloadClicked)="downloadPdf()"
-    (userIconClicked)="toggleMedecinInfo()"
+      [qrCode]="historiqueData.qrCode"
+      (downloadClicked)="downloadPdf()"
+      (userIconClicked)="toggleMedecinInfo()"
     ></app-top-right-section>
-  
-    <!-- Médecin's Information -->
-<div *ngIf="isMedecinVisible" class="medecin-info bg-gray-100 p-6 rounded-md shadow-md mt-4">
-  <h3 class="text-lg font-bold">Informations du Médecin</h3>
-  <p><strong>Nom :</strong> {{ medecinConnecte.nom }}</p>
-  <p><strong>Prénom :</strong> {{ medecinConnecte.prenom }}</p>
-  <p><strong>Spécialité :</strong> {{ medecinConnecte.specialite }}</p>
-</div>
+
+  <!-- Médecin's Information -->
+  <div 
+    *ngIf="isMedecinVisible" 
+    class="medecin-info absolute right-6 top-16  bg-white p-4 rounded-md shadow-lg border border-gray-200 w-64">
+    <h3 class="text-lg font-bold text-gray-700">Informations du Médecin</h3>
+    <p class="mt-2"><strong>Nom :</strong> {{ medecinConnecte.nom }}</p>
+    <p><strong>Prénom :</strong> {{ medecinConnecte.prenom }}</p>
+    <p><strong>Spécialité :</strong> {{ medecinConnecte.specialite }}</p>
+    <button 
+      class="mt-4 bg-dark-blue text-white py-1 px-4 rounded hover:bg-blue-600"
+      (click)="logout()">
+      Déconnexion
+    </button>
+  </div>
     <!-- Table -->
     <div class="bg-white shadow-md rounded-md p-6 mt-20 ml-16">
       <table class="w-full border-collapse border-2 border-dark-blue text-left text-sm">
         <thead class="bg-light-blue">
           <tr>
-            <th class="p-6 border-2 border-dark-blue">Maladies chroniques</th>
-            <td class="p-6 border-2 border-dark-blue">
-              {{ historiqueData.historiques.join(', ') }}
-            </td>
+            <th class="p-6 border-2 border-dark-blue">Type</th>
+            <th class="p-6 border-2 border-dark-blue">Détails</th>
+            <th class="p-6 border-2 border-dark-blue">Action</th>
           </tr>
         </thead>
         <tbody>
           <tr class="bg-light-blue">
+            <th class="p-6 border-2 border-dark-blue">Maladies chroniques</th>
+            <td class="p-6 border-2 border-dark-blue">
+              {{ historiqueData.historiques.join(', ') }}
+            </td>
+            <td class="p-6 border-2 border-dark-blue text-center">
+              <button 
+                class="bg-dark-blue text-white px-2 py-1 rounded" 
+                (click)="addItem('historiques')">
+                Ajouter
+              </button>
+            </td>
+          </tr>
+          <tr class="bg-light-blue">
             <th class="p-6 border-2 border-dark-blue">Interventions chirurgicales</th>
             <td class="p-6 border-2 border-dark-blue">
               {{ historiqueData.interventionsChirurgicales.join(', ') }}
+            </td>
+            <td class="p-6 border-2 border-dark-blue text-center">
+              <button 
+                class="bg-dark-blue text-white px-2 py-1 rounded" 
+                (click)="addItem('interventionsChirurgicales')">
+                Ajouter
+              </button>
             </td>
           </tr>
           <tr class="bg-light-blue">
@@ -37,17 +63,38 @@
             <td class="p-6 border-2 border-dark-blue">
               {{ historiqueData.antecedentsFamiliaux.join(', ') }}
             </td>
+            <td class="p-6 border-2 border-dark-blue text-center">
+              <button 
+                class="bg-dark-blue text-white px-2 py-1 rounded" 
+                (click)="addItem('antecedentsFamiliaux')">
+                Ajouter
+              </button>
+            </td>
           </tr>
           <tr class="bg-light-blue">
             <th class="p-6 border-2 border-dark-blue">Allergies</th>
             <td class="p-6 border-2 border-dark-blue">
               {{ historiqueData.allergies.join(', ') }}
             </td>
+            <td class="p-6 border-2 border-dark-blue text-center">
+              <button 
+                class="bg-dark-blue text-white px-2 py-1 rounded" 
+                (click)="addItem('allergies')">
+                Ajouter
+              </button>
+            </td>
           </tr>
           <tr class="bg-light-blue">
             <th class="p-6 border-2 border-dark-blue">Vaccinations</th>
             <td class="p-6 border-2 border-dark-blue">
               {{ historiqueData.vaccinations.join(', ') }}
+            </td>
+            <td class="p-6 border-2 border-dark-blue text-center">
+              <button 
+                class="bg-dark-blue text-white px-2 py-1 rounded" 
+                (click)="addItem('vaccinations')">
+                Ajouter
+              </button>
             </td>
           </tr>
         </tbody>
