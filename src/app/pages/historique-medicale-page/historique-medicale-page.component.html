@@ -1,0 +1,57 @@
+<div class="flex h-screen bg-white" id="historique-page-content">
+  <!-- Main Content -->
+  <main class="w-3/4 p-6">
+    <app-top-right-section
+    [qrCode]="historiqueData.qrCode"
+    (downloadClicked)="downloadPdf()"
+    (userIconClicked)="toggleMedecinInfo()"
+    ></app-top-right-section>
+  
+    <!-- Médecin's Information -->
+<div *ngIf="isMedecinVisible" class="medecin-info bg-gray-100 p-6 rounded-md shadow-md mt-4">
+  <h3 class="text-lg font-bold">Informations du Médecin</h3>
+  <p><strong>Nom :</strong> {{ medecinConnecte.nom }}</p>
+  <p><strong>Prénom :</strong> {{ medecinConnecte.prenom }}</p>
+  <p><strong>Spécialité :</strong> {{ medecinConnecte.specialite }}</p>
+</div>
+    <!-- Table -->
+    <div class="bg-white shadow-md rounded-md p-6 mt-20 ml-16">
+      <table class="w-full border-collapse border-2 border-dark-blue text-left text-sm">
+        <thead class="bg-light-blue">
+          <tr>
+            <th class="p-6 border-2 border-dark-blue">Maladies chroniques</th>
+            <td class="p-6 border-2 border-dark-blue">
+              {{ historiqueData.historiques.join(', ') }}
+            </td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="bg-light-blue">
+            <th class="p-6 border-2 border-dark-blue">Interventions chirurgicales</th>
+            <td class="p-6 border-2 border-dark-blue">
+              {{ historiqueData.interventionsChirurgicales.join(', ') }}
+            </td>
+          </tr>
+          <tr class="bg-light-blue">
+            <th class="p-6 border-2 border-dark-blue">Antécédents familiaux</th>
+            <td class="p-6 border-2 border-dark-blue">
+              {{ historiqueData.antecedentsFamiliaux.join(', ') }}
+            </td>
+          </tr>
+          <tr class="bg-light-blue">
+            <th class="p-6 border-2 border-dark-blue">Allergies</th>
+            <td class="p-6 border-2 border-dark-blue">
+              {{ historiqueData.allergies.join(', ') }}
+            </td>
+          </tr>
+          <tr class="bg-light-blue">
+            <th class="p-6 border-2 border-dark-blue">Vaccinations</th>
+            <td class="p-6 border-2 border-dark-blue">
+              {{ historiqueData.vaccinations.join(', ') }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+</div>

@@ -1,0 +1,88 @@
+<div class="relative p-6 bg-gray-50 min-h-screen" style="line-height: 1.8;" id="dpi-page-content">
+  <!-- Top Right Section -->
+  <div class="absolute top-0 right-12 flex items-center space-x-4 p-4">
+    <!-- QR Code -->
+    <div>
+      <img
+        [src]="dpiData.qrCode"
+        alt="QR Code DPI"
+        class="w-10 h-10 border border-gray-300 rounded"
+      />
+    </div>
+    <!-- Download icon -->
+    <div>
+      <img class="w-auto h-8" src="assets/icons/download.png" alt="download" (click)="downloadPdf()" />
+    </div>
+    <!-- User Icon -->
+    <div>
+      <img 
+        class="w-auto h-10" 
+        src="assets/icons/user.png" 
+        alt="user" 
+        (click)="toggleMedecinInfo()"
+      />
+    </div>
+  </div>
+  
+  <!-- Médecin Connected Information (toggle visibility) -->
+  <div *ngIf="isMedecinVisible" class="absolute top-32 right-12 bg-white p-4 border shadow-md">
+    <h4 class="font-bold text-lg">Médecin Connecté</h4>
+    <p><strong>Nom:</strong> {{ medecinConnecte.nom }} {{ medecinConnecte.prenom }}</p>
+    <p><strong>Spécialité:</strong> {{ medecinConnecte.specialite }}</p>
+  </div>
+
+  <!-- Informations sur le patient -->
+  <div class="absolute top-20 left-16">
+    <div class="flex items-start space-x-6 mb-6">
+      <!-- Photo du patient -->
+      <img
+      [src]="dpiData.photo"
+      alt="Photo du patient"
+      class="w-24 h-40 border border-gray-300 rounded"
+      style="margin-top: 90px;" 
+    />
+      <!-- Informations personnelles -->
+      <div class="relative left-0">
+        <h3 class="bg-blue-100 text-blue-900 text-lg font-bold rounded-md p-2 mb-8 shadow mt-8 ">
+          Informations Personnelles
+        </h3>
+        <div class="grid grid-cols-2 gap-y-4 gap-x-128">
+          <p><strong>Nom :</strong> {{ dpiData.nom }}</p>
+          <p><strong>Prénom :</strong> {{ dpiData.prenom }}</p>
+          <p><strong>Date de naissance :</strong> {{ dpiData.dateNaissance }}</p>
+          <p><strong>Adresse :</strong> {{ dpiData.adresse }}</p>
+          <p><strong>NSS :</strong> {{ dpiData.nss }}</p>
+          <p><strong>Téléphone :</strong> {{ dpiData.telephone }}</p>
+        </div>
+        
+      </div>
+    </div>
+
+    <!-- QR Code et Informations Administratives -->
+    <div >
+      <!-- Informations Administratives -->
+      <h3 class="bg-blue-100 text-blue-900 text-lg font-bold rounded-md p-2 mb-8 shadow mt-8">
+        Informations Administratives
+      </h3>
+      <div class="grid grid-cols-2 gap-y-4 gap-x-128">
+        <p><strong>Nom de la mutuelle :</strong> {{ dpiData.mutuelle }}</p>
+        <p><strong>Numéro d’identification :</strong> {{ dpiData.numeroIdentification }}</p>
+      </div>
+
+      <!-- Personne à contacter -->
+      <h4 class="bg-blue-100 text-blue-900 text-lg font-bold rounded-md p-2 mb-8 shadow mt-8">
+        Personne à contacter
+      </h4>
+      <div class="grid grid-cols-2 gap-y-4 gap-x-128">
+        <p><strong>Nom :</strong> {{ dpiData.contact.nom }}</p>
+        <p><strong>Prénom :</strong> {{ dpiData.contact.prenom }}</p>
+        <p class="col-span-2"><strong>Téléphone :</strong> {{ dpiData.contact.telephone }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bouton Modifier en bas à droite -->
+   <!--<button class="absolute bottom-8 right-12 bg-blue-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-blue-600">
+    Modifier
+  </button>-->
+</div>
