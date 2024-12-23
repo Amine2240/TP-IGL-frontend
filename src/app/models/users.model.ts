@@ -14,7 +14,7 @@ export interface Administratif extends Utilisateur {
 }
 
 export interface Patient extends Utilisateur{
-  nss : number,
+ nss : number,
   dateNaissance: Date, 
   adresse : String,
   mutuelle : String,
