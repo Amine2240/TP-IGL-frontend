@@ -1,0 +1,90 @@
+<div class="flex flex-col items-center min-h-screen bg-blue-50">
+    <!-- logo -->
+    <div class="w-full flex justify-between items-center px-8 py-4 bg-white shadow">
+     
+        <img src="../../../assets/logos/logo.png"  />
+        <span class="text-xl font-bold text-blue-600"></span>
+    
+      <button class="px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600">
+        Retour
+      </button>
+    </div>
+  
+ 
+    <div class="flex flex-col items-center mt-8 space-y-6 w-3/4">
+      <div class="w-full">
+        <!-- Table -->
+        <table class="table-auto w-full border border-gray-300 bg-white">
+          <thead class="bg-white">
+            <tr>
+              <th class="px-4 py-2 border text-blue-600">Paramètre</th>
+              <th class="px-4 py-2 border text-blue-600">Valeur</th>
+              <th class="px-4 py-2 border text-blue-600">Unité</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let row of tableData">
+              <td class="px-4 py-2 border">{{ row.parametre }}</td>
+              <td class="px-4 py-2 border">{{ row.valeur }}</td>
+              <td class="px-4 py-2 border">{{ row.unite }}</td>
+            </tr>
+  
+          
+            <tr>
+              <td class="px-4 py-2 border">
+                <input
+                  type="text"
+                  placeholder="Paramètre"
+                  [(ngModel)]="newParametre"
+                  class="w-full p-2 border rounded"
+                />
+              </td>
+              <td class="px-4 py-2 border">
+                <input
+                  type="text"
+                  placeholder="Valeur"
+                  [(ngModel)]="newValeur"
+                  class="w-full p-2 border rounded"
+                />
+              </td>
+              <td class="px-4 py-2 border">
+                <input
+                  type="text"
+                  placeholder="Unité"
+                  [(ngModel)]="newUnite"
+                  class="w-full p-2 border rounded"
+                />
+              </td>
+            </tr>
+          </tbody>
+        </table>
+  
+    
+        <button
+          (click)="ajouterEntree()"
+          class="mt-4 px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+        >
+          Ajouter
+        </button>
+      </div>
+  
+   
+      
+      <div class="flex justify-between w-full mt-4">
+        <button
+          (click)="generateGraph()"
+          [disabled]="tableData.length === 0"
+          class="px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 disabled:bg-gray-300"
+        >
+          Générer Graphe
+        </button>
+        <button
+          (click)="saveEntries()"
+          class="px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+        >
+          Enregistrer
+        </button>
+      </div>
+    </div>
+  </div>
+  
