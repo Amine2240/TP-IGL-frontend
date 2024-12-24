@@ -5,6 +5,7 @@ import { LoginPageComponent } from "./pages/login-page/login-page.component";
 import { DpiPageComponent } from "./pages/dpi-page/dpi-page.component";
 import { HistoriqueMedicalePageComponent } from "./pages/historique-medicale-page/historique-medicale-page.component";
 import { TopRightSectionComponent } from './components/top-right-section/top-right-section.component';
+import { BilanRadiologiquePageComponent } from './pages/bilan-radiologique-page/bilan-radiologique-page.component';
 
 @Component({
   selector: 'app-root',
