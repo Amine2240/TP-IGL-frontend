@@ -167,31 +167,35 @@
       <hr class=" border-blue-500 border-1 my-2">
       <div>
         <p>le patient a-t-il des allérgies connues ?</p>
-        <div *ngFor="let allergie of allergiesList">
+        <div *ngFor="let allergie of allergiesList" class="text-xl" >
           <p>
             {{allergie.nom}} :
           </p>
 
-          <div *ngFor="let allergieType of allergie.list">
+          <div class=" flex flex-wrap">
+          <div *ngFor="let allergieType of allergie.list" class=" m-5">
             <!-- [checked]="patient.allergies.includes(allergieType)" -->
             <input type="checkbox" (change)="onCheckboxChange($event,'allergies',allergieType)"
               [name]="allergieType.label" id="allergieType.label">
             <label for="allergieType.label">{{allergieType.label}}</label>
 
           </div>
+        </div>
           <hr class=" border-blue-500 border-1 my-2">
 
         </div>
       </div>
       <div>
         <p>le patient a-t-il subi des interventions chirurgicales ?</p>
-        <div *ngFor="let intervention of interventionsList">
+        <div class=" flex flex-wrap text-xl">
+        <div *ngFor="let intervention of interventionsList" class=" m-5">
           <!-- [checked]="patient.interventions.includes(intervention)" -->
           <input type="checkbox" (change)="onCheckboxChange($event,'interventions',intervention)" [value]="intervention"
             [name]="intervention.label" id="intervention.label">
           <label for="intervention.label">{{intervention.label}}</label>
 
         </div>
+      </div>
 
       </div>
       <hr class=" border-blue-500 border-1 my-2">

@@ -24,7 +24,7 @@ export class OrdonnanceComponent {
       const pdfHeight = pdf.internal.pageSize.getHeight();
 
       // Scale image to fit the page
-      const imgWidth = canvas.width / 5; // Adjust scale as needed
+      const imgWidth = canvas.width / 6; // Adjust scale as needed
       const imgHeight = canvas.height / 5;
 
       const x = (pdfWidth - imgWidth) / 2; // Center horizontally

@@ -8,15 +8,21 @@ interface Item {
   label: string;
 }
 
+interface Item2 {
+  id : number;
+  
+  label: string;
+}
+
 interface Maladie {
   id : number;
-  checked : boolean;
+
   label: string;
 }
 
 interface AllergieType {
   id : number;
-  checked : boolean;
+
   label: string;
 }
 
@@ -52,38 +58,38 @@ export class FormpatientComponent {
   public maladiesList : Maladie[] = [
     {
       id :0,
-      checked : false,
+    
       label: 'Diabète'
     },
     {
       id :1,
-      checked : false,
+    
       label: 'Hypertension'
     },
     {
       id :2,
-      checked : false,
+    
       label: 'Asthme'
     },
     {
       id :3,
-      checked : false,
+    
       label: 'Cancer'
     },
     {
       id : 4,
       
-      checked : false,
+    
       label : 'Arthrite'
     },
     {
       id :5,
-      checked : false,
+    
       label: 'Métabolisme'
     },
     {
       id :6,
-      checked : false,
+    
       label: 'Autre'
     }
   ]
@@ -95,21 +101,21 @@ export class FormpatientComponent {
         {
           id : 0,
           
-          checked : false,
+        
           label : "Penicilline",
 
         },
         {
           id : 1,
           
-          checked : false,
+        
           label : "Aspirine",
 
         },
         {
           id : 2,
           
-          checked : false,
+        
           label : "Penicilline",
 
         },
@@ -124,21 +130,21 @@ export class FormpatientComponent {
         {
           id : 0,
           
-          checked : false,
+        
           label : "Fruits de mer",
 
         },
         {
           id : 1,
           
-          checked : false,
+        
           label : "Noix",
 
         },
         {
           id : 2,
           
-          checked : false,
+        
           label : "Lait",
 
         },
@@ -153,21 +159,21 @@ export class FormpatientComponent {
         {
           id : 0,
           
-          checked : false,
+        
           label : "Pollen",
 
         },
         {
           id : 1,
           
-          checked : false,
+        
           label : "Poussière",
 
         },
         {
           id : 2,
           
-          checked : false,
+        
           label : "Moisissure",
 
         },
@@ -175,29 +181,29 @@ export class FormpatientComponent {
     }
   ]
 
-  public interventionsList :Item[] = [
+  public interventionsList :Item2[] = [
     {
       id : 0,
       
-      checked : false,
+    
       label : "Chirurgie cardiaque",
     },
     {
       id : 1,
       
-      checked : false,
+    
       label : "Chirurgie orthopédique",
     },
     {
       id : 2,
       
-      checked : false,
+    
       label : "Chirurgie abdominale",
     },
     {
       id : 3,
       
-      checked : false,
+    
       label : "Autre",
     }
   ]
@@ -206,7 +212,7 @@ export class FormpatientComponent {
     {
       id : 0,
       
-      checked : true,
+    checked : true,
       label : "Oui",
     },
     {
