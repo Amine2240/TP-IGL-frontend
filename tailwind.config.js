@@ -11,6 +11,7 @@ module.exports = {
       spacing: {
         '128': '32rem', // Example: Adding a custom gap of 32rem (512px)
         '160': '40rem', // Example: Adding a custom gap of 40rem (640px)
+        '80': '20rem',   // Custom value for gap-x-80
       },
     },
   },
