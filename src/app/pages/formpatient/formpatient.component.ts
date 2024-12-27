@@ -261,7 +261,7 @@ public perosonneAcontacter = {
       personneAconntacterTelephone: ['', Validators.required],
       
       photoPatient : ['', Validators.required],
-      codeqr : ['', Validators.required]
+      // codeqr : ['', Validators.required]
     });
   }
 
@@ -285,7 +285,7 @@ public perosonneAcontacter = {
 
 
   photoPatientPreview: string | ArrayBuffer | null = null; // Holds the image preview URL or data URL
-  photoCodeQrPreview: string | ArrayBuffer | null = null; // Holds the image preview URL or data URL
+  // photoCodeQrPreview: string | ArrayBuffer | null = null; // Holds the image preview URL or data URL
 
   // Handle file selection
   onFileSelected(event: Event , type : "patient" | "codeQr") {
@@ -309,12 +309,12 @@ public perosonneAcontacter = {
 
           
         }
-        if (type == 'codeQr') {
-          this.photoCodeQrPreview = reader.result;
-          // this.patient.codeqr = this.photoCodeQrPreview;
-          this.patientForm.get('codeqr')?.setValue(this.photoCodeQrPreview);
+        // if (type == 'codeQr') {
+        //   this.photoCodeQrPreview = reader.result;
+        //   // this.patient.codeqr = this.photoCodeQrPreview;
+        //   this.patientForm.get('codeqr')?.setValue(this.photoCodeQrPreview);
           
-        }
+        // }
 
         
       };

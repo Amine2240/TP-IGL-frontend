@@ -1,0 +1,86 @@
+<div class=" flex place-content-center">
+  <section class="w-[65%]">
+    <div class=" bg-blue-200 p-2 rounded-md mb-5">
+      <p class=" text-blue-700 font-semibold">Informations de la consultation</p>
+    </div>
+    <!-- <p *ngIf="patientForm.get('dateNaissance')?.invalid && patientForm.get('dateNaissance')?.touched"
+    class="text-red-500">
+    dateNaissance is required*
+  </p> -->
+    <form [formGroup]="consultationForm" (ngSubmit)="saveForm()" class=" flex flex-col w-full">
+      <p *ngIf="consultationForm.get('date')?.invalid" class="text-red-500">
+        date is required*
+      </p>
+      <div class=" flex mb-3 ">
+        <p class=" font-semibold">date: </p>
+        <input type="date" formControlName="date" name="" id=""
+          class=" w-full ml-3 border-b-2 focus:outline-none border-blue-300 h-7">
+      </div>
+      <p *ngIf="consultationForm.get('heure')?.invalid" class="text-red-500">
+        heure is required*
+      </p>
+      <div class=" flex mb-3 ">
+        <p class=" font-semibold">heure: </p>
+        <input type="time" formControlName="heure" name="" id=""
+          class=" w-full ml-3 border-b-2 focus:outline-none border-blue-300 h-7">
+      </div>
+
+      <div class=" mb-3">
+        <p class=" font-semibold">Contenu de la consultation: </p>
+        <textarea name="" id="" placeholder="rediger consultation"
+          class=" border-2 border-blue-300 w-full focus:outline-blue-500 h-32 p-5"></textarea>
+      </div>
+      <div class=" mb-3 ">
+        <p *ngIf="consultationForm.get('outils')?.invalid" class="text-red-500">
+          outils is required*
+        </p>
+        <p class=" font-semibold">Outils: </p>
+        <div *ngFor="let outil of outils" class=" text-xl m-5">
+          <!-- [checked]="patient.maladies.includes(maladie)" -->
+          <input type="checkbox" (change)="onCheckboxChange($event,'outils',outil)" [value]="outil.nom"
+            [name]="outil.nom" [id]="outil.nom">
+          <label [for]="outil.nom">{{outil.nom}}</label>
+
+        </div>
+      </div>
+      <div class=" bg-blue-200 p-2 rounded-md mb-5">
+        <p class=" text-blue-700 font-semibold">Diagnostic Médical</p>
+      </div>
+      <textarea name="" id="" placeholder="rediger diagnostic"
+        class=" border-2 border-blue-300 w-full focus:outline-blue-500 h-32 p-5"></textarea>
+      <div class=" bg-blue-200 p-2 rounded-md mb-5">
+        <p class=" text-blue-700 font-semibold">Préscriptions d'examens complementraires</p>
+      </div>
+      <p *ngIf="consultationForm.get('bilanBool')?.invalid" class="text-red-500">
+        bilan is required*
+      </p>
+      <div *ngFor="let bilan of bilans" class=" text-xl m-5 flex">
+        <!-- [checked]="patient.maladies.includes(maladie)" -->
+        <input type="radio" formControlName="bilanBool" [value]="bilan.checked" name="bilanBool" [id]="bilan.nom">
+        <label [for]="bilan.nom">{{bilan.nom}}</label>
+
+      </div>
+      <p>Commentaires:</p>
+      <textarea name="" id="" placeholder="rediger Commentaires"
+        class=" border-2 border-blue-300 w-full focus:outline-blue-500 h-32 p-5"></textarea>
+      <div class=" bg-blue-200 p-2 rounded-md mb-5">
+        <p class=" text-blue-700 font-semibold">Résume de la consultation</p>
+      </div>
+      <textarea name="" id=""
+        placeholder="les antécédents du patient , observations........( va etre remplis automatiquement )"
+        class=" border-2 border-blue-300 w-full focus:outline-blue-500 h-32 p-5"></textarea>
+      <div class=" flex place-content-end">
+        <button routerLink="ordonnance"
+          class=" text-center text-nowrap disabled:bg-blue-300 bg-blue-500 text-white capitalize px-5 py-3 m-3 rounded-lg ">
+          ajouter ordonnance
+        </button>
+      </div>
+
+      <button type="submit" [disabled]="consultationForm.invalid"
+        class=" text-center disabled:bg-blue-300 bg-blue-500 text-white capitalize px-5 py-3 m-3 rounded-lg ">
+        valider consultation
+      </button>
+    </form>
+  </section>
+  <router-outlet></router-outlet>
+</div>
