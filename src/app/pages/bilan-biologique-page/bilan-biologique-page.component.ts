@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-bilan-biologique-page',
-  standalone: true,
-  imports: [CommonModule, FormsModule],
-  templateUrl: './bilan-biologique-page.component.html',
-  styleUrls: ['./bilan-biologique-page.component.scss']
+    selector: 'app-bilan-biologique-page',
+    imports: [CommonModule, FormsModule],
+    templateUrl: './bilan-biologique-page.component.html',
+    styleUrls: ['./bilan-biologique-page.component.scss']
 })
 export class BilanBiologiquePageComponent {
   tableData: { parametre: string; valeur: string; unite: string }[] = [];
@@ -33,7 +33,19 @@ export class BilanBiologiquePageComponent {
   }
 
   // generation du graphe
-  generateGraph() {
-    console.log('Generating graph for:', this.tableData);
+
+   // creation du router
+  constructor(private router: Router) {}
+  
+  genererGraph() {
+    const labels = this.tableData.map((item) => item.parametre);
+    const data = this.tableData.map((item) => parseFloat(item.valeur));
+    console.log(data);
+   // passer les données à la page du graphe
+   
+    
+    this.router.navigate(['/graphe'], {
+      state: { labels, data },
+    });
   }
 }

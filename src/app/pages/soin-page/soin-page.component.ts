@@ -3,11 +3,10 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-soin-page',
-  standalone: true,
-  imports: [CommonModule, FormsModule],
-  templateUrl: './soin-page.component.html',
-  styleUrls: ['./soin-page.component.scss']
+    selector: 'app-soin-page',
+    imports: [CommonModule, FormsModule],
+    templateUrl: './soin-page.component.html',
+    styleUrls: ['./soin-page.component.scss']
 })
 export class SoinPageComponent {
   tableData: { soin: string; type: string; observation: string }[] = [];

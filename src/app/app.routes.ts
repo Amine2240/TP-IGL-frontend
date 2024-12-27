@@ -6,6 +6,7 @@ import { LoginPageComponent } from "./pages/login-page/login-page.component";
 import { BilanRadiologiquePageComponent} from "./pages/bilan-radiologique-page/bilan-radiologique-page.component";
 import { BilanBiologiquePageComponent} from "./pages/bilan-biologique-page/bilan-biologique-page.component";
 import { SoinPageComponent} from "./pages/soin-page/soin-page.component";
+import { GraphPageComponent } from './pages/graphe-page/graphe-page.component';
 export const routes: Routes = [
     { path: '', redirectTo: 'page-dpi', pathMatch: 'full' },
     { path: 'page-dpi', component: DpiPageComponent},
@@ -13,7 +14,9 @@ export const routes: Routes = [
     { path: 'login', component: LoginPageComponent},
     { path: 'bilan-radiologique', component: BilanRadiologiquePageComponent },
     { path: 'bilan-biologique', component: BilanBiologiquePageComponent },
-    { path: 'soin-page', component: SoinPageComponent}
+    { path: 'soin-page', component: SoinPageComponent},
+    {path: 'graphe',component:GraphPageComponent}
+    
   ];
   @NgModule({
     imports: [RouterModule.forRoot(routes)],

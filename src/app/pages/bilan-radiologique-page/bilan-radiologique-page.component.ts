@@ -2,11 +2,10 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-bilan-radiologique-page',
-  standalone: true,  
-  imports: [CommonModule],  
-  templateUrl: './bilan-radiologique-page.component.html',
-  styleUrls: ['./bilan-radiologique-page.component.scss']
+    selector: 'app-bilan-radiologique-page',
+    imports: [CommonModule],
+    templateUrl: './bilan-radiologique-page.component.html',
+    styleUrls: ['./bilan-radiologique-page.component.scss']
 })
 export class BilanRadiologiquePageComponent {
   uploadedImages: string[] = []; 

@@ -1,59 +1,87 @@
-import { Component, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ChartConfiguration, ChartType } from 'chart.js';
-import { NgChartsModule } from 'ng2-charts';
+import { Component, OnInit, ViewChild, ElementRef, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Chart, CategoryScale, LinearScale, BarController, BarElement, Title, Tooltip, Legend } from 'chart.js';
+
+Chart.register(CategoryScale, LinearScale, BarController, BarElement, Title, Tooltip, Legend);
 
 @Component({
   selector: 'app-graph-page',
-  standalone: true,
-  imports: [CommonModule, NgChartsModule],
   template: `
-    <div>
-      <h2 class="text-center text-xl font-bold mb-4">Bar Chart</h2>
-      <canvas baseChart
-              [data]="barChartData"
-              [options]="barChartOptions"
-              [type]="barChartType">
-      </canvas>
+    <div class="flex flex-col items-center min-h-screen bg-blue-50 mb-0">
+      <!-- Header -->
+      <div class="w-full flex justify-between items-center px-8 py-4 bg-white shadow">
+        <img src="../../../assets/logos/logo.png" alt="Logo" />
+      </div>
+
+      <!-- Chart -->
+      <div class="flex flex-col items-center mt-8 space-y-6 w-3/4 can">
+        <div class="w-full">
+          <canvas #chartCanvas></canvas>
+        </div>
+      </div>
     </div>
   `,
   styles: [`
     canvas {
       display: block;
       margin: 0 auto;
-      max-width: 700px;
+      width: 100% !important;
+      height: 400px !important;
     }
+      can{
+      margin-top:100px;
+      }
   `]
 })
-export class GraphPageComponent {
-  @Input() tableData: { parametre: string; valeur: string; unite: string }[] = [];
+export class GraphPageComponent implements OnInit {
+  @ViewChild('chartCanvas') chartCanvas!: ElementRef<HTMLCanvasElement>;
 
-  public barChartType: ChartType = 'bar';
-  public barChartOptions: ChartConfiguration['options'] = {
-    responsive: true,
-    scales: {
-      x: {},
-      y: {
-        beginAtZero: true
-      }
-    }
-  };
+  private chart: Chart | undefined;
 
-  public barChartData: ChartConfiguration['data'] = {
-    labels: [], // To be populated dynamically
-    datasets: [
-      {
-        data: [], // To be populated dynamically
-        label: 'Values',
-        backgroundColor: '#4a90e2'
-      }
-    ]
-  };
+  constructor(@Inject(PLATFORM_ID) private platformId: any) {}
 
-  ngOnChanges(): void {
-    if (this.tableData?.length) {
-      this.barChartData.labels = this.tableData.map(item => item.parametre);
-      this.barChartData.datasets[0].data = this.tableData.map(item => +item.valeur);
+  ngOnInit(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      const state = history.state;
+const labels = state.labels || [];
+const data = state.data || [];
+      setTimeout(() => {
+        const ctx = this.chartCanvas.nativeElement.getContext('2d');
+        if (ctx) {
+          this.chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+              labels: labels,
+              datasets: [{
+                label: 'Graphique de tendance',
+                data: data,
+                backgroundColor: '#4a90e2',
+              }]
+            },
+            options: {
+              responsive: true,
+              plugins: {
+                legend: {
+                  labels: {
+                    font: {
+                      family: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
+                      size: 18,
+                      weight: 'bold',
+                    },
+                    padding: 20,
+                  }
+                }
+              },
+              scales: {
+                x: {},
+                y: {
+                  beginAtZero: true
+                }
+              }
+            }
+          });
+        }
+      });
     }
   }
 }

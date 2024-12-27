@@ -8,11 +8,10 @@ import { FormsModule } from '@angular/forms';
 
 
 @Component({
-  selector: 'app-dpi-page',
-  standalone: true,
-  imports: [FormsModule ,CommonModule, SidebarComponent],  // Add CommonModule here
-  templateUrl: './dpi-page.component.html',
-  styleUrls: ['./dpi-page.component.scss']
+    selector: 'app-dpi-page',
+    imports: [FormsModule, CommonModule, SidebarComponent], // Add CommonModule here
+    templateUrl: './dpi-page.component.html',
+    styleUrls: ['./dpi-page.component.scss']
 })
 export class DpiPageComponent {
   // Define isMedecinVisible to toggle visibility of médecin's info

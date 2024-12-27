@@ -7,11 +7,10 @@ import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas'
 
 @Component({
-  selector: 'app-historique-medicale-page',
-  standalone: true,
-  imports: [CommonModule ,TopRightSectionComponent ],
-  templateUrl: './historique-medicale-page.component.html',
-  styleUrl: './historique-medicale-page.component.scss'
+    selector: 'app-historique-medicale-page',
+    imports: [CommonModule, TopRightSectionComponent],
+    templateUrl: './historique-medicale-page.component.html',
+    styleUrl: './historique-medicale-page.component.scss'
 })
 /*export class HistoriqueMedicalePageComponent implements OnInit {
   patientId: string = '';

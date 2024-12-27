@@ -8,11 +8,10 @@ import { TopRightSectionComponent } from './components/top-right-section/top-rig
 import { BilanRadiologiquePageComponent } from './pages/bilan-radiologique-page/bilan-radiologique-page.component';
 import { CommonModule } from '@angular/common'; 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [CommonModule,RouterOutlet, RouterLink, SidebarComponent, LoginPageComponent,DpiPageComponent,HistoriqueMedicalePageComponent ,TopRightSectionComponent ],  // Correctly include SidebarComponent
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+    selector: 'app-root',
+    imports: [CommonModule, RouterOutlet, RouterLink, SidebarComponent, LoginPageComponent, DpiPageComponent, HistoriqueMedicalePageComponent, TopRightSectionComponent], // Correctly include SidebarComponent
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
   title = 'front-end';
