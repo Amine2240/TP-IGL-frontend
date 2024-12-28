@@ -262,6 +262,7 @@ public perosonneAcontacter = {
       personneAconntacterNom: ['', Validators.required],
       personneAconntacterPrenom: ['', Validators.required],
       personneAconntacterTelephone: ['', Validators.required],
+      personneAconntacterEmail: [''], 
       
       photoPatient : ['', Validators.required],
       // codeqr : ['', Validators.required]
@@ -292,7 +293,7 @@ public perosonneAcontacter = {
           nom: formValue.personneAconntacterNom,
           prenom: formValue.personneAconntacterPrenom,
           telephone: formValue.personneAconntacterTelephone,
-          email: `${formValue.personneAconntacterNom.toLowerCase()}.${formValue.personneAconntacterPrenom.toLowerCase()}@example.com`,
+          email: formValue.personneAconntacterEmail,
         },
         hopital_initial_id: 1, // Replace with actual value if dynamic
         antecedants: [
