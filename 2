@@ -71,10 +71,8 @@ export class LoginPageComponent {
             },
           },
         );
-        document.cookie = `auth_token=${response.data.token}; path=/; max-age=3600; secure; SameSite=None`;
         console.log('Login Successful:', response.data);
         await this.authService.loadUser();
-        console.log('User Loaded:', this.authService.getUser());
       } catch (error: any) {
         if (error.response && error.response.status == 401) {
           this.errorMessage =
