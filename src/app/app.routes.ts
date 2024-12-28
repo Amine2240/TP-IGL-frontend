@@ -1,25 +1,38 @@
-import { NgModule } from '@angular/core';
-import {RouterModule, Routes } from '@angular/router';
-import { HistoriqueMedicalePageComponent } from './pages/historique-medicale-page/historique-medicale-page.component';
-import { DpiPageComponent } from './pages/dpi-page/dpi-page.component';
-import { LoginPageComponent } from "./pages/login-page/login-page.component";
-import { BilanRadiologiquePageComponent} from "./pages/bilan-radiologique-page/bilan-radiologique-page.component";
-import { BilanBiologiquePageComponent} from "./pages/bilan-biologique-page/bilan-biologique-page.component";
-import { SoinPageComponent} from "./pages/soin-page/soin-page.component";
-import { GraphPageComponent } from './pages/graphe-page/graphe-page.component';
+import { Routes } from '@angular/router';
+
 export const routes: Routes = [
-    { path: '', redirectTo: 'page-dpi', pathMatch: 'full' },
-    { path: 'page-dpi', component: DpiPageComponent},
-    { path: 'page-historique', component: HistoriqueMedicalePageComponent },
-    { path: 'login', component: LoginPageComponent},
-    { path: 'bilan-radiologique', component: BilanRadiologiquePageComponent },
-    { path: 'bilan-biologique', component: BilanBiologiquePageComponent },
-    { path: 'soin-page', component: SoinPageComponent},
-    {path: 'graphe',component:GraphPageComponent}
+  { 
     
-  ];
-  @NgModule({
-    imports: [RouterModule.forRoot(routes)],
-    exports: [RouterModule],
-  })
-  export class AppRoutingModule {}
+    path: 'dpi',  
+    loadComponent: () => import('./pages/dpi/dpi.component').then(m => m.DpiComponent),
+    // I opted for this approach (children array of dpi) because the sidebar is a child of dpi not app 
+    children : [
+      // {
+      //   path: 'informations-patient',
+      //   // loadComponent: () => import('./components/certificat/certificat.component').then(m => m.CertificatComponent)
+      // },
+      {
+        path: 'certificat',
+        loadComponent: () => import('./components/certificat/certificat.component').then(m => m.CertificatComponent)
+      },
+      {
+        path: 'consultations-medicales',
+        loadComponent: () => import('./components/consultations/consultations.component').then(m => m.ConsultationsComponent),
+      },
+      {
+        path : 'consultations-medicales/form-consultation',
+        loadComponent: () => import('./components/formconsultation/formconsultation.component').then(m => m.FormconsultationComponent),
+      },
+      {
+        path : 'consultations-medicales/form-consultation/ordonnance',
+        loadComponent: () => import('./components/ordonnance/ordonnance.component').then(m => m.OrdonnanceComponent)
+      }
+
+    ] 
+  },
+  {
+    path: 'formpatient',
+    loadComponent : () => import('./pages/formpatient/formpatient.component').then(m => m.FormpatientComponent)
+  },
+  
+];
