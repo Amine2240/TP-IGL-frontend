@@ -1,5 +1,5 @@
 import { Component , OnInit} from '@angular/core';
-import { PatientService } from '../../services/patient.service';
+
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';  // Import CommonModule
 import { TopRightSectionComponent } from '../../components/top-right-section/top-right-section.component';
