@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { HttpService } from '../../services/http.service';
 
 interface Item {
   id : number;
@@ -34,9 +36,10 @@ interface Allergie {
 @Component({
   selector: 'app-formpatient',
   standalone: true,
-  imports: [CommonModule , FormsModule , ReactiveFormsModule],
+  imports: [CommonModule , FormsModule , ReactiveFormsModule , HttpClientModule],
   templateUrl: './formpatient.component.html',
-  styleUrl: './formpatient.component.scss'
+  styleUrl: './formpatient.component.scss' ,
+  providers: [HttpService]
 })
 
 
@@ -229,7 +232,7 @@ public perosonneAcontacter = {
   }
   patientForm: FormGroup;
   // we use constructor instead of formcontrol for clean code 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,private httpService: HttpService) {
     this.patientForm = this.fb.group({
       // Text inputs
       nom: ['', Validators.required],
@@ -243,7 +246,7 @@ public perosonneAcontacter = {
       nss: ['', [Validators.required, Validators.min(1)]],
       telephone: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
       numIdentification: ['', Validators.required],
-
+      email : ['', Validators.required ],
       mutuelle: ['', Validators.required],
 
       // Radio buttons
@@ -271,6 +274,43 @@ public perosonneAcontacter = {
     if (this.patientForm.valid) {
       console.log('Form submitted!', this.patientForm.value);
       // console.log("patient : ", this.patient);
+      const formValue = this.patientForm.value;
+      const payload = {
+        patient: {
+          NSS: formValue.nss,
+          user: {
+            nom: formValue.nom,
+            prenom: formValue.prenom,
+            date_naissance: formValue.dateNaissance,
+            telephone: formValue.telephone,
+            role: 'patient',
+            email: formValue.email, 
+          },
+        },
+        mutuelle: formValue.mutuelle,
+        contact_urgence: {
+          nom: formValue.personneAconntacterNom,
+          prenom: formValue.personneAconntacterPrenom,
+          telephone: formValue.personneAconntacterTelephone,
+          email: `${formValue.personneAconntacterNom.toLowerCase()}.${formValue.personneAconntacterPrenom.toLowerCase()}@example.com`,
+        },
+        hopital_initial_id: 1, // Replace with actual value if dynamic
+        antecedants: [
+          ...formValue.maladies.map((maladie: any) => ({
+            nom: maladie.label,
+            type: 'maladie',
+          })),
+          ...formValue.allergies.map((allergie: any) => ({
+            nom: allergie.label,
+            type: 'allergie',
+          })),
+        ],
+      };
+
+      this.httpService.createDpi(payload).subscribe({
+        next: (response) => console.log('DPI created:', response),
+        error: (error) => console.error('Error creating DPI:', error),
+      });
       
     }
   }
@@ -280,7 +320,7 @@ public perosonneAcontacter = {
 
   public saveForm(): void {
     this.submitForm();
-    this.resetForm();
+   // this.resetForm();
   }
 
 

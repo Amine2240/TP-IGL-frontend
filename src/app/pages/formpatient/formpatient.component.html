@@ -64,7 +64,16 @@
           <div class=" flex w-full mb-3">
             <p class=" font-semibold text-nowrap">Telephone : </p>
             <input type="number" formControlName="telephone" name="" id=""
-              class=" w-full ml-3 border-b-2 focus:outline-none border-blue-300 h-7">
+            class=" w-full ml-3 border-b-2 focus:outline-none border-blue-300 h-7">
+          </div>
+          <p *ngIf="patientForm.get('email')?.invalid && patientForm.get('email')?.touched"
+            class="text-red-500">
+            email is required*
+          </p>
+          <div class=" flex w-full mb-3">
+            <p class=" font-semibold text-nowrap">Email : </p>
+            <input type="email" formControlName="email" name="" id=""
+            class=" w-full ml-3 border-b-2 focus:outline-none border-blue-300 h-7">
           </div>
         </div>
       </div>
