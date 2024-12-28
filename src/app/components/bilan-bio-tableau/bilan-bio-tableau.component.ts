@@ -1,0 +1,136 @@
+import {
+  Component,
+  OnInit,
+  ElementRef,
+  Renderer2,
+  ViewChild,
+  input,
+} from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import jsQR from 'jsqr';
+
+interface DataRow {
+  id: string;
+  date: string;
+  
+  
+}
+
+interface Column {
+  key: keyof DataRow;
+  label: string;
+}
+
+@Component({
+  selector: 'app-bilan-bio-tableau',
+  standalone: true,
+  imports: [FormsModule, CommonModule],
+  templateUrl: './bilan-bio-tableau.component.html',
+  //styleUrls: ['./dpi-tableau.component.css'],
+})
+export class BilanBioTableauComponent implements OnInit {
+  searchText: string = '';
+  toggleFilterDropdown: boolean = false; 
+  selectedFilter: string = 'Date'; 
+  filterBy: keyof DataRow = 'date';
+  filteredData: DataRow[] = [];
+ 
+  constructor(private renderer: Renderer2, private el: ElementRef) {}
+  filterableKeys: { key: keyof DataRow; label: string }[] = [
+    { key: 'id', label: 'Bilan_Id' },
+    { key: 'date', label: 'Date' },
+   
+  ];
+  
+  
+
+  columns: Column[] = [
+    { key: 'id', label: 'Bilan_Id' },
+    { key: 'date', label: 'Date' },
+   
+   
+  ];
+
+  data: DataRow[] = [
+    {
+      id: '1001',
+      date: '25/12/2024',
+     
+    },
+    {
+      id: '1002',
+      date: '20/12/2024',
+     
+    },
+    {
+      id: '1003',
+      date: '18/12/2024',
+      
+    },
+    {
+      id: '1004',
+      date: '15/12/2024',
+     
+    },
+    {
+      id: '1005',
+      date: '10/12/2024',
+  
+    },
+    {
+      id: '1006',
+      date: '05/12/2024',
+    
+    },
+  ];
+  
+
+ 
+  
+  applyFilter(): void {
+    this.filteredData = [...this.data].sort((a, b) =>
+      a[this.filterBy].localeCompare(b[this.filterBy])
+    );
+  }
+
+  toggleDropdown(): void {
+    this.toggleFilterDropdown = !this.toggleFilterDropdown;
+  }
+
+  onFilterSelect(selected: { key: keyof DataRow; label: string }): void {
+    this.filterBy = selected.key; // Update the filter key
+    this.selectedFilter = selected.label; // Update the displayed label
+    this.applyFilter(); // Apply the filter
+    this.toggleFilterDropdown = false; // Close the dropdown
+  }
+
+  getCellClass(key: string): string {
+   
+      // General classes for other columns
+      return 'px-3 py-2 border-[1px] border-dark-blue text-center w-[80px] min-h-[4px]';
+   
+  }
+
+  ngOnInit(): void {
+    this.applySearchFilter();
+
+    this.renderer.listen('document', 'click', (event: Event) => {
+      const clickedInside = this.el.nativeElement.contains(event.target);
+      if (!clickedInside) {
+        this.toggleFilterDropdown = false;
+      }
+    });
+  }
+
+  applySearchFilter(): void {
+    this.filteredData = this.data.filter(
+      (row) =>
+        row.date.toLowerCase().includes(this.searchText.toLowerCase()) ||
+      
+        row.id.toLowerCase().startsWith(this.searchText.toLowerCase()) //beh nkoun sur yebda de droite a gauche
+    );
+  }
+
+  
+}

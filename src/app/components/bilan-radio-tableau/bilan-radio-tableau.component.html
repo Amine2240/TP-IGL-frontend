@@ -1,53 +1,44 @@
 <div class="flex justify-center items-center my-6">
-  <!-- Search Input Field -->
-  <input
-  type="text"
-  class="w-2/3 sm:w-1/2 px-4 py-2 border border-dark-blue rounded-l-md focus:outline-none focus:ring-1 focus:ring-dark-blue"
-  placeholder="Rechercher DPI"
-  [(ngModel)]="searchText"
-  (ngModelChange)="applySearchFilter()"
-/>
-  <!-- QR Code Icon Button to Trigger Image Upload -->
-  <button
-    class="px-4 py-2 bg-sky-blue text-white border border-dark-blue rounded-r-md hover:bg-light-blue transition"
-    (click)="openFileInput()"
-  >
-    <img src="../../../assets/qrCode.svg" alt="QR Code Icon" class="h-6 w-6 object-contain" />
-  </button>
-
-  <!-- Hidden File Input for Image Upload -->
-  <input 
-    type="file" 
-    #fileInput 
-    class="hidden" 
-    accept="image/*"
-    (change)="onImageUpload($event)"
-  />
-</div>
-
-
-
-
-
-<div class="flex justify-center items-center bg-white w-full max-w-5xl mx-auto p-6">
-  <table class="table-auto border-collapse w-full hidden sm:table">
+    <!-- Search Input Field -->
+    <input
+      type="text"
+      class="w-2/3 sm:w-1/2 px-4 py-2 border border-dark-blue rounded-l-md focus:outline-none focus:ring-1 focus:ring-dark-blue"
+      placeholder="Rechercher DPI"
+      [(ngModel)]="searchText"
+      (ngModelChange)="applySearchFilter()"
+    />
+    <!-- QR Code Icon Button to Trigger Image Upload -->
+    <button
+      class="px-4 py-2 bg-sky-blue text-white border border-dark-blue rounded-r-md hover:bg-light-blue transition"
+    
+    >
+      <img src="../../../assets/search.svg" alt="QR Code Icon" class="h-6 w-6 object-contain" />
+    </button>
+  
+    <!-- Hidden File Input for Image Upload -->
+    <input
+      type="file"
+      #fileInput
+      class="hidden"
+      accept="image/*"
+     
+    />
+  </div>
+  
+  <div class="flex justify-center items-center bg-white w-full max-w-5xl mx-auto p-6">
+    <table class="table-auto border-collapse w-full hidden sm:table">
       <!-- Filter row with the icon -->
-       
       <thead>
         <tr class="border-b border-dark-blue">
           <td colspan="5" class="px-2 py-1 rounded-t-lg border-dark-blue">
             <div class="flex justify-start items-center relative rounded-lg">
               <!-- Filter button -->
               <button
-                class="p-2 text-white  rounded-full hover:bg-light-blue transition"
+                class="p-2 text-white rounded-full hover:bg-light-blue transition"
                 (click)="toggleDropdown()"
                 aria-label="Filter"
               >
-                <img
-                  src="../../../assets/filter.svg"
-                  alt="Filter"
-                  class="h-4 w-4"
-                />
+                <img src="../../../assets/filter.svg" alt="Filter" class="h-4 w-4" />
               </button>
               <!-- Selected filter label -->
               <span class="ml-1 font-inter text-xs font-medium">
@@ -82,16 +73,12 @@
         </tr>
       </thead>
       <!-- Data rows -->
-   
       <tbody *ngIf="filteredData.length > 0; else noResults">
         <tr *ngFor="let row of filteredData" class="hover:bg-light-blue transition">
           <td *ngFor="let column of columns" [class]="getCellClass(column.key)" class="px-4 py-2 border">
             <ng-container [ngSwitch]="column.key">
               <!-- QR Code -->
-              <img *ngSwitchCase="'qrCode'" [src]="row.qrCode" alt="QR Code" class="h-6 w-6 mx-auto" />
-              <!-- Photo -->
-              <img *ngSwitchCase="'photo'" [src]="row.photo" alt="Photo" class="h-6 w-6 mx-auto rounded-full" />
-              <!-- Text -->
+              
               <span *ngSwitchDefault>
                 {{ row[column.key] }}
               </span>
@@ -99,17 +86,17 @@
           </td>
         </tr>
       </tbody>
-
-<!-- No results found -->
-<ng-template #noResults>
-  <tr>
-    <td colspan="5" class="px-4 py-2 text-center text-red-500">
-      Pas de results.
-    </td>
-  </tr>
-</ng-template>
-
+  
+      <!-- No results found -->
+      <ng-template #noResults>
+        <tr>
+          <td colspan="5" class="px-4 py-2 text-center text-red-500">
+            Pas de résultats.
+          </td>
+        </tr>
+      </ng-template>
     </table>
+
 
     <div class="block sm:hidden">
       <!-- Filter Button -->
@@ -152,55 +139,31 @@
         class="border border-dark-blue rounded-lg p-2 mb-6 shadow-sm relative"
         class="border border-dark-blue rounded-lg p-2 mb-6 shadow-sm relative w-4/5 mx-auto"
       >
-        <!-- Photo (Top Right) -->
-        <div class="absolute top-2 right-3">
-          <img
-            *ngIf="row.photo"
-            [src]="row.photo"
-            alt="Photo"
-            class="h-12 w-12 rounded-full"
-          />
-        </div>
+        
     
         <!-- NSS, Nom, Prenom -->
-        <div class="flex flex-col mt-14 pl-4 space-y-3">
+        <div class="flex flex-col mt-5  pl-4 space-y-3">
           <!-- NSS -->
           <div>
-            <span class="font-semibold text-sky-500">NSS:</span>
-            <span class="text-black font-xs ml-4">{{ row.nss }}</span>
+            <span class="font-semibold text-sky-500">Bilan-Id:</span>
+            <span class="text-black font-xs ml-4">{{ row.id }}</span>
           </div>
     
           <!-- Nom -->
           <div>
-            <span class="font-semibold text-sky-500">Nom:</span>
-            <span class="text-black font-xs ml-4 break-words">{{ row.nom }}</span>
+            <span class="font-semibold text-sky-500">Date:</span>
+            <span class="text-black font-xs ml-4 break-words">{{ row.date }}</span>
           </div>
     
           <!-- Prenom -->
           <div>
-            <span class="font-semibold text-sky-500">Prenom:</span>
-            <span class="text-black font-xs ml-4 break-words">{{ row.prenom }}</span>
+            <span class="font-semibold text-sky-500">Observation:</span>
+            <span class="text-black font-xs ml-4 break-words">{{ row.observation }}</span>
           </div>
         </div>
     
-        <!-- QR Code (Bottom Center) -->
-        <div class="flex justify-center mt-3">
-          <img
-            *ngIf="row.qrCode"
-            [src]="row.qrCode"
-            alt="QR Code"
-            class="h-10 w-10"
-          />
-        </div>
+       
       </div>
     </div>
-    
-    
-    
-    
-
-    
-    
   </div>
-
-
+  

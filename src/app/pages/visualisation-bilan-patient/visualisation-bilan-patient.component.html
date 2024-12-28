@@ -1,0 +1,203 @@
+<header class="flex justify-between items-center bg-white p-4 ml-4">
+  <!-- Bouton et menu utilisateur -->
+  <div class="flex items-center space-x-4 ml-auto ">
+    <button class="focus:outline-none">
+      <img
+        src="../../../assets/qrCode.svg"
+        alt="qrcode"
+        class="h-9 cursor-pointer"
+      />
+    </button>
+    <!-- Image de compte et menu -->
+    <div class="relative">
+      <!-- Icône de compte -->
+      <button
+        class="focus:outline-none"
+        (click)="toggleMenu($event)"
+        aria-label="Account Menu"
+      >
+        <img
+          src="../../../assets/account.svg"
+          alt="account"
+          class="h-9 cursor-pointer"
+        />
+      </button>
+
+      <!-- Menu déroulant -->
+      <div
+        *ngIf="isMenuOpen"
+        class="absolute right-0 mt-2 w-40 bg-white border border-dark-blue rounded-lg"
+      >
+        <!-- Lien Profil -->
+        <a
+          (click)="profil()"
+          class="block px-4 py-2 text-gray-900 hover:bg-light-blue transition"
+        >
+          Profil
+        </a>
+
+        <!-- Bouton Déconnexion -->
+        <button
+          (click)="logout()"
+          class="w-full text-left px-4 py-2 text-gray-700 hover:bg-red-100 hover:text-red-600 transition focus:outline-none"
+        >
+          Déconnexion
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+<div class="flex justify-center items-center my-6">
+  <!-- Search Input Field -->
+  <input
+  type="text"
+  class="w-2/3 sm:w-1/2 px-4 py-2 border border-dark-blue rounded-l-md focus:outline-none focus:ring-1 focus:ring-dark-blue"
+  placeholder="Rechercher DPI"
+  [(ngModel)]="searchText"
+  (ngModelChange)="applySearchFilter()"
+/>
+  <!-- QR Code Icon Button to Trigger Image Upload -->
+  <button
+    class="px-4 py-2 bg-sky-blue text-white border border-dark-blue rounded-r-md hover:bg-light-blue transition"
+   
+  >
+    <img src="../../../assets/search.svg" alt="QR Code Icon" class="h-6 w-6 object-contain" />
+  </button>
+
+  <!-- Hidden File Input for Image Upload -->
+  <input 
+    type="file" 
+    #fileInput 
+    class="hidden" 
+    accept="image/*"
+    
+  />
+</div>
+
+
+
+
+<div class="flex justify-center items-center bg-white w-full max-w-5xl mx-auto p-6">
+  <table class="table-auto border-collapse w-full hidden sm:table">
+    <!-- Filter Row -->
+    <thead>
+      <tr class="border-b border-dark-blue">
+        <td colspan="5" class="px-2 py-1 rounded-t-lg border-dark-blue">
+          <div class="flex justify-start items-center relative rounded-lg">
+            <!-- Filter Button -->
+            <button
+              class="p-2 text-white rounded-full hover:bg-light-blue transition"
+              (click)="toggleDropdown()"
+              aria-label="Filter"
+            >
+              <img src="../../../assets/filter.svg" alt="Filter" class="h-4 w-4" />
+            </button>
+            <!-- Selected Filter Label -->
+            <span class="ml-1 font-inter text-xs font-medium">
+              {{ selectedFilter }}
+            </span>
+            <!-- Dropdown Menu -->
+            <ul
+              *ngIf="toggleFilterDropdown"
+              class="absolute bg-white shadow-lg mt-0 rounded-md border border-dark-blue z-10 w-[120px] text-xs left-0"
+            >
+              <li
+                *ngFor="let item of filterableKeys"
+                class="px-2 py-2 hover:bg-light-blue text-xs text-center cursor-pointer transition"
+                (click)="onFilterSelect(item)"
+              >
+                {{ item.label }}
+              </li>
+            </ul>
+          </div>
+        </td>
+      </tr>
+    </thead>
+    <!-- Column Headers -->
+    <thead>
+      <tr class="bg-sky-blue text-black">
+        <th
+          *ngFor="let column of columns"
+          class="px-4 py-3 font-bold border border-dark-blue text-center"
+        >
+          {{ column.label }}
+        </th>
+      </tr>
+    </thead>
+    <!-- Data Rows -->
+    <tbody *ngIf="filteredData.length > 0; else noResults">
+      <tr *ngFor="let row of filteredData" class="hover:bg-light-blue transition">
+        <td *ngFor="let column of columns" [class]="getCellClass(column.key)" class="px-4 py-2 border">
+          <span *ngIf="column.key !== 'actions' && column.key !== 'graphique'">{{ row[column.key] }}</span>
+          <span *ngIf="column.key === 'actions'" [innerHTML]="row[column.key]"></span>
+          <span *ngIf="column.key === 'graphique'" [innerHTML]="row[column.key]"></span>
+        </td>
+      </tr>
+    </tbody>
+    <!-- No Results Template -->
+    <ng-template #noResults>
+      <tr>
+        <td colspan="5" class="px-4 py-2 text-center text-red-500">
+          Pas de résultats.
+        </td>
+      </tr>
+    </ng-template>
+  </table>
+
+  <!-- Mobile View -->
+  <div class="block sm:hidden">
+    <!-- Filter Button -->
+    <div class="flex justify-start items-center mb-4">
+      <button
+        class="p-2 ml-5 text-white rounded-full hover:bg-light-blue transition"
+        (click)="toggleDropdown()"
+        aria-label="Filter"
+      >
+        <img src="../../../assets/filter.svg" alt="Filter" class="h-4 w-4" />
+      </button>
+      <span class="ml-1 font-inter text-xs font-medium">
+        {{ selectedFilter }}
+      </span>
+      <!-- Dropdown Menu -->
+      <ul
+        *ngIf="toggleFilterDropdown"
+        class="absolute bg-white shadow-lg mt-2 rounded-md border border-dark-blue z-10 w-[120px] text-xs"
+      >
+        <li
+          *ngFor="let item of filterableKeys"
+          class="px-2 py-2 hover:bg-light-blue text-xs text-center cursor-pointer transition"
+          (click)="onFilterSelect(item)"
+        >
+          {{ item.label }}
+        </li>
+      </ul>
+    </div>
+    <!-- Display Data Rows as Cards -->
+    <div
+      *ngFor="let row of filteredData"
+      class="border border-dark-blue rounded-lg p-4 mb-4 shadow-sm w-full"
+    >
+      <div class="mb-2">
+        <span class="font-semibold">Date:</span>
+        <span>{{ row.date }}</span>
+      </div>
+      <div class="mb-2">
+        <span class="font-semibold">Type de Bilan:</span>
+        <span>{{ row.type }}</span>
+      </div>
+      <div class="mb-2">
+        <span class="font-semibold">Statut:</span>
+        <span>{{ row.statut }}</span>
+      </div>
+      <div class="mb-2">
+        <span class="font-semibold">Actions:</span>
+        <span [innerHTML]="row.actions"></span>
+      </div>
+      <div class="mb-2">
+        <span class="font-semibold">Graphique:</span>
+        <span [innerHTML]="row.graphique"></span>
+      </div>
+    </div>
+  </div>
+  
+</div>
