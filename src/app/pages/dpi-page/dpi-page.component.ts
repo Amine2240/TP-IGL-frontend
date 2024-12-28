@@ -2,14 +2,12 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';  // Import CommonModule
 import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas'
-
-import { SidebarComponent } from "../../components/sidebar/sidebar.component"; // Correct import
 import { FormsModule } from '@angular/forms';
 
 
 @Component({
     selector: 'app-dpi-page',
-    imports: [FormsModule, CommonModule, SidebarComponent], // Add CommonModule here
+    imports: [FormsModule, CommonModule], // Add CommonModule here
     templateUrl: './dpi-page.component.html',
     styleUrls: ['./dpi-page.component.scss']
 })

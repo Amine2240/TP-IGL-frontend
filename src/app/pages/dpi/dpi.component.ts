@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { SidebardpiComponent } from "../../components/sidebardpi/sidebardpi.component";
+import { SidebardpiComponent } from "../../components/sidebardpi-medecin/sidebardpi.component";
 import {  RouterOutlet } from '@angular/router';
 
 @Component({
