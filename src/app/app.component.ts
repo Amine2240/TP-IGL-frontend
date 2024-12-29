@@ -9,7 +9,7 @@ import { BilanRadiologiquePageComponent } from './pages/bilan-radiologique-page/
 import { CommonModule } from '@angular/common'; 
 @Component({
     selector: 'app-root',
-    imports: [CommonModule, RouterOutlet, RouterLink, SidebarComponent, LoginPageComponent, DpiPageComponent, HistoriqueMedicalePageComponent, TopRightSectionComponent], // Correctly include SidebarComponent
+    imports: [CommonModule, RouterOutlet, RouterLink, SidebarComponent, LoginPageComponent, DpiPageComponent, HistoriqueMedicalePageComponent, TopRightSectionComponent ], // Correctly include SidebarComponent
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss']
 })
