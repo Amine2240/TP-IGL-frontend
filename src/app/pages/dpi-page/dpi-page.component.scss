@@ -1,3 +1,94 @@
+<<<<<<< HEAD
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+=======
+/* Ensure the page content takes at least the height of the viewport */
+#dpi-page-content {
+    min-height: 100vh; /* Full height of the viewport */
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 4rem; /* Ensure there is space for the button */
+  }
+  
+  /* Button should be at the bottom of the content */
+  .bottom-button {
+    margin-top: auto; /* Pushes the button to the bottom */
+    margin-bottom: 2rem; /* Optional, you can adjust this space as needed */
+    position: relative;
+    /* no fixed positioning here, so it will follow the page content */
+  }
+  
+
+/* Responsive layout for the personal information section */
+/* Extra Large Screens (Large Desktops, TV Screens) */
+
+@media (min-width: 1280px) {
+    /* Styles for large desktops and TV screens */
+  }
+
+/* Large Screens (Laptops, Desktops) */
+@media (min-width: 1024px) and (max-width: 1279px) {
+
+  
+    .inline {
+        display: inline;
+      }
+
+    .responsive-text {
+      font-size: 14px; /* Smaller font size on smaller screens */
+    }
+}
+
+/* Medium Screens (Tablets in Landscape Mode, Small Laptops) */  
+@media (min-width: 768px) and (max-width: 1023px) {
+    .grid {
+      grid-template-columns: 1fr; /* Stack content in a single column */
+    }
+  
+    .responsive-text {
+      font-size: 14px; /* Smaller font size for very small screens */
+    }
+
+    .Informations-personnelle {
+        font-size: 1.05rem; /* 17px */
+        padding: 0.45rem; /* 7px */
+        margin-bottom: 1.75rem; /* 28px */
+        margin-top: 1.75rem; /* 28px */
+    }
+    
+}
+
+/* Small Screens (Tablets in Portrait Mode) */
+@media (min-width: 640px) and (max-width: 767px) {
+    .grid {
+        grid-template-columns: 1fr; /* Stack content in a single column */
+    }
+    .Informations-personnelle {
+        font-size: 0.5rem; /* 16px */
+        padding: 0.4rem; /* 6px */
+        margin-bottom: 1.5rem; /* 24px */
+        margin-top: 1.5rem; /* 24px */
+      }
+    /* Styles for small tablets */
+}
+
+/* Extra Small Screens (Phones) */
+@media (max-width: 639px) {
+    .grid {
+        grid-template-columns: 1fr; /* Stack content in a single column */
+    }
+    .responsive-text {
+        font-size: 14px; /* Smaller font size for very small screens */
+      }
+  
+      .Informations-personnelle {
+          font-size: 1.05rem; /* 17px */
+          padding: 0.45rem; /* 7px */
+          margin-bottom: 1.75rem; /* 28px */
+          margin-top: 1.75rem; /* 28px */
+      }
+    /* Styles for small screens */
+}
+  
+>>>>>>> origin/login-integration

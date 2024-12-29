@@ -7,9 +7,10 @@ import { HistoriqueMedicalePageComponent } from "./pages/historique-medicale-pag
 import { TopRightSectionComponent } from './components/top-right-section/top-right-section.component';
 import { BilanRadiologiquePageComponent } from './pages/bilan-radiologique-page/bilan-radiologique-page.component';
 import { CommonModule } from '@angular/common'; 
+import { HttpClientModule } from '@angular/common/http';
 @Component({
     selector: 'app-root',
-    imports: [CommonModule, RouterOutlet, RouterLink, SidebarComponent, LoginPageComponent, DpiPageComponent, HistoriqueMedicalePageComponent, TopRightSectionComponent], // Correctly include SidebarComponent
+    imports: [HttpClientModule,CommonModule, RouterOutlet, RouterLink, SidebarComponent, LoginPageComponent, DpiPageComponent, HistoriqueMedicalePageComponent, TopRightSectionComponent], // Correctly include SidebarComponent
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss']
 })

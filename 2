@@ -10,18 +10,11 @@ import {
 import axois from 'axios';
 import axios from 'axios';
 @Component({
-<<<<<<< HEAD
-    selector: 'app-login-page',
-    imports: [CommonModule, ReactiveFormsModule], // Import ReactiveFormsModule here
-    templateUrl: './login-page.component.html',
-    styleUrls: ['./login-page.component.scss']
-=======
   selector: 'app-login-page',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule], // Import ReactiveFormsModule here
   templateUrl: './login-page.component.html',
   styleUrls: ['./login-page.component.scss'],
->>>>>>> origin/login-integration
 })
 export class LoginPageComponent {
   loginForm: FormGroup;
@@ -78,10 +71,8 @@ export class LoginPageComponent {
             },
           },
         );
-        document.cookie = `auth_token=${response.data.token}; path=/; max-age=3600; secure; SameSite=None`;
         console.log('Login Successful:', response.data);
         await this.authService.loadUser();
-        console.log('User Loaded:', this.authService.getUser());
       } catch (error: any) {
         if (error.response && error.response.status == 401) {
           this.errorMessage =
