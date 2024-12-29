@@ -4,11 +4,11 @@ import { CommonModule } from '@angular/common';
 // import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-sidebardpi',
-  standalone: true,
-  imports: [CommonModule , RouterModule, RouterLink],
-  templateUrl: './sidebardpi.component.html',
-  styleUrl: './sidebardpi.component.scss'
+    selector: 'app-sidebardpi',
+    standalone: true,
+    imports: [CommonModule, RouterModule, RouterLink],
+    templateUrl: './sidebardpi.component.html',
+    styleUrl: './sidebardpi.component.scss'
 })
 export class SidebardpiComponent {
 

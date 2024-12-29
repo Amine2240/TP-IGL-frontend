@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 @Component({
-  selector: 'app-ordonnance',
-  standalone: true,
-  imports: [],
-  templateUrl: './ordonnance.component.html',
-  styleUrl: './ordonnance.component.scss'
+    selector: 'app-ordonnance',
+    standalone: true,
+    imports: [],
+    templateUrl: './ordonnance.component.html',
+    styleUrl: './ordonnance.component.scss'
 })
 export class OrdonnanceComponent {
   downloadSection(): void {

@@ -14,11 +14,11 @@ interface Column {
   label: string;
 }
 @Component({
-  selector: 'app-consultations',
-  standalone: true,
-  imports: [CommonModule ,  RouterLink , RouterModule , RouterOutlet],
-  templateUrl: './consultations.component.html',
-  styleUrl: './consultations.component.scss'
+    selector: 'app-consultations',
+    standalone: true,
+    imports: [CommonModule, RouterLink, RouterModule, RouterOutlet],
+    templateUrl: './consultations.component.html',
+    styleUrl: './consultations.component.scss'
 })
 export class ConsultationsComponent {
 

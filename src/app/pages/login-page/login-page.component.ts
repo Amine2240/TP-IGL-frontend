@@ -10,11 +10,11 @@ import {
 import axios from 'axios';
 import { Router } from '@angular/router';
 @Component({
-  selector: 'app-login-page',
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule], // Import ReactiveFormsModule here
-  templateUrl: './login-page.component.html',
-  styleUrls: ['./login-page.component.scss'],
+    selector: 'app-login-page',
+    standalone: true,
+    imports: [CommonModule, ReactiveFormsModule], // Import ReactiveFormsModule here
+    templateUrl: './login-page.component.html',
+    styleUrls: ['./login-page.component.scss']
 })
 export class LoginPageComponent implements OnInit {
   loginForm: FormGroup;

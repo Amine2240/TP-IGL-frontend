@@ -5,11 +5,11 @@ import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 
 @Component({
-  selector: 'app-historique-medicale',
-  standalone: true,
-  imports: [CommonModule , TopRightSectionComponent],
-  templateUrl: './historique-medicale.component.html',
-  styleUrl: './historique-medicale.component.scss'
+    selector: 'app-historique-medicale',
+    standalone: true,
+    imports: [CommonModule, TopRightSectionComponent],
+    templateUrl: './historique-medicale.component.html',
+    styleUrl: './historique-medicale.component.scss'
 })
 export class HistoriqueMedicaleComponent {
   isMedecinVisible: boolean = false;

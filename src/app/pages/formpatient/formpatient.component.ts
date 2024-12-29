@@ -33,11 +33,11 @@ interface Allergie {
   list: AllergieType[];
 }
 @Component({
-  selector: 'app-formpatient',
-  standalone: true,
-  imports: [CommonModule , FormsModule , ReactiveFormsModule],
-  templateUrl: './formpatient.component.html',
-  styleUrl: './formpatient.component.scss'
+    selector: 'app-formpatient',
+    standalone: true,
+    imports: [CommonModule, FormsModule, ReactiveFormsModule],
+    templateUrl: './formpatient.component.html',
+    styleUrl: './formpatient.component.scss'
 })
 
 

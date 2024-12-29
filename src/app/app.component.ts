@@ -5,11 +5,11 @@ import { NavbarComponent } from "./components/navbar/navbar.component";
 import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [RouterOutlet , FormsModule , NavbarComponent  ],
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+    selector: 'app-root',
+    standalone: true,
+    imports: [RouterOutlet, FormsModule, NavbarComponent],
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
   title = 'front-end';

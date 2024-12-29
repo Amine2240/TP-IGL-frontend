@@ -5,11 +5,11 @@ import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 
 @Component({
-  selector: 'app-informations-patient',
-  standalone: true,
-  imports: [FormsModule ,CommonModule],
-  templateUrl: './informations-patient.component.html',
-  styleUrl: './informations-patient.component.scss'
+    selector: 'app-informations-patient',
+    standalone: true,
+    imports: [FormsModule, CommonModule],
+    templateUrl: './informations-patient.component.html',
+    styleUrl: './informations-patient.component.scss'
 })
 export class InformationsPatientComponent {
   // Define isMedecinVisible to toggle visibility of médecin's info
