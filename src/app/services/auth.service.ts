@@ -44,21 +44,25 @@ export class AuthService {
   // load the user into  the service wheather it's from the localStorage or the backend
   // --> the user will be always persistant in the app
   async loadUser(): Promise<void> {
-    const cachedUser = localStorage.getItem(this.userKey);
-
-    if (cachedUser) {
-      this.user = JSON.parse(cachedUser);
-    } else {
-      try {
-        this.user = await this.fetchUser();
-        localStorage.setItem(this.userKey, JSON.stringify(this.user)); // Cache the user in local storage
-      } catch (error) {
-        console.error('Error loading user:', error);
-        this.clearAuth();
+    // Check if the code is running in a browser environment
+    if (typeof window !== 'undefined' && window.localStorage) {
+      const cachedUser = localStorage.getItem(this.userKey);
+  
+      if (cachedUser) {
+        this.user = JSON.parse(cachedUser);
+      } else {
+        try {
+          this.user = await this.fetchUser();
+          localStorage.setItem(this.userKey, JSON.stringify(this.user)); // Cache the user in local storage
+        } catch (error) {
+          console.error('Error loading user:', error);
+          this.clearAuth(); // Clear any invalid auth data
+        }
       }
+    } else {
+      console.warn('localStorage is not available.');
     }
   }
-
   // get ther user ( current authenticated)
   getUser(): any {
     return this.user;

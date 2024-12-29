@@ -1,27 +1,21 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
+import axios from 'axios';
 import {
   ReactiveFormsModule,
   FormGroup,
   FormBuilder,
   Validators,
 } from '@angular/forms';
-import axois from 'axios';
-import axios from 'axios';
+
+
 @Component({
-<<<<<<< HEAD
-    selector: 'app-login-page',
-    imports: [CommonModule, ReactiveFormsModule], // Import ReactiveFormsModule here
-    templateUrl: './login-page.component.html',
-    styleUrls: ['./login-page.component.scss']
-=======
   selector: 'app-login-page',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule], // Import ReactiveFormsModule here
   templateUrl: './login-page.component.html',
   styleUrls: ['./login-page.component.scss'],
->>>>>>> origin/login-integration
 })
 export class LoginPageComponent {
   loginForm: FormGroup;
