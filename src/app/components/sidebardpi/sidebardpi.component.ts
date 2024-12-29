@@ -19,7 +19,7 @@ export class SidebardpiComponent {
     // {id : 3, path: 'ordonnance', label: 'Ordonnance' },
     {id : 3, path: 'certificat', label: 'Certificat Médicale' },
     {id : 4, path: 'decompte-frais', label: 'Décompte des Frais' },
-    {id : 5, path: 'bilans', label: 'My bilans' },
+    {id : 5, path: 'bilans-patient', label: 'My bilans' },
   ];
   public sideBarBool = false;
   public toggleSidebar() {

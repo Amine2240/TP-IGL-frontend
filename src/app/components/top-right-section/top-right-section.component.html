@@ -1,0 +1,29 @@
+<div class="absolute top-0 right-28 flex items-center space-x-4 p-4">
+    <!-- QR Code -->
+    <div>
+      <img
+        [src]="qrCode"
+        alt="QR Code"
+        class="w-8 h-8 border border-gray-300 rounded"
+      />
+    </div>
+    <!-- Download icon -->
+    <div>
+      <img
+        class="w-auto h-8"
+        src="assets/icons/download.png"
+        alt="download"
+        (click)="onDownload()"
+      />
+    </div>
+    <!-- User Icon -->
+    <div>
+      <img
+        class="w-auto h-8"
+        src="assets/icons/user.png"
+        alt="user"
+        (click)="onUserIconClick()"
+      />
+    </div>
+  </div>
+  

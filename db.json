@@ -1,0 +1,36 @@
+{
+    "patients": [
+      {
+        "id": "1",
+        "dpi": {
+          "nom": "Dupont",
+          "prenom": "Jean",
+          "dateNaissance": "01/01/1980",
+          "adresse": "123 Rue Principale",
+          "nss": "123456789",
+          "telephone": "0123456789",
+          "mutuelle": "Mutuelle Santé",
+          "numeroIdentification": "987654321",
+          "contact": {
+            "nom": "Durand",
+            "prenom": "Marie",
+            "telephone": "0987654321"
+          }
+        },
+        "historique": {
+          "maladiesChroniques": "Diabète, Hypertension",
+          "interventionsChirurgicales": [
+            "Appendicectomie - 2010",
+            "Pontage coronarien - 2020"
+          ],
+          "antecedentsFamiliaux": "Cancer du sein",
+          "allergies": "Arachides, Pollen",
+          "vaccinations": [
+            "COVID-19 - 2021",
+            "Tétanos - 2019"
+          ]
+        }
+      }
+    ]
+  }
+  
