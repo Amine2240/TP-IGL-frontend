@@ -1,12 +1,12 @@
 import { Component, ElementRef, HostListener } from '@angular/core';
 import { DpiTableauComponent } from '../../components/dpi-tableau/dpi-tableau.component';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import {RouterModule , Router } from '@angular/router';
 
 @Component({
   selector: 'app-page-administratiff',
   standalone: true,
-  imports: [CommonModule, DpiTableauComponent],
+  imports: [CommonModule,RouterModule, DpiTableauComponent],
   templateUrl: './page-administratiff.component.html',
 })
 export class PageAdministratiffComponent {

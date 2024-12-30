@@ -1,14 +1,14 @@
 import { Component, ElementRef, HostListener, NgModule } from '@angular/core';
 import { DpiTableauComponent } from '../../components/dpi-tableau/dpi-tableau.component';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { RouterModule , Router } from '@angular/router';
 
 
 @Component({
   
   selector: 'app-page-medecin',
   standalone: true,
-  imports: [CommonModule, DpiTableauComponent],
+  imports: [CommonModule, RouterModule  ,DpiTableauComponent],
   templateUrl: './page-medecin.component.html',
 })
 export class PageMedecinComponent {

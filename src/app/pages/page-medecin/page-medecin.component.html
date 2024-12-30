@@ -5,7 +5,9 @@ Page medecin
   <header class="flex justify-between items-center bg-white p-4">
     <!-- Logo -->
     <div class="flex items-center">
-      <img src="../../../assets/logo.svg" alt="Logo" class="h-8 mr-2" />
+      <a [routerLink]="['/pageLanding']">
+        <img src="../../../assets/logo.svg" alt="Logo" class="w-auto h-10" />
+      </a>
     </div>
   
     <!-- Bouton et menu utilisateur -->

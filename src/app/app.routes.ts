@@ -17,6 +17,7 @@ export const routes: Routes = [
   { path: 'pageMedecin', component: PageMedecinComponent },
   { path: 'pageRadiologue', component: PageRadiologueComponent },
   { path: 'pageLaboratin', component: PageLaboratinComponent },
+  { path: 'pageInfermier', component: PageLaboratinComponent },
   { path: 'formPatient', component: FormpatientComponent },
   { path: 'ajouterBilanBiologique', component:BilanBiologiquePageComponent },
   { path: 'ajouterBilanRadiologique', component: BilanRadiologiquePageComponent },
@@ -81,6 +82,7 @@ export const routes: Routes = [
 
   // Redirect to landing page in case of empty path or undefined routes
   { path: '**', redirectTo: '/' },
+  { path: 'pageLanding', component: LandingPageComponent },
 
   
 ];

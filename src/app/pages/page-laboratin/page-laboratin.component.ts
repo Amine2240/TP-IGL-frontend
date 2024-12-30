@@ -5,12 +5,12 @@ import { BilanRadioTableauComponent } from '../../components/bilan-radio-tableau
 import { BilanBioTableauComponent } from '../../components/bilan-bio-tableau/bilan-bio-tableau.component';
 import { FormsModule } from '@angular/forms';
 import { GlobalService } from '../../global.service';
-import { Router } from '@angular/router';
+import { RouterModule ,Router } from '@angular/router';
 
 @Component({
   selector: 'app-page-laboratin',
   standalone: true,
-  imports: [CommonModule,FormsModule, BilanBioTableauComponent],
+  imports: [CommonModule, RouterModule ,FormsModule, BilanBioTableauComponent ],
   templateUrl: './page-laboratin.component.html',
 })
 export class PageLaboratinComponent {
