@@ -74,7 +74,7 @@
       </thead>
       <!-- Data rows -->
       <tbody *ngIf="filteredData.length > 0; else noResults">
-        <tr *ngFor="let row of filteredData" class="hover:bg-light-blue transition">
+        <tr *ngFor="let row of filteredData" class="hover:bg-light-blue transition" (click)="onRowClick(row)">
           <td *ngFor="let column of columns" [class]="getCellClass(column.key)" class="px-4 py-2 border">
             <ng-container [ngSwitch]="column.key">
               <!-- QR Code -->

@@ -8,6 +8,8 @@ import {
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import jsQR from 'jsqr';
+import { Router } from '@angular/router';
+import { GlobalService } from '../../global.service';
 
 interface DataRow {
   id: string;
@@ -34,7 +36,12 @@ export class BilanRadioTableauComponent implements OnInit {
   filterBy: keyof DataRow = 'date';
   filteredData: DataRow[] = [];
  
-  constructor(private renderer: Renderer2, private el: ElementRef) {}
+  constructor(
+      private renderer: Renderer2,
+      private el: ElementRef,
+      private router: Router,
+      private globalService: GlobalService   // Combine all dependencies into one constructor
+    ) {}
   filterableKeys: { key: keyof DataRow; label: string }[] = [
     { key: 'id', label: 'Bilan_Id' },
     { key: 'date', label: 'Date' },
@@ -83,6 +90,12 @@ export class BilanRadioTableauComponent implements OnInit {
     },
   ];
   
+  onRowClick(row: any): void {
+    
+    
+    this.router.navigate(['/visualisationBilanRadiologique']);
+ 
+  }
 
  
   

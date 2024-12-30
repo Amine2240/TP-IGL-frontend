@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { BilanRadioTableauComponent } from '../../components/bilan-radio-tableau/bilan-radio-tableau.component';
 import { BilanBioTableauComponent } from '../../components/bilan-bio-tableau/bilan-bio-tableau.component';
 import { FormsModule } from '@angular/forms';
+import { GlobalService } from '../../global.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-page-laboratin',
@@ -14,7 +16,15 @@ import { FormsModule } from '@angular/forms';
 export class PageLaboratinComponent {
   isMenuOpen = false;
 
-  constructor(private elementRef: ElementRef) {}
+  
+   constructor(private elementRef: ElementRef,private globalService: GlobalService, private router: Router) {}
+  
+   onRowClick(): void {
+    console.log('am here ');
+      this.router.navigate(['/ajouterBilanBiologique']);
+   
+    }
+  
 
   toggleMenu(event: MouseEvent) {
     console.log('rami maftoha');

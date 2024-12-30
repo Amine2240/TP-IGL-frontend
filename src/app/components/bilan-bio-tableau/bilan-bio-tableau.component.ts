@@ -93,15 +93,14 @@ export class BilanBioTableauComponent implements OnInit {
     },
   ];
   
-  onRowClick(row: any): void {
-    // Use the global variable from GlobalService to determine the route
-    if (this.globalService.pageToRedirect === 'pageMedecin') {
-      this.router.navigate(['/dpi']);
-    } else {
-      this.router.navigate(['/pageadminnistratif']);
+  
+   onRowClick(row: any): void {
+    
+    
+      this.router.navigate(['/visualisationBilanBiologique']);
+   
     }
-  }
- 
+  
   
   applyFilter(): void {
     this.filteredData = [...this.data].sort((a, b) =>

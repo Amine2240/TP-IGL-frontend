@@ -2,6 +2,8 @@ import { Component, ElementRef, HostListener } from '@angular/core';
 import { DpiTableauComponent } from '../../components/dpi-tableau/dpi-tableau.component';
 import { CommonModule } from '@angular/common';
 import { BilanRadioTableauComponent } from '../../components/bilan-radio-tableau/bilan-radio-tableau.component';
+import { Router } from '@angular/router';
+import { GlobalService } from '../../global.service';
 
 @Component({
   selector: 'app-page-radiologue',
@@ -12,7 +14,20 @@ import { BilanRadioTableauComponent } from '../../components/bilan-radio-tableau
 export class PageRadiologueComponent {
   isMenuOpen = false;
 
-  constructor(private elementRef: ElementRef) {}
+  
+  constructor(
+   
+    private elementRef: ElementRef,
+    private router: Router,
+      // Combine all dependencies into one constructor
+  ) {}
+
+  onRowClick(): void {
+    
+    
+    this.router.navigate(['/ajouterBilanRadiologique']);
+ 
+  }
 
   toggleMenu(event: MouseEvent) {
     console.log('rami maftoha');

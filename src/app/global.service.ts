@@ -3,6 +3,6 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class GlobalService {
-  public pageToRedirect: string = 'pageMedecin'; // Valeur par défaut
+  public pageToRedirect: string = 'pagePatient'; // Valeur par défaut
   constructor() {}
 }

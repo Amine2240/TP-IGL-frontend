@@ -6,6 +6,10 @@ import { PageRadiologueComponent } from './pages/page-radiologue/page-radiologue
 import { PageLaboratinComponent } from './pages/page-laboratin/page-laboratin.component';
 import { LandingPageComponent } from './pages/landing-page/landing-page.component';
 import { FormpatientComponent } from './pages/formpatient/formpatient.component';
+import { BilanRadiologiquePageComponent } from './pages/bilan-radiologique-page/bilan-radiologique-page.component';
+import { BilanBiologiquePageComponent } from './pages/bilan-biologique-page/bilan-biologique-page.component';
+import { PagePatientComponent } from './pages/page-patient/page-patient.component';
+import { VisualisationBilanPatientComponent } from './pages/visualisation-bilan-patient/visualisation-bilan-patient.component';
 
 export const routes: Routes = [
   // Routes for pages
@@ -14,6 +18,11 @@ export const routes: Routes = [
   { path: 'pageRadiologue', component: PageRadiologueComponent },
   { path: 'pageLaboratin', component: PageLaboratinComponent },
   { path: 'formPatient', component: FormpatientComponent },
+  { path: 'ajouterBilanBiologique', component:BilanBiologiquePageComponent },
+  { path: 'ajouterBilanRadiologique', component: BilanRadiologiquePageComponent },
+  { path: 'pagePatient', component: PageMedecinComponent },
+  { path: 'bilans', component: VisualisationBilanPatientComponent },
+
   // DPI related routes with children
   { 
     path: 'dpi',  
