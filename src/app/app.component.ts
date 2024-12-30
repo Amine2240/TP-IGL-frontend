@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import {DpiTableauComponent  } from './components/dpi-tableau/dpi-tableau.component';
 import { CommonModule } from '@angular/common';
 
@@ -11,12 +11,14 @@ import { VisualisationBilanPatientComponent } from './pages/visualisation-bilan-
 import { BilanRadioTableauComponent } from "./components/bilan-radio-tableau/bilan-radio-tableau.component";
 import { PageRadiologueComponent } from './pages/page-radiologue/page-radiologue.component';
 import { PageLaboratinComponent } from './pages/page-laboratin/page-laboratin.component';
+import { GlobalService } from './global.service';
+import { LandingPageComponent } from './pages/landing-page/landing-page.component';
 
 
 @Component({
   selector: 'app-root',  // Nom du sélecteur de ce composant
   standalone: true,
-  imports: [CommonModule,PageLaboratinComponent ],
+  imports: [CommonModule,LandingPageComponent,RouterModule],
   templateUrl: './app.component.html',
   //styleUrls: ['./app.component.css'],
   
