@@ -12,10 +12,11 @@ Page medecin
     <div class="flex items-center space-x-4">
       <!-- Bouton Créer DPI -->
       <button
-        class="bg-dark-blue text-white text-sm px-4 py-2 rounded-lg hover:bg-light-blue hover:text-black transition"
-      >
-        Créer DPI
-      </button>
+      class="bg-dark-blue text-white text-sm px-4 py-2 rounded-lg hover:bg-light-blue hover:text-black transition"
+      (click)="onRowClick()"
+    >
+      Créer DPI
+    </button>
   
       <!-- Image de compte et menu -->
       <div class="relative">

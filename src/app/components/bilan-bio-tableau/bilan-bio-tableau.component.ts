@@ -9,6 +9,9 @@ import {
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import jsQR from 'jsqr';
+import { Router } from '@angular/router';
+import { GlobalService } from '../../global.service';
+
 
 interface DataRow {
   id: string;
@@ -35,8 +38,13 @@ export class BilanBioTableauComponent implements OnInit {
   selectedFilter: string = 'Date'; 
   filterBy: keyof DataRow = 'date';
   filteredData: DataRow[] = [];
+  constructor(
+    private renderer: Renderer2,
+    private el: ElementRef,
+    private router: Router,
+    private globalService: GlobalService   // Combine all dependencies into one constructor
+  ) {}
  
-  constructor(private renderer: Renderer2, private el: ElementRef) {}
   filterableKeys: { key: keyof DataRow; label: string }[] = [
     { key: 'id', label: 'Bilan_Id' },
     { key: 'date', label: 'Date' },
@@ -85,7 +93,14 @@ export class BilanBioTableauComponent implements OnInit {
     },
   ];
   
-
+  onRowClick(row: any): void {
+    // Use the global variable from GlobalService to determine the route
+    if (this.globalService.pageToRedirect === 'pageMedecin') {
+      this.router.navigate(['/dpi']);
+    } else {
+      this.router.navigate(['/pageadminnistratif']);
+    }
+  }
  
   
   applyFilter(): void {

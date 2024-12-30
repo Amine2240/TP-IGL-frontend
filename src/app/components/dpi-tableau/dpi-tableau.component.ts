@@ -2,6 +2,8 @@ import { Component, OnInit, ElementRef, Renderer2, ViewChild } from '@angular/co
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import jsQR from 'jsqr';
+import { Router } from '@angular/router';
+import { GlobalService } from '../../global.service';
 
 interface DataRow {
   qrCode: string;
@@ -24,6 +26,7 @@ interface Column {
   //styleUrls: ['./dpi-tableau.component.css'],
 })
 export class DpiTableauComponent implements OnInit {
+  [x: string]: any;
   toggleFilterDropdown: boolean = false; // Dropdown visibility
   selectedFilter: string = 'Nom'; // Default filter label
   filterBy: keyof DataRow = 'nom'; // Default filter key
@@ -90,8 +93,21 @@ export class DpiTableauComponent implements OnInit {
 
   filteredData: DataRow[] = []; // Filtered data
   qrCodeDataset: string[] = ['12345', 'abcdef', '67890']; 
-  constructor(private renderer: Renderer2, private el: ElementRef) {}
-
+  constructor(
+    private renderer: Renderer2,
+    private el: ElementRef,
+    private router: Router,
+    private globalService: GlobalService   // Combine all dependencies into one constructor
+  ) {}
+ 
+  onRowClick(row: any): void {
+    // Use the global variable from GlobalService to determine the route
+    if (this.globalService.pageToRedirect === 'pageMedecin') {
+      this.router.navigate(['/dpi']);
+    } else {
+      this.router.navigate(['/pageadminnistratif']);
+    }
+  }
   
   applyFilter(): void {
     this.filteredData = [...this.data].sort((a, b) =>
