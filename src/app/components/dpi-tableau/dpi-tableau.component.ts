@@ -104,8 +104,12 @@ export class DpiTableauComponent implements OnInit {
     // Use the global variable from GlobalService to determine the route
     if (this.globalService.pageToRedirect === 'pageMedecin') {
       this.router.navigate(['/dpi']);
-    } else {
+    }
+    if (this.globalService.pageToRedirect === 'pageAdministratiff') {
       this.router.navigate(['/pageadminnistratif']);
+    }
+    else {
+      this.router.navigate(['/ajouterSoin']);
     }
   }
   

@@ -10,6 +10,8 @@ import { BilanRadiologiquePageComponent } from './pages/bilan-radiologique-page/
 import { BilanBiologiquePageComponent } from './pages/bilan-biologique-page/bilan-biologique-page.component';
 import { PagePatientComponent } from './pages/page-patient/page-patient.component';
 import { VisualisationBilanPatientComponent } from './pages/visualisation-bilan-patient/visualisation-bilan-patient.component';
+import { SoinPageComponent } from './pages/soin-page/soin-page.component';
+import { PageInfirmierComponent } from './pages/page-infirmier/page-infirmier.component';
 
 export const routes: Routes = [
   // Routes for pages
@@ -17,10 +19,11 @@ export const routes: Routes = [
   { path: 'pageMedecin', component: PageMedecinComponent },
   { path: 'pageRadiologue', component: PageRadiologueComponent },
   { path: 'pageLaboratin', component: PageLaboratinComponent },
-  { path: 'pageInfermier', component: PageLaboratinComponent },
+  { path: 'pageInfermier', component: PageInfirmierComponent },
   { path: 'formPatient', component: FormpatientComponent },
   { path: 'ajouterBilanBiologique', component:BilanBiologiquePageComponent },
   { path: 'ajouterBilanRadiologique', component: BilanRadiologiquePageComponent },
+  { path: 'ajouterSoin', component: SoinPageComponent },
  
  
 
