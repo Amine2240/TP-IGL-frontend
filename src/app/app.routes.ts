@@ -20,8 +20,8 @@ export const routes: Routes = [
   { path: 'formPatient', component: FormpatientComponent },
   { path: 'ajouterBilanBiologique', component:BilanBiologiquePageComponent },
   { path: 'ajouterBilanRadiologique', component: BilanRadiologiquePageComponent },
-  { path: 'pagePatient', component: PageMedecinComponent },
-  { path: 'bilans', component: VisualisationBilanPatientComponent },
+ 
+ 
 
   // DPI related routes with children
   { 
@@ -29,19 +29,21 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/dpi/dpi.component').then(m => m.DpiComponent),
     children: [
 
+      
       { path: 'certificat', loadComponent: () => import('./components/certificat/certificat.component').then(m => m.CertificatComponent) },
       { path: 'consultations-medicales', loadComponent: () => import('./components/consultations/consultations.component').then(m => m.ConsultationsComponent) },
       { path: 'page-historique', loadComponent: () => import('./pages/historique-medicale-page/historique-medicale-page.component').then(m => m.HistoriqueMedicalePageComponent) },
       { path: 'page-dpi', loadComponent: () => import('./pages/dpi-page/dpi-page.component').then(m => m.DpiPageComponent) },
       { path: 'consultations-medicales/form-consultation', loadComponent: () => import('./components/formconsultation/formconsultation.component').then(m => m.FormconsultationComponent) },
       { path: 'consultations-medicales/form-consultation/ordonnance', loadComponent: () => import('./components/ordonnance/ordonnance.component').then(m => m.OrdonnanceComponent) },
+    
       
     ]
   },
 
   // Pagepatient related routes with children
   {
-    path: 'pagepatient',  
+    path: 'pagePatient',  
     loadComponent: () => import('./pages/page-patient/page-patient.component').then(m => m.PagePatientComponent),
     children: [
       { path: 'certificat', loadComponent: () => import('./components/certificat/certificat.component').then(m => m.CertificatComponent) },
@@ -49,7 +51,8 @@ export const routes: Routes = [
       { path: 'page-historique', loadComponent: () => import('./pages/historique-medicale-page/historique-medicale-page.component').then(m => m.HistoriqueMedicalePageComponent) },
       { path: 'page-dpi', loadComponent: () => import('./pages/dpi-page/dpi-page.component').then(m => m.DpiPageComponent) },
       { path: 'consultations-medicales/form-consultation', loadComponent: () => import('./components/formconsultation/formconsultation.component').then(m => m.FormconsultationComponent) },
-      { path: 'consultations-medicales/form-consultation/ordonnance', loadComponent: () => import('./components/ordonnance/ordonnance.component').then(m => m.OrdonnanceComponent) }
+      { path: 'consultations-medicales/form-consultation/ordonnance', loadComponent: () => import('./components/ordonnance/ordonnance.component').then(m => m.OrdonnanceComponent) },
+      { path: 'bilans', loadComponent: () => import('./pages/visualisation-bilan-patient/visualisation-bilan-patient.component').then(m => m.VisualisationBilanPatientComponent) },
     ]
   },
 
