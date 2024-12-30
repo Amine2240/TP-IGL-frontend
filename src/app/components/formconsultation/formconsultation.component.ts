@@ -41,11 +41,14 @@ export class FormconsultationComponent implements OnInit {
       nom: 'Bilan Biologique',
     },
   ];
-  user : any;
+  user: any;
   consultationForm: FormGroup;
   // we use constructor instead of formcontrol for clean code
-  constructor(private fb: FormBuilder, private dpiService: DpiService , private authService : AuthService) {
-    
+  constructor(
+    private fb: FormBuilder,
+    private dpiService: DpiService,
+    private authService: AuthService
+  ) {
     this.consultationForm = this.fb.group({
       // Date input
       date: ['', Validators.required],
@@ -70,17 +73,15 @@ export class FormconsultationComponent implements OnInit {
           this.consultationForm.get('bilanChoisi')?.setValue('biologique');
         }
       });
-      // this.authService.loadUser();
-      //  this.user = this.authService.getUser();
+    // this.authService.loadUser();
+    //  this.user = this.authService.getUser();
   }
   async ngOnInit(): Promise<void> {
     try {
       this.outils = await this.dpiService.getOutils();
       console.log('outils from backnnn', this.outils);
-      
     } catch (error) {
       console.error('Error fetching outils:', error);
-      
     }
   }
 
@@ -90,7 +91,6 @@ export class FormconsultationComponent implements OnInit {
 
     if (isChecked) {
       formArray.push(this.fb.control(value));
-      
     } else {
       const index = formArray.controls.findIndex(
         (control) => control.value === value
@@ -105,28 +105,37 @@ export class FormconsultationComponent implements OnInit {
     const selectedValue = (event.target as HTMLInputElement).value;
     this.consultationForm.get(formControlName)?.setValue(selectedValue);
   }
-
+prescriptionsPayload :any = [];
   public submitForm(): void {
     if (this.consultationForm.valid) {
+      console.log(
+        'list presecripitions from formconsultation',
+        this.dpiService.getlistOfPrescriptions()
+      );
+      this.prescriptionsPayload = this.dpiService.getlistOfPrescriptions().map((item : any)=>{
+        return {
+          medicament: {
+            nom: item.medicament,
+          },
+          dose: item.dose,
+          duree: item.duree,
+          // heure: item.heure,
+          nombre_de_prises: item.nbrPrises,
+        }
+      });
+      console.log(
+        'list presecripitionspayload from formconsultation',
+        this.prescriptionsPayload
+      );
+      
+      const ordonnancePayload = {
+        // date_de_creation: '2024-12-22',
+        prescriptions: this.prescriptionsPayload,
+      };
       const consultationPayload = {
         dpi: 6, // it will be replaced by the dpi id of the patient that is being consulted (le choisir de la liste des patients)
         hopital: 1,
-        ordonnances: [
-          // {
-          //   date_de_creation: '2024-12-22',
-          //   prescriptions: [
-          //     {
-          //       medicament: {
-          //         nom: 'Paracetamol',
-          //       },
-          //       dose: '500mg',
-          //       duree: 7.0,
-          //       heure: '08:00:00',
-          //       nombre_de_prises: 3,
-          //     },
-          //   ],
-          // },
-        ],
+        ordonnances: [ordonnancePayload],
         examens: [
           {
             id: 1,
@@ -143,11 +152,13 @@ export class FormconsultationComponent implements OnInit {
             mesures: [{ mesure: this.consultationForm.value.resume }],
           },
         ],
-        outils: this.consultationForm.value.outils.map((outil: Outil) => outil.id),
+        outils: this.consultationForm.value.outils.map(
+          (outil: Outil) => outil.id
+        ),
         // outils: [1,2],
       };
       console.log('Payload being sent:', consultationPayload);
-      
+
       this.dpiService.ajouterConsultation(consultationPayload);
       console.log('Form submitted!', this.consultationForm.value);
       // console.log("patient : ", this.patient);
