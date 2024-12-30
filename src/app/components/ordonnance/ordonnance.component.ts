@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
+import { AuthService } from '../../services/auth.service';
 @Component({
     selector: 'app-ordonnance',
     standalone: true,
@@ -9,6 +10,11 @@ import jsPDF from 'jspdf';
     styleUrl: './ordonnance.component.scss'
 })
 export class OrdonnanceComponent {
+  user : any;
+  constructor(private authService : AuthService) {
+    this.authService.loadUser();
+    this.user = this.authService.getUser();
+  }
   downloadSection(): void {
     const section = document.getElementById('sectionToDownload') as HTMLElement;
 

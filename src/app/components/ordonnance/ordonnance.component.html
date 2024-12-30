@@ -7,8 +7,10 @@
     </div>
     <div class=" flex flex-col items-end mr-10">
 
-      <p class=" font-semibold text-xl">Dr. Samir Benyahia</p>
-      <p>Radiologue</p>
+      <p class=" font-semibold text-xl">Dr. {{ user.role == "medecin" ? user.nom : "Benkrid"}} {{user.role == "medecin"
+        ? user.prenom : "Soumia"}} </p>
+      <!--  -->
+      <p> {{user.role == "medecin" ? user.specialite : "Radiologue"}} </p>
     </div>
 
     <div class=" ml-10">
@@ -71,6 +73,13 @@
     </div>
 
   </section>
-  <button (click)="downloadSection()" class=" bg-blue-400 text-white capitalize px-5 py-3 m-3 rounded-lg">télécharger ordonnance</button>
+  <div class=" flex place-content-end">
+    <button routerLink="form-consultation"
+      class=" text-center text-nowrap disabled:bg-blue-300 bg-blue-500 text-white capitalize px-5 py-3 m-3 rounded-lg ">
+      ajouter ordonnance
+    </button>
+  </div>
+  <button (click)="downloadSection()" class=" bg-blue-400 text-white capitalize px-5 py-3 m-3 rounded-lg">télécharger
+    ordonnance</button>
 
 </div>

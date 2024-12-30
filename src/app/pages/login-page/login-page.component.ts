@@ -73,6 +73,7 @@ export class LoginPageComponent implements OnInit {
         if (this.authService.getUser().role === 'administratif') {
           this.router.navigate(['/formpatient']);
         } else if (this.authService.getUser().role === 'medecin') {
+          this.router.navigate(['/formpatient']);
           
           
         }else if (this.authService.getUser().role === 'admin') {

@@ -1,38 +1,77 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
+import { DpiService } from '../../services/dpi.service';
 
+
+interface ContactUrgence {
+  nom: string;
+  prenom: string;
+  telephone: string;
+  email: string;
+}
+
+interface infosPatient {
+  dpiId: number;
+  dateCreation : string;
+  nom: string;
+  prenom: string;
+  dateDeNaissance: string;
+  adresse: string;
+  NSS: string;
+  telephone: string;
+  mutuelle: string;
+  // numeroIdentification: string;
+  contact_urgence: ContactUrgence;
+  // qrCode: string;
+  // photo: string;
+
+}
 @Component({
-    selector: 'app-informations-patient',
-    standalone: true,
-    imports: [FormsModule, CommonModule],
-    templateUrl: './informations-patient.component.html',
-    styleUrl: './informations-patient.component.scss'
+  selector: 'app-informations-patient',
+  standalone: true,
+  imports: [FormsModule, CommonModule],
+  templateUrl: './informations-patient.component.html',
+  styleUrl: './informations-patient.component.scss',
 })
-export class InformationsPatientComponent {
+// si le patient qui accede à informations patient, utilise lid de
+// // this.authService.loadUser();
+//  this.user = this.authService.getUser();
+// si le medecin accede utilise lid du patient qui eu à partir de la liste des patients (dans la page patients)
+
+// there is no put method in the dpi backend so for now the component renders the infos of the patient
+
+export class InformationsPatientComponent implements OnInit {
+  // Données du patient
+  infosPatient : any = {
+  
+  };
+  constructor(private dpiService: DpiService) {}
+  async ngOnInit(): Promise<void> {
+    console.log('hiiiiii');
+
+    try {
+      // this.infosPatient = await this.dpiService.getDpi(); does not contain the all information like photo..
+      this.infosPatient = await this.dpiService.getPatient(15);
+      const infosAajouter = await this.dpiService.getDpi(15); // contact urgence et mutuelle 
+      this.infosPatient = {
+        ...this.infosPatient,
+        contact_urgence: infosAajouter.contact_urgence,
+        mutuelle: infosAajouter.mutuelle,
+      };
+      console.log('informationsPatient from component :', this.infosPatient);
+      // this.rows = consultations; // Assuming consultations is an array of DataRow
+    } catch (error) {
+      console.error('Error fetching consultations:', error);
+    }
+  }
+
   // Define isMedecinVisible to toggle visibility of médecin's info
   isMedecinVisible: boolean = false;
   isEditMode = false;
-  // Données du patient
-  dpiData = {
-    nom: 'Dupont',
-    prenom: 'Jean',
-    dateNaissance: '1990-01-01',
-    adresse: '123 Rue Exemple',
-    nss: '123456789',
-    telephone: '0612345678',
-    mutuelle: 'Exemple Mutuelle',
-    numeroIdentification: 'ABC123',
-    contact: {
-      nom: 'Contact Nom',
-      prenom: 'Contact Prénom',
-      telephone: '0612345678',
-    },
-    qrCode: 'assets/qrcode.png',
-    photo: 'assets/photo-patient.png',
-  };
+  
 
   // Médecin connecté
   medecinConnecte = {
@@ -40,7 +79,6 @@ export class InformationsPatientComponent {
     prenom: 'Alice',
     specialite: 'Cardiologie',
   };
-  
 
   // Function to toggle visibility of médecin's information
   toggleMedecinInfo() {
@@ -74,26 +112,26 @@ export class InformationsPatientComponent {
   logout(): void {
     console.log('Médecin déconnecté');
     // Add logout logic here
-    this.isMedecinVisible = false;}
+    this.isMedecinVisible = false;
+  }
 
-    toggleEditMode(): void {
-      if (this.isEditMode) {
-        // Ici, vous pouvez ajouter une logique pour sauvegarder les modifications, comme envoyer les données à un backend.
-        console.log('Données sauvegardées :', this.dpiData);
-      }
-      this.isEditMode = !this.isEditMode;
+  toggleEditMode(): void {
+    if (this.isEditMode) {
+      // Ici, vous pouvez ajouter une logique pour sauvegarder les modifications, comme envoyer les données à un backend.
+      console.log('Données sauvegardées :', this.infosPatient);
     }
+    this.isEditMode = !this.isEditMode;
+  }
 
-    // Fonction pour changer l'image
+  // Fonction pour changer l'image
   onImageChange(event: any): void {
-    const file = event.target.files[0];  // Récupère le fichier sélectionné
+    const file = event.target.files[0]; // Récupère le fichier sélectionné
     if (file) {
       const reader = new FileReader();
       reader.onload = (e: any) => {
-        this.dpiData.photo = e.target.result;  // Met à jour l'image avec le fichier choisi
+      //  this.infosPatient.photo = e.target.result; // Met à jour l'image avec le fichier choisi
       };
-      reader.readAsDataURL(file);  // Lis le fichier comme une URL de données
-    }}
-
-
+      reader.readAsDataURL(file); // Lis le fichier comme une URL de données
+    }
+  }
 }
