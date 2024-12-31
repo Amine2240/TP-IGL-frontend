@@ -5,6 +5,7 @@ import { DpiPageComponent } from './pages/dpi-page/dpi-page.component';
 import { LoginPageComponent } from "./pages/login-page/login-page.component";
 import { BilanRadiologiquePageComponent} from "./pages/bilan-radiologique-page/bilan-radiologique-page.component";
 import { BilanRadiologiqueVisPageComponent} from "./pages/bilan-radiologique-vis-page/bilan-radiologique-vis-page.component";
+import { BilanBiologiquePageVisComponent} from "./pages/bilan-biologique-page-vis/bilan-biologique-page-vis.component";
 import { BilanBiologiquePageComponent} from "./pages/bilan-biologique-page/bilan-biologique-page.component";
 import { SoinPageComponent} from "./pages/soin-page/soin-page.component";
 import { GraphPageComponent } from './pages/graphe-page/graphe-page.component';
@@ -19,8 +20,9 @@ export const routes: Routes = [
     { path: 'soin-page', component: SoinPageComponent},
     {path: 'graphe',component:GraphPageComponent},
         {path:'bilan-radiologique-vis',component: BilanRadiologiqueVisPageComponent
+    },
+    {path:'bilan-biologique-vis',component: BilanBiologiquePageVisComponent
     }
-    
   ];
   @NgModule({
     imports: [RouterModule.forRoot(routes)],

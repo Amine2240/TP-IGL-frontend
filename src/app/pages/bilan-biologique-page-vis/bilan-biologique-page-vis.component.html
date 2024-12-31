@@ -30,32 +30,7 @@
             </tr>
   
           
-            <tr>
-              <td class="px-4 py-2 border">
-                <input
-                  type="text"
-                  placeholder="Paramètre"
-                  [(ngModel)]="newParametre"
-                  class="w-full p-2 border rounded"
-                />
-              </td>
-              <td class="px-4 py-2 border">
-                <input
-                  type="text"
-                  placeholder="Valeur"
-                  [(ngModel)]="newValeur"
-                  class="w-full p-2 border rounded"
-                />
-              </td>
-              <td class="px-4 py-2 border">
-                <input
-                  type="text"
-                  placeholder="Unité"
-                  [(ngModel)]="newUnite"
-                  class="w-full p-2 border rounded"
-                />
-              </td>
-            </tr>
+  
           </tbody>
         </table>
   
@@ -71,14 +46,9 @@
           [disabled]="tableData.length === 0"
           class="px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 disabled:bg-gray-300"
         >
-          Générer Graphe
+          Visualiser Graphe
         </button>
-        <button
-          (click)="sauvegarder()"
-          class="px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
-        >
-          Enregistrer
-        </button>
+        
       </div>
     </div>
 
