@@ -2,9 +2,7 @@
     <!-- logo -->
     <div class="w-full flex justify-between items-center px-8 py-4 bg-white shadow">
      
-      <a [routerLink]="['/bilan-bio-tableau']">
-        <img src="../../../assets/logo.svg" alt="Logo" class="w-auto h-10" />
-      </a>
+        <img src="../../../assets/logos/logo.png"  />
         <span class="text-xl font-bold text-blue-600"></span>
     
       <button class="px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600">
@@ -32,42 +30,12 @@
             </tr>
   
           
-            <tr>
-              <td class="px-4 py-2 border">
-                <input
-                  type="text"
-                  placeholder="Paramètre"
-                  [(ngModel)]="newParametre"
-                  class="w-full p-2 border rounded"
-                />
-              </td>
-              <td class="px-4 py-2 border">
-                <input
-                  type="text"
-                  placeholder="Valeur"
-                  [(ngModel)]="newValeur"
-                  class="w-full p-2 border rounded"
-                />
-              </td>
-              <td class="px-4 py-2 border">
-                <input
-                  type="text"
-                  placeholder="Unité"
-                  [(ngModel)]="newUnite"
-                  class="w-full p-2 border rounded"
-                />
-              </td>
-            </tr>
+  
           </tbody>
         </table>
   
     
-        <button
-          (click)="ajouterEntree()"
-          class="mt-4 px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
-        >
-          Ajouter
-        </button>
+        
       </div>
   
    
@@ -78,14 +46,9 @@
           [disabled]="tableData.length === 0"
           class="px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 disabled:bg-gray-300"
         >
-          Générer Graphe
+          Visualiser Graphe
         </button>
-        <button
-          (click)="sauvegarder()"
-          class="px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
-        >
-          Enregistrer
-        </button>
+        
       </div>
     </div>
 

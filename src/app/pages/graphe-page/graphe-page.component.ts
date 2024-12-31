@@ -44,7 +44,7 @@ export class GraphPageComponent implements OnInit {
     if (isPlatformBrowser(this.platformId)) {
       const state = history.state;
 const labels = state.labels || [];
-const data = state.data || [];
+const data = state.data || []; 
       setTimeout(() => {
         const ctx = this.chartCanvas.nativeElement.getContext('2d');
         if (ctx) {
