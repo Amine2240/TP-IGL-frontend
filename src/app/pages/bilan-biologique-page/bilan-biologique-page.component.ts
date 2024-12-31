@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import {  RouterModule ,Router } from '@angular/router';
 
 @Component({
     selector: 'app-bilan-biologique-page',
-    imports: [CommonModule, FormsModule],
+    imports: [CommonModule,  RouterModule, FormsModule],
     templateUrl: './bilan-biologique-page.component.html',
     styleUrls: ['./bilan-biologique-page.component.scss']
 })

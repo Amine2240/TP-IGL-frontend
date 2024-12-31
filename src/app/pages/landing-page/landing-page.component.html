@@ -1,4 +1,83 @@
 
-<h1 style="font-size: 5vw;">This is the landing page</h1>
-<button class="mt-4 bg-dark-blue text-white py-1 px-4 rounded hover:bg-blue-600" (click)="onButtonClick()">LogIn</button>
+
+<div class="min-h-screen bg-gray-50">
+    <!-- Header -->
+    <header class="bg-light-blue shadow">
+      <div class="container mx-auto flex justify-between items-center py-4 px-6">
+ 
+            <img src="../../../assets/logo.svg" alt="Logo" class="w-auto h-10" />
+       
+        <nav>
+          <ul class="flex space-x-6 text-gray-600">
+            <li><a href="#" class="hover:text-blue-600">Home</a></li>
+            <li><a href="#" class="hover:text-blue-600">About</a></li>
+            <li><a href="#" class="hover:text-blue-600">Contact Us</a></li>
+          </ul>
+        </nav>
+        <div class="space-x-4">
+            <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" (click)="onButtonClick()">LogIn</button>
+        </div>
+      </div>
+    </header>
+  
+    <!-- Hero Section -->
+    <section class="bg-blue-50 py-12">
+      <div class="container mx-auto flex flex-col lg:flex-row items-center">
+        <div class="text-center lg:text-left lg:w-1/2 space-y-4 lg:pl-12">
+            <h1 class="text-4xl font-bold">
+              Bienvenue dans le système de gestion du
+              <span class="text-blue-600">Dossier Patient Informatisé</span>
+            </h1>
+            <p class="text-gray-600">
+              Lorem ipsum dolor sit amet consectetur adipiscing elit. Sit amet vivamus amet faucibus faucibus.
+            </p>
+          </div>
+        <div class="mt-8 lg:mt-0 lg:w-1/2">
+          <img src="../../../assets/images/Group 30.png" alt="Doctor" class="rounded shadow-lg mx-auto max-w-sm">
+        </div>
+      </div>
+    </section>
+  
+    <!-- About Section -->
+    <section class="py-12">
+      <div class="container mx-auto text-center">
+        <h2 class="text-3xl font-bold text-blue-600">Apprenez à nous connaître</h2>
+        <ul class="mt-6 space-y-4 text-left max-w-3xl mx-auto">
+          <li class="flex items-start space-x-2">
+            <span class="text-blue-600">✅</span>
+            <p>Plateforme Innovante : MediCare est dédiée à la gestion des dossiers médicaux informatisés, simplifiant le travail des professionnels de santé.</p>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-blue-600">✅</span>
+            <p>Amélioration de la qualité des soins : Conçue pour optimiser les processus et garantir une prise en charge efficace des patients.</p>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-blue-600">✅</span>
+            <p>Mission Principale : Fournir une solution fiable et sécurisée qui centralise les informations médicales pour un accès rapide et pratique.</p>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-blue-600">✅</span>
+            <p>Objectif : Transformer la gestion des données médicales en une expérience fluide et efficace.</p>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-blue-600">✅</span>
+            <p>Valeurs Fondamentales : Sécurité et confidentialité des données placées au cœur des priorités.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+  
+    <!-- Footer -->
+    <footer class="bg-gray-100 py-4">
+      <div class="container mx-auto flex justify-between items-center">
+        <p class="text-gray-600">&copy; 2024 MediCare - Tous droits réservés</p>
+        <div class="flex space-x-4">
+          <a href="#" class="text-blue-600">LinkedIn</a>
+          <a href="#" class="text-blue-600">Facebook</a>
+          <a href="#" class="text-blue-600">Contact</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+  
 <router-outlet></router-outlet>
