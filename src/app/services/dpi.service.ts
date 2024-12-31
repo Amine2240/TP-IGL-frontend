@@ -93,26 +93,33 @@ export class DpiService {
   }
   async getPatient(patientId: any) {
     try {
-      const response = await this.authService.axiosInstance.get(
-        `/users/patients`
-      );
-      response.data.filter(
-        (item: { patientId: any }) => item.patientId == patientId
-      );
-      console.log('response getPatient:', response.data);
+        const response = await this.authService.axiosInstance.get(
+            `/users/patients`
+        );
 
-      return response.data[0]; // the list is filtered
+        // Filter the results and store the filtered list
+        const filteredData = response.data.filter(
+            (item: { patientId: any }) => item.patientId === patientId
+        );
+
+        console.log('response getPatient:', filteredData);
+
+        // Assuming you want to return the first item of the filtered list
+        return filteredData[0];
     } catch (error) {
-      console.log('error getpatient :', error);
+        console.log('error getPatient:', error);
     }
-  }
+}
   listPrescriptions: any = [];
   setlistOfPrescriptions(list: any) {
-    this.removeLastPrescription(list)
+    this.removeLastPrescription(list);
     this.listPrescriptions = list;
-    console.log('list of prescriptions from dpi service:', this.listPrescriptions);
+    console.log(
+      'list of prescriptions from dpi service:',
+      this.listPrescriptions
+    );
   }
-  removeLastPrescription(list : []) {
+  removeLastPrescription(list: []) {
     // se debarasser de la lign dinitialization
     if (list.length > 0) {
       list.pop();
@@ -123,5 +130,26 @@ export class DpiService {
   }
   getlistOfPrescriptions() {
     return this.listPrescriptions;
+  }
+  // the dpi will be created without a photo and the photo will be added later in the informations-patient component (backend issues)
+  // photoPatient : any
+  // setPhotoPatient(photo:any){
+  //   this.photoPatient = photo
+  // }
+  // getPhotoPatient(){
+  //   return this.photoPatient
+  // }
+  async ajouterPhotoPatient(patientId: number, file: File) {
+    try {
+      const formdata = new FormData(); 
+      formdata.append('profilePicture', file);
+      const response = await this.authService.axiosInstance.post(
+        `users/patients/${patientId}/update-profile-picture/`,
+        formdata
+      );
+      return response.data;
+    } catch (error) {
+      console.log('error ajouter photo patient :', error);
+    }
   }
 }

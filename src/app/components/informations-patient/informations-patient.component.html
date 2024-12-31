@@ -15,7 +15,7 @@
       </div>
       <!-- User Icon -->
       <div>
-        <img class="w-auto h-8" src="assets/icons/user.png" alt="user" (click)="toggleMedecinInfo()" />
+        <img class="w-auto h-8" [src]="infosPatient.photoProfil" alt="user" (click)="toggleMedecinInfo()" />
       </div>
     </div>
 
@@ -43,7 +43,7 @@
       <div class="flex items-center  space-x-4 mb-6">
         <!-- Photo du patient -->
         <label for="imageInput" class="cursor-pointer flex-shrink-0">
-          <img [src]="infosPatient.photo" alt="Photo du patient"
+          <img [src]="infosPatient.photoProfil" alt="Photo du patient"
             class="w-24 h-40 border border-gray-300 rounded object-cover top-20 " />
           <input type="file" id="imageInput" (change)="onImageChange($event)" class="hidden" />
         </label>
@@ -164,7 +164,8 @@
       <div *ngIf="infosPatient.qrCode" class=" rounded-full w-40 h-40 bg-blue-200 mx-auto overflow-hidden mb-5 p-5">
         <img [src]="'data:image/png;base64,' + infosPatient.qrCode" alt="code qr" class=" border rounded" />
       </div>
-      <p *ngIf="infosPatient.qrCode" class=" font-semibold text-2xl">code qr du {{infosPatient.nom}} {{infosPatient.prenom}}</p>
+      <p *ngIf="infosPatient.qrCode" class=" font-semibold text-2xl">code qr du {{infosPatient.nom}}
+        {{infosPatient.prenom}}</p>
       <p *ngIf="!infosPatient.qrCode" class=" font-semibold text-2xl">Loading QR Code...</p>
     </div>
   </div>

@@ -269,7 +269,7 @@ public perosonneAcontacter = {
 
   
 
-  public submitForm(): void {
+  public async submitForm(): Promise<void> {
     if (this.patientForm.valid) {
       const dpiPayload = { // so it will matches the dpi patient serializer
         patient: {
@@ -279,7 +279,7 @@ public perosonneAcontacter = {
           date_naissance: this.patientForm.value.dateNaissance,
           email: this.patientForm.value.adresse,
           telephone: this.patientForm.value.telephone,
-          photo_profil:"https://example.com/profile.jpg", 
+          // photo_profil:"https://example.com/profile.jpg", 
           role : "patient",
           // num_identification: this.patientForm.value.numIdentification, // Add if required
           // vaccine: this.patientForm.value.vaccine, // Add if required
@@ -305,8 +305,25 @@ public perosonneAcontacter = {
       };
       console.log('dpiPayload' , dpiPayload);
       
-      this.dpiservice.postDpi(dpiPayload);
-
+     await  this.dpiservice.postDpi(dpiPayload).then((dpi) => {
+        console.log("DPI response before calling ajouterPhotoPatient:", dpi); // Debugging step
+        
+        // Check if `dpi`, `patient`, and `id` are valid
+        if (dpi?.dpi?.patient?.id) {
+          const patientId = dpi.dpi.patient.id;
+          this.dpiservice.ajouterPhotoPatient(patientId, this.photoPatientFile)
+            .then((response) => {
+              console.log("Photo uploaded successfully:", response);
+            })
+            .catch((error) => {
+              console.error("Error uploading patient photo:", error);
+            });
+        } else {
+          console.error("Invalid DPI response or missing patient ID:", dpi);
+        }
+      }).catch((error) => {
+        console.error("Error creating DPI:", error);
+      });
       console.log('Form submitted!', this.patientForm.value);
       // console.log("patient : ", this.patient);
       
@@ -324,7 +341,8 @@ public perosonneAcontacter = {
 
   photoPatientPreview: string | ArrayBuffer | null = null; // Holds the image preview URL or data URL
   // photoCodeQrPreview: string | ArrayBuffer | null = null; // Holds the image preview URL or data URL
-
+  photoPatientFile : any;
+  
   // Handle file selection
   onFileSelected(event: Event , type : "patient" | "codeQr") {
     const fileInput = event.target as HTMLInputElement;
@@ -336,7 +354,8 @@ public perosonneAcontacter = {
         alert('Please select a valid image file.');
         return;
       }
-
+    
+      this.photoPatientFile = file;
       // Preview the image
       const reader = new FileReader();
       reader.onload = () => {
