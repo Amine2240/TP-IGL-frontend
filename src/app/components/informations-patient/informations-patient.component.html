@@ -160,5 +160,13 @@
         (click)="toggleEditMode()">
         {{ isEditMode ? 'Sauvegarder' : 'Modifier' }}
       </button> -->
+    <div class=" flex place-content-center flex-col items-center">
+      <div *ngIf="infosPatient.qrCode" class=" rounded-full w-40 h-40 bg-blue-200 mx-auto overflow-hidden mb-5 p-5">
+        <img [src]="'data:image/png;base64,' + infosPatient.qrCode" alt="code qr" class=" border rounded" />
+      </div>
+      <p *ngIf="infosPatient.qrCode" class=" font-semibold text-2xl">code qr du {{infosPatient.nom}} {{infosPatient.prenom}}</p>
+      <p *ngIf="!infosPatient.qrCode" class=" font-semibold text-2xl">Loading QR Code...</p>
+    </div>
   </div>
+
 </div>

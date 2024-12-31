@@ -74,14 +74,17 @@ export class DpiService {
       this.authService.loadUser();
       const user = this.authService.getUser();
       if (user.role == 'patient') {
+        // const response = await this.authService.axiosInstance.get(
+        //   `/dpi/${user.id}/`
+        // );
         const response = await this.authService.axiosInstance.get(
-          `/dpi/${user.id}/`
+          `/dpi/${user.roleId}/`
         );
         return response.data;
       }
 
       const response = await this.authService.axiosInstance.get(
-        `/dpi/${params}`
+        `/dpi/${params}/`
       ); // if the user is a patient get that id from loaduser, if the user is a medecin get that id from patiens page
       return response.data;
     } catch (error) {
@@ -98,7 +101,7 @@ export class DpiService {
       );
       console.log('response getPatient:', response.data);
 
-      return response.data[0];
+      return response.data[0]; // the list is filtered
     } catch (error) {
       console.log('error getpatient :', error);
     }

@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import { DpiService } from '../../services/dpi.service';
-
+import { AuthService } from '../../services/auth.service';
 
 interface ContactUrgence {
   nom: string;
@@ -15,7 +15,7 @@ interface ContactUrgence {
 
 interface infosPatient {
   dpiId: number;
-  dateCreation : string;
+  dateCreation: string;
   nom: string;
   prenom: string;
   dateDeNaissance: string;
@@ -27,7 +27,6 @@ interface infosPatient {
   contact_urgence: ContactUrgence;
   // qrCode: string;
   // photo: string;
-
 }
 @Component({
   selector: 'app-informations-patient',
@@ -42,25 +41,40 @@ interface infosPatient {
 // si le medecin accede utilise lid du patient qui eu à partir de la liste des patients (dans la page patients)
 
 // there is no put method in the dpi backend so for now the component renders the infos of the patient
-
 export class InformationsPatientComponent implements OnInit {
   // Données du patient
-  infosPatient : any = {
-  
-  };
-  constructor(private dpiService: DpiService) {}
+  infosPatient: any = {};
+  constructor(
+    private dpiService: DpiService,
+    private authService: AuthService
+  ) {}
   async ngOnInit(): Promise<void> {
     console.log('hiiiiii');
 
     try {
+      this.authService.loadUser();
+      const user = this.authService.getUser();
       // this.infosPatient = await this.dpiService.getDpi(); does not contain the all information like photo..
-      this.infosPatient = await this.dpiService.getPatient(15);
-      const infosAajouter = await this.dpiService.getDpi(15); // contact urgence et mutuelle 
-      this.infosPatient = {
-        ...this.infosPatient,
-        contact_urgence: infosAajouter.contact_urgence,
-        mutuelle: infosAajouter.mutuelle,
-      };
+      if (user.role === 'patient') {
+        this.infosPatient = await this.dpiService.getPatient(user.roleId);
+        const infosAajouter = await this.dpiService.getDpi(user.roleId); // contact urgence et mutuelle
+        this.infosPatient = {
+          ...this.infosPatient,
+          contact_urgence: infosAajouter.contact_urgence,
+          mutuelle: infosAajouter.mutuelle,
+        };
+      }
+      if (user.role === 'medecin') {
+        // get the id from list patients (roleId), 15 is just an example
+        this.infosPatient = await this.dpiService.getPatient(15);
+        const infosAajouter = await this.dpiService.getDpi(15); // contact urgence et mutuelle
+        this.infosPatient = {
+          ...this.infosPatient,
+          contact_urgence: infosAajouter.contact_urgence,
+          mutuelle: infosAajouter.mutuelle,
+        };
+      }
+
       console.log('informationsPatient from component :', this.infosPatient);
       // this.rows = consultations; // Assuming consultations is an array of DataRow
     } catch (error) {
@@ -71,7 +85,6 @@ export class InformationsPatientComponent implements OnInit {
   // Define isMedecinVisible to toggle visibility of médecin's info
   isMedecinVisible: boolean = false;
   isEditMode = false;
-  
 
   // Médecin connecté
   medecinConnecte = {
@@ -129,7 +142,7 @@ export class InformationsPatientComponent implements OnInit {
     if (file) {
       const reader = new FileReader();
       reader.onload = (e: any) => {
-      //  this.infosPatient.photo = e.target.result; // Met à jour l'image avec le fichier choisi
+        //  this.infosPatient.photo = e.target.result; // Met à jour l'image avec le fichier choisi
       };
       reader.readAsDataURL(file); // Lis le fichier comme une URL de données
     }

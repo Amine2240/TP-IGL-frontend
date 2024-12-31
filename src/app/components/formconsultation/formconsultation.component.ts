@@ -27,6 +27,8 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './formconsultation.component.html',
   styleUrl: './formconsultation.component.scss',
 })
+
+// if the medecin want to create a consultation with ordonnace, he has to click on ajouter ordonnance first, fill the medicaments(only) then go back to ordonnance form and complete the other fields
 export class FormconsultationComponent implements OnInit {
   public outils: Outil[] = []; // will be fetch from the backend
   public bilans: any[] = [
@@ -51,14 +53,17 @@ export class FormconsultationComponent implements OnInit {
   ) {
     this.consultationForm = this.fb.group({
       // Date input
-      date: ['', Validators.required],
-      heure: ['', Validators.required],
+      // date: ['', Validators.required],
+      // heure: ['', Validators.required],
 
       // Radio buttons
       bilanBool: ['', Validators.required],
+      diagnostic: ['', Validators.required],
       bilanChoisi: ['radiologique', Validators.required],
-      resultat: ['', Validators.required],
-      resume: ['', Validators.required],
+      commentaire: ['', Validators.required],
+      symptomes: this.fb.array([]), // FormArray for symptomes
+      mesures: this.fb.array([]),
+      // resume: ['', Validators.required],
 
       // Checkboxes
       outils: this.fb.array([], Validators.required), // Dynamically track selected items
@@ -84,6 +89,32 @@ export class FormconsultationComponent implements OnInit {
       console.error('Error fetching outils:', error);
     }
   }
+  // Getters for FormArrays
+  get symptomes(): FormArray {
+    return this.consultationForm.get('symptomes') as FormArray;
+  }
+
+  get mesures(): FormArray {
+    return this.consultationForm.get('mesures') as FormArray;
+  }
+
+  addSymptome() {
+    this.symptomes.push(this.fb.group({ symptome: '' }));
+    
+  }
+
+  addMesure() {
+    this.mesures.push(this.fb.group({ mesure: '' }));
+    
+  }
+
+  removeSymptome(index: number) {
+    this.symptomes.removeAt(index);
+  }
+
+  removeMesure(index: number) {
+    this.mesures.removeAt(index);
+  }
 
   onCheckboxChange(event: Event, formArrayName: string, value: Outil): void {
     const formArray = this.consultationForm.get(formArrayName) as FormArray;
@@ -105,29 +136,30 @@ export class FormconsultationComponent implements OnInit {
     const selectedValue = (event.target as HTMLInputElement).value;
     this.consultationForm.get(formControlName)?.setValue(selectedValue);
   }
-prescriptionsPayload :any = [];
+  prescriptionsPayload: any = [];
   public submitForm(): void {
     if (this.consultationForm.valid) {
       console.log(
         'list presecripitions from formconsultation',
         this.dpiService.getlistOfPrescriptions()
       );
-      this.prescriptionsPayload = this.dpiService.getlistOfPrescriptions().map((item : any)=>{
-        return {
-          medicament: {
-            nom: item.medicament,
-          },
-          dose: item.dose,
-          duree: item.duree,
-          // heure: item.heure,
-          nombre_de_prises: item.nbrPrises,
-        }
-      });
+      this.prescriptionsPayload = this.dpiService
+        .getlistOfPrescriptions()
+        .map((item: any) => {
+          return {
+            medicament: {
+              nom: item.medicament,
+            },
+            dose: item.dose,
+            duree: item.duree,
+            // heure: item.heure,
+            nombre_de_prises: item.nbrPrises,
+          };
+        });
       console.log(
         'list presecripitionspayload from formconsultation',
         this.prescriptionsPayload
       );
-      
       const ordonnancePayload = {
         // date_de_creation: '2024-12-22',
         prescriptions: this.prescriptionsPayload,
@@ -140,21 +172,22 @@ prescriptionsPayload :any = [];
           {
             id: 1,
             type: this.consultationForm.value.bilanChoisi,
-            date: '2024-12-01',
-            resultats: this.consultationForm.value.resultat,
-            note: "He's gonna die",
+            // date: '2024-12-01',
+            // resultats: this.consultationForm.value.resultat,
+            note: this.consultationForm.value.commentaire,
           },
         ],
         medecins: [],
         resumes: [
           {
-            symptomes: [{ symptome: 'symp1' }],
-            mesures: [{ mesure: this.consultationForm.value.resume }],
+            symptomes: this.symptomes.value,
+            mesures: this.mesures.value,
           },
         ],
         outils: this.consultationForm.value.outils.map(
           (outil: Outil) => outil.id
         ),
+        diagnostic : this.consultationForm.value.diagnostic,
         // outils: [1,2],
       };
       console.log('Payload being sent:', consultationPayload);
