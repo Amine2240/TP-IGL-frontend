@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
     selector: 'app-bilan-radiologique-page',
@@ -9,6 +10,21 @@ import { Component } from '@angular/core';
 })
 export class BilanRadiologiquePageComponent {
   uploadedImages: string[] = []; 
+
+  constructor(private router: Router,private route: ActivatedRoute) {}
+    id: string | null = null; 
+    
+  
+    ngOnInit(): void {
+      this.id = this.route.snapshot.paramMap.get('id'); // Récupérer l'ID
+      console.log('ID reçu :', this.id);
+      // Utilisez cet ID pour charger les données ou effectuer des actions
+    }
+    saveEntries() {
+      
+      this.router.navigate(['pageRadiologue/bilan-radio-tableau', this.id]);
+    }
+    
 
   onImageUpload(event: any): void {
     const files = event.target.files;

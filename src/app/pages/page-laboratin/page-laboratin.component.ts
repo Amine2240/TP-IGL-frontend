@@ -5,25 +5,27 @@ import { BilanRadioTableauComponent } from '../../components/bilan-radio-tableau
 import { BilanBioTableauComponent } from '../../components/bilan-bio-tableau/bilan-bio-tableau.component';
 import { FormsModule } from '@angular/forms';
 import { GlobalService } from '../../global.service';
-import { RouterModule ,Router } from '@angular/router';
+import { RouterModule ,Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-page-laboratin',
   standalone: true,
-  imports: [CommonModule, RouterModule ,FormsModule, BilanBioTableauComponent ],
+  imports: [CommonModule, RouterModule, FormsModule, DpiTableauComponent],
   templateUrl: './page-laboratin.component.html',
 })
 export class PageLaboratinComponent {
   isMenuOpen = false;
 
+  id: string | null = null; 
+
+
+  ngOnInit(): void {
+    this.id = this.route.snapshot.paramMap.get('id'); // Récupérer l'ID
+    console.log('ID reçu :', this.id);
+    // Utilisez cet ID pour charger les données ou effectuer des actions
+  }
+   constructor(private elementRef: ElementRef,private globalService: GlobalService, private router: Router,private route: ActivatedRoute) {}
   
-   constructor(private elementRef: ElementRef,private globalService: GlobalService, private router: Router) {}
-  
-   onRowClick(): void {
-    console.log('am here ');
-      this.router.navigate(['/ajouterBilanBiologique']);
-   
-    }
   
 
   toggleMenu(event: MouseEvent) {

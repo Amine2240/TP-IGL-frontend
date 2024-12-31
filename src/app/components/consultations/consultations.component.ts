@@ -17,7 +17,7 @@ interface Column {
 @Component({
   selector: 'app-consultations',
   standalone: true,
-  imports: [CommonModule ,  RouterLink , RouterModule , RouterOutlet ,TopRightSectionComponent],
+  imports: [CommonModule ,  RouterLink , RouterModule ,TopRightSectionComponent],
   templateUrl: './consultations.component.html',
   styleUrl: './consultations.component.scss'
 })

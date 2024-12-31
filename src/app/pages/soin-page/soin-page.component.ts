@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 
 @Component({
     selector: 'app-soin-page',
@@ -14,7 +14,7 @@ export class SoinPageComponent {
   newSoin: string = '';
   newType: string = '';
   newObservation: string = '';
-  constructor(private router : Router){};
+ 
   onClick()
   {  console.log('confirmed');
     this.router.navigate(['/pageInfermier']);
@@ -41,9 +41,20 @@ export class SoinPageComponent {
     }
   }
 
+  constructor(private router: Router,private route: ActivatedRoute) {}
+    id: string | null = null; 
+    
+  
+    ngOnInit(): void {
+      this.id = this.route.snapshot.paramMap.get('id'); // Récupérer l'ID
+      console.log('ID reçu :', this.id);
+      // Utilisez cet ID pour charger les données ou effectuer des actions
+    }
   // Sauvegarder les entrées
   saveEntries() {
     console.log('Sauvegarde des données:', this.tableData);
+    this.router.navigate(['/pageInfermier']);
+
   }
 
 }

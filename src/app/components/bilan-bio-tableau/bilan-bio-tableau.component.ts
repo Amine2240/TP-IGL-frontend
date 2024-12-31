@@ -5,11 +5,12 @@ import {
   Renderer2,
   ViewChild,
   input,
+  HostListener,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import jsQR from 'jsqr';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { GlobalService } from '../../global.service';
 
 
@@ -28,7 +29,7 @@ interface Column {
 @Component({
   selector: 'app-bilan-bio-tableau',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule,RouterLink],
   templateUrl: './bilan-bio-tableau.component.html',
   //styleUrls: ['./dpi-tableau.component.css'],
 })
@@ -40,10 +41,15 @@ export class BilanBioTableauComponent implements OnInit {
   filteredData: DataRow[] = [];
   constructor(
     private renderer: Renderer2,
-    private el: ElementRef,
+    private elementRef: ElementRef,
     private router: Router,
-    private globalService: GlobalService   // Combine all dependencies into one constructor
+    private globalService: GlobalService ,
+    private route: ActivatedRoute,
+     // Combine all dependencies into one constructor
   ) {}
+
+  id: string | null = null; 
+    
  
   filterableKeys: { key: keyof DataRow; label: string }[] = [
     { key: 'id', label: 'Bilan_Id' },
@@ -93,11 +99,26 @@ export class BilanBioTableauComponent implements OnInit {
     },
   ];
   
-  
-   onRowClick(row: any): void {
+  ngOnInit(): void {
+    this.applySearchFilter();
+
+    this.renderer.listen('document', 'click', (event: Event) => {
+      const clickedInside = this.elementRef.nativeElement.contains(event.target);
+      if (!clickedInside) {
+        this.toggleFilterDropdown = false;
+      }
+    });
+
+    this.id = this.route.snapshot.paramMap.get('id'); // Récupérer l'ID
+      console.log('ID reçu :', this.id);
+  }
+
+
+   
+  onRowClick(row: any): void {
     
     
-      this.router.navigate(['/visualisationBilanBiologique']);
+      this.router.navigate(['/visualisationBilanBiologique',row.id]);
    
     }
   
@@ -126,17 +147,7 @@ export class BilanBioTableauComponent implements OnInit {
    
   }
 
-  ngOnInit(): void {
-    this.applySearchFilter();
-
-    this.renderer.listen('document', 'click', (event: Event) => {
-      const clickedInside = this.el.nativeElement.contains(event.target);
-      if (!clickedInside) {
-        this.toggleFilterDropdown = false;
-      }
-    });
-  }
-
+ 
   applySearchFilter(): void {
     this.filteredData = this.data.filter(
       (row) =>
@@ -145,6 +156,49 @@ export class BilanBioTableauComponent implements OnInit {
         row.id.toLowerCase().startsWith(this.searchText.toLowerCase()) //beh nkoun sur yebda de droite a gauche
     );
   }
+
+
+
+
+   isMenuOpen = false;
+   
+  
+    
+    
+   
+    
+     onButtonClick(): void {
+      console.log('am here ');
+        this.router.navigate(['ajouterBilanBiologique',this.id]);
+     
+      }
+    
+  
+    toggleMenu(event: MouseEvent) {
+      console.log('rami maftoha');
+      event.stopPropagation();
+      this.isMenuOpen = !this.isMenuOpen;
+      console.log('rami ta8la9t');
+    }
+  
+    profil() {
+      console.log('Navigating to profile...');
+      // Add profile navigation logic here
+    }
+  
+    logout() {
+      console.log('Logging out...');
+      // Add logout logic here
+    }
+  
+    // Close the menu if clicked outside of the menu and button
+    @HostListener('document:click', ['$event'])
+    onClickOutside(event: MouseEvent) {
+      const clickedInside = this.elementRef.nativeElement.contains(event.target);
+      if (!clickedInside) {
+        this.isMenuOpen = false;
+      }
+    }
 
   
 }

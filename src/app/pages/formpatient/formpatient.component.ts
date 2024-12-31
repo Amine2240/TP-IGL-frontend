@@ -237,14 +237,17 @@ public perosonneAcontacter = {
       nom: ['', Validators.required],
       prenom: ['', Validators.required],
       adresse: ['', Validators.required],
+    
 
       // Date input
       dateNaissance: ['', Validators.required],
 
       // Number inputs
       nss: ['', [Validators.required, Validators.min(1)]],
+      
       telephone: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
       numIdentification: ['', Validators.required],
+      
 
       mutuelle: ['', Validators.required],
 
@@ -265,26 +268,23 @@ public perosonneAcontacter = {
       photoPatient : ['', Validators.required],
       // codeqr : ['', Validators.required]
     });
+    console.log(this.patientForm.value.nss);
   }
 
  
   
   public submitForm(): void {
     if (this.patientForm.valid) {
-      console.log('Form submitted!', this.patientForm.value);
-     
-        // Use the global variable from GlobalService to determine the route
-        console.log(this.globalService.pageToRedirect);
-        if (this.globalService.pageToRedirect === 'pageMedecin') {
-          this.router.navigate(['/dpi']);
-        } else {
-          this.router.navigate(['/pageadminnistratif']);
-        }
-      }
-      // console.log("patient : ", this.patient);
-      
-    }
+      console.log('Form submitted!');
   
+      
+      }
+    
+    else {
+      console.error('Form is invalid:', this.patientForm.errors);
+      this.patientForm.markAllAsTouched(); // Highlight invalid fields
+    }
+  }
   public resetForm(): void {
     this.patientForm.reset();
   }
@@ -292,6 +292,22 @@ public perosonneAcontacter = {
   public saveForm(): void {
     this.submitForm();
     this.resetForm();
+    const formValues = this.patientForm.value; // Extract values for further use
+      
+       const id =formValues.nss;
+      const pageToRedirect = this.globalService.pageToRedirect;
+      console.log(id);
+     
+      if (this.globalService.pageToRedirect === 'pageMedecin') {
+        // Naviguer vers '/dpi' avec l'ID en paramètre
+        this.router.navigate(['/dpi',1]);
+      } 
+      else 
+      if (this.globalService.pageToRedirect === 'pageAdministratiff') 
+        {
+        // Naviguer vers '/pageadminnistratif' avec l'ID en paramètre
+        this.router.navigate(['/pageadminnistratif', 2]);
+        } 
   }
 
 

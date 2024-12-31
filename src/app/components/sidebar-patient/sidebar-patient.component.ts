@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {  RouterLink, RouterModule } from '@angular/router';
+import {  ActivatedRoute, RouterLink, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 // import { Router } from '@angular/router';
 
@@ -23,6 +23,12 @@ export class SidebarPatientComponent {
   public toggleSidebar() {
     this.sideBarBool = !this.sideBarBool;
     
+  }
+   idPatient: string | null = null;
+    constructor(private route: ActivatedRoute) {}
+    ngOnInit(): void {
+    this.idPatient = this.route.snapshot.paramMap.get('id'); // Récupérer l'ID
+    console.log('ID reçu dans sideBar :', this.idPatient);
   }
 
 }

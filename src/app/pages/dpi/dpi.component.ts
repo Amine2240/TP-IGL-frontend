@@ -10,10 +10,12 @@ import {  ActivatedRoute, RouterOutlet } from '@angular/router';
   styleUrl: './dpi.component.scss'
 })
 export class DpiComponent {
-  nss: string;
+  id: string | null = null; 
+  constructor(private route: ActivatedRoute) {}
 
-  constructor(private route: ActivatedRoute) {
-    // Retrieve the 'nss' parameter from the URL
-    this.nss = this.route.snapshot.paramMap.get('nss')!;
+  ngOnInit(): void {
+    this.id = this.route.snapshot.paramMap.get('id'); // Récupérer l'ID
+    console.log('ID reçu :', this.id);
+    // Utilisez cet ID pour charger les données ou effectuer des actions
   }
 }

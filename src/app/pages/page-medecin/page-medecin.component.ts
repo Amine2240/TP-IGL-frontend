@@ -2,6 +2,7 @@ import { Component, ElementRef, HostListener, NgModule } from '@angular/core';
 import { DpiTableauComponent } from '../../components/dpi-tableau/dpi-tableau.component';
 import { CommonModule } from '@angular/common';
 import { RouterModule , Router } from '@angular/router';
+import { GlobalService } from '../../global.service';
 
 
 @Component({
@@ -13,14 +14,18 @@ import { RouterModule , Router } from '@angular/router';
 })
 export class PageMedecinComponent {
   isMenuOpen = false;
-
-  constructor(private elementRef: ElementRef,private router: Router) {}
+  
+  
+  constructor(private elementRef: ElementRef,private router: Router,private globalService :GlobalService) {}
   onRowClick(): void {
-    // Use the global variable from GlobalService to determine the route
+    const pageType = this.globalService.pageToRedirect; // Par exemple, 'pageMedecin' ou 'pageAdministratif'
     
-      this.router.navigate(['/formPatient']);
-    
+    if (pageType) {
+      this.router.navigate([`${pageType}/formPatient`]);
+    } else {
+      console.error('pageToRedirect is not defined');
     }
+  }
   
 
   toggleMenu(event: MouseEvent) {

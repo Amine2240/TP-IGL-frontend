@@ -8,6 +8,8 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+
 
 interface DataRow {
   date: string;
@@ -128,16 +130,19 @@ export class VisualisationBilanPatientComponent implements OnInit {
   @ViewChild('fileInput') fileInput: any;
   elementRef: any;
 
-  constructor(private renderer: Renderer2, private el: ElementRef) {
+  constructor(private renderer: Renderer2, private el: ElementRef,private route: ActivatedRoute,private router :Router) {
     this.renderer.listen('document', 'click', (event: Event) => {
       const clickedInside = this.el.nativeElement.contains(event.target);
       if (!clickedInside) {
         this.toggleFilterDropdown = false;
       }
     });
+    
   }
   
-
+  idPatient: string | null = null;
+  
+ 
   ngOnInit(): void {
     this.applySearchFilter();
 
@@ -147,6 +152,8 @@ export class VisualisationBilanPatientComponent implements OnInit {
         this.toggleFilterDropdown = false;
       }
     });
+    this.idPatient = this.route.snapshot.paramMap.get('id'); // Récupérer l'ID
+  console.log('ID reçu dans sideBar :', this.idPatient);
   }
   isMenuOpen = false;
   
@@ -172,7 +179,16 @@ export class VisualisationBilanPatientComponent implements OnInit {
     // Close the menu if clicked outside of the menu and button
     
     
-  
+    onRowClick(row: any): void {
+      console.log('ID de la ligne sélectionnée :', row.id); // Affiche l'ID dans la console pour debug
+    
+      if (row.type.toLowerCase.equals("biologique")) {
+        // Naviguer vers '/dpi' avec l'ID en paramètre
+        this.router.navigate(['/visualiserBilanBiologique', row.id]);
+      } else  
+      {this.router.navigate(['/visualiserBilanBiologique', row.id]);
+      }
+    }
 
   applyFilter(): void {
     this.filteredData = [...this.data].sort((a, b) =>

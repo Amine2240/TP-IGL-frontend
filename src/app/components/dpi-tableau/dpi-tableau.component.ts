@@ -6,13 +6,13 @@ import { Router } from '@angular/router';
 import { GlobalService } from '../../global.service';
 
 interface DataRow {
+  id: number; // Identifiant unique pour chaque ligne
   qrCode: string;
   nom: string;
   prenom: string;
   nss: string;
   photo: string;
 }
-
 interface Column {
   key: keyof DataRow;
   label: string;
@@ -48,6 +48,7 @@ export class DpiTableauComponent implements OnInit {
 
   data: DataRow[] = [
     {
+      id: 1,
       qrCode: '../../../assets/qrCode.svg',
       nom: 'Lorem ',
       prenom: 'Ipsum',
@@ -55,41 +56,23 @@ export class DpiTableauComponent implements OnInit {
       photo: '../../../assets/account.svg',
     },
     {
+      id: 2,
       qrCode: '../../../assets/qrCode.svg',
       nom: 'Dolor Sit',
-      prenom: 'eeeeeeeeeeeeeeeeAmet',
+      prenom: 'Amet',
       nss: '987654321098',
       photo: '../../../assets/account.svg',
     },
     {
+      id: 3,
       qrCode: '../../../assets/qrCode.svg',
       nom: 'Consectetur',
-      prenom: 'zzzzzzzzzzzzzAdipiscing',
-      nss: '567890123456',
-      photo: '../../../assets/account.svg',
-    },
-    {
-      qrCode: '../../../assets/qrCode.svg',
-      nom: 'Lorem ddddddddddddddderrahmane',
-      prenom: 'Ipsum',
-      nss: '123456789012',
-      photo: '../../../assets/account.svg',
-    },
-    {
-      qrCode: '../../../assets/qrCode.svg',
-      nom: 'aaConsectetur',
-      prenom: 'zzzzzzzzzzzAdipiscing',
-      nss: '567890123456',
-      photo: '../../../assets/account.svg',
-    },
-    {
-      qrCode: '../../../assets/qrCode.svg',
-      nom: 'Consectetur',
-      prenom: 'zzzzAdipiscing',
+      prenom: 'Adipiscing',
       nss: '567890123456',
       photo: '../../../assets/account.svg',
     },
   ];
+  
 
   filteredData: DataRow[] = []; // Filtered data
   qrCodeDataset: string[] = ['12345', 'abcdef', '67890']; 
@@ -101,24 +84,41 @@ export class DpiTableauComponent implements OnInit {
   ) {}
  
   onRowClick(row: any): void {
-    // Use the global variable from GlobalService to determine the route
+    console.log('ID de la ligne sélectionnée :', row.id); // Affiche l'ID dans la console pour debug
+  
     if (this.globalService.pageToRedirect === 'pageMedecin') {
-      this.router.navigate(['/dpi']);
+      // Naviguer vers '/dpi' avec l'ID en paramètre
+      this.router.navigate(['/dpi', row.id]);
+    } else if (this.globalService.pageToRedirect === 'pageAdministratiff') {
+      // Naviguer vers '/pageadminnistratif' avec l'ID en paramètre
+      this.router.navigate(['/pageadminnistratif', row.id]);
+    } else if(this.globalService.pageToRedirect === 'pageInfermier') {
+      // Naviguer vers '/ajouterSoin' sans inclure l'ID
+      this.router.navigate(['/ajouterSoin',row.id]);
     }
-    if (this.globalService.pageToRedirect === 'pageAdministratiff') {
-      this.router.navigate(['/pageadminnistratif']);
+    else if(this.globalService.pageToRedirect === 'pageLaboratin') {
+      // Naviguer vers '/ajouterSoin' sans inclure l'ID
+      this.router.navigate(['pageLaboratin/bilan-bio-tableau',row.id]);
     }
-    else {
-      this.router.navigate(['/ajouterSoin']);
+    else if(this.globalService.pageToRedirect === 'pageRadiologue') {
+      // Naviguer vers '/ajouterSoin' sans inclure l'ID
+      this.router.navigate(['pageRadiologue/bilan-radio-tableau',row.id]);
     }
   }
   
+  
   applyFilter(): void {
-    this.filteredData = [...this.data].sort((a, b) =>
-      a[this.filterBy].localeCompare(b[this.filterBy])
-    );
+    this.filteredData = [...this.data].sort((a, b) => {
+      // Vérifier si le filtre sélectionné est autre que 'id'
+      if (this.filterBy === 'id') {
+        return 0; // Ne pas trier par 'id'
+      }
+  
+      // Tri basé sur le champ sélectionné
+      return a[this.filterBy].localeCompare(b[this.filterBy]);
+    });
   }
-
+  
   toggleDropdown(): void {
     this.toggleFilterDropdown = !this.toggleFilterDropdown;
   }

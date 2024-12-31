@@ -4,11 +4,12 @@ import {
   ElementRef,
   Renderer2,
   ViewChild,
+  HostListener,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import jsQR from 'jsqr';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { GlobalService } from '../../global.service';
 
 interface DataRow {
@@ -26,7 +27,7 @@ interface Column {
 @Component({
   selector: 'app-bilan-radio-tableau',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule,RouterLink],
   templateUrl: './bilan-radio-tableau.component.html',
   //styleUrls: ['./dpi-tableau.component.css'],
 })
@@ -35,12 +36,14 @@ export class BilanRadioTableauComponent implements OnInit {
   selectedFilter: string = 'Date'; 
   filterBy: keyof DataRow = 'date';
   filteredData: DataRow[] = [];
+  isMenuOpen = false;
  
   constructor(
       private renderer: Renderer2,
-      private el: ElementRef,
+      private elementRef: ElementRef,
       private router: Router,
-      private globalService: GlobalService   // Combine all dependencies into one constructor
+      
+      private route: ActivatedRoute,  // Combine all dependencies into one constructor
     ) {}
   filterableKeys: { key: keyof DataRow; label: string }[] = [
     { key: 'id', label: 'Bilan_Id' },
@@ -89,11 +92,25 @@ export class BilanRadioTableauComponent implements OnInit {
       observation: 'Data inconclusive, retesting recommended.',
     },
   ];
+
+  id: string | null = null; 
+    
+  
+    
+    
+   
+    
+  onButtonClick(): void {
+   console.log('am here ');
+     this.router.navigate(['ajouterBilanRadiologique',this.id]);
+  
+   }
+ 
   
   onRowClick(row: any): void {
     
     
-    this.router.navigate(['/visualisationBilanRadiologique']);
+    this.router.navigate(['/visualisationBilanRadiologique',row.id]);
  
   }
 
@@ -130,12 +147,16 @@ export class BilanRadioTableauComponent implements OnInit {
     this.applySearchFilter();
 
     this.renderer.listen('document', 'click', (event: Event) => {
-      const clickedInside = this.el.nativeElement.contains(event.target);
+      const clickedInside = this.elementRef.nativeElement.contains(event.target);
       if (!clickedInside) {
         this.toggleFilterDropdown = false;
       }
     });
+    this.id = this.route.snapshot.paramMap.get('id'); // Récupérer l'ID
+    console.log('ID reçu :', this.id);
   }
+
+ 
 
   applySearchFilter(): void {
     this.filteredData = this.data.filter(
@@ -145,6 +166,32 @@ export class BilanRadioTableauComponent implements OnInit {
         row.id.toLowerCase().startsWith(this.searchText.toLowerCase()) //beh nkoun sur yebda de droite a gauche
     );
   }
+
+ toggleMenu(event: MouseEvent) {
+      console.log('rami maftoha');
+      event.stopPropagation();
+      this.isMenuOpen = !this.isMenuOpen;
+      console.log('rami ta8la9t');
+    }
+  
+    profil() {
+      console.log('Navigating to profile...');
+      // Add profile navigation logic here
+    }
+  
+    logout() {
+      console.log('Logging out...');
+      // Add logout logic here
+    }
+  
+    // Close the menu if clicked outside of the menu and button
+    @HostListener('document:click', ['$event'])
+    onClickOutside(event: MouseEvent) {
+      const clickedInside = this.elementRef.nativeElement.contains(event.target);
+      if (!clickedInside) {
+        this.isMenuOpen = false;
+      }
+    }
 
   
 }

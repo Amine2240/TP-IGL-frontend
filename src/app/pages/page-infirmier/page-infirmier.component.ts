@@ -18,13 +18,6 @@ export class PageInfirmierComponent {
 
   
    constructor(private elementRef: ElementRef,private globalService: GlobalService, private router: Router) {}
-  
-   onRowClick(): void {
-    console.log('am here ');
-      this.router.navigate(['/ajouterSoin']);
-   
-    }
-  
 
   toggleMenu(event: MouseEvent) {
     console.log('rami maftoha');
