@@ -14,6 +14,7 @@ import { SoinPageComponent } from './pages/soin-page/soin-page.component';
 import { PageInfirmierComponent } from './pages/page-infirmier/page-infirmier.component';
 import { BilanBioTableauComponent } from './components/bilan-bio-tableau/bilan-bio-tableau.component';
 import { BilanRadioTableauComponent } from './components/bilan-radio-tableau/bilan-radio-tableau.component';
+import { GraphPageComponent } from './pages/graphe-page/graphe-page.component';
 
 export const routes: Routes = [
   // Routes for pages
@@ -30,6 +31,8 @@ export const routes: Routes = [
   { path: ':pageType/formPatient', component: FormpatientComponent },
   { path: 'pageLaboratin/bilan-bio-tableau/:id', component: BilanBioTableauComponent },
   { path: 'pageRadiologue/bilan-radio-tableau/:id', component: BilanRadioTableauComponent },
+  { path: 'pageGraphics/:idPatient',component: GraphPageComponent },
+
  
 
  
@@ -49,8 +52,8 @@ export const routes: Routes = [
       { path: 'page-dpi/:idPatient', loadComponent: () => import('./pages/dpi-page/dpi-page.component').then(m => m.DpiPageComponent) },
       { path: 'consultations-medicales/form-consultation/:idPatient', loadComponent: () => import('./components/formconsultation/formconsultation.component').then(m => m.FormconsultationComponent) },
       { path: 'consultations-medicales/form-consultation/ordonnance/:idPatient', loadComponent: () => import('./components/ordonnance/ordonnance.component').then(m => m.OrdonnanceComponent) },
-    
-      
+      { path: 'bilans/:idPatient', loadComponent: () => import('./pages/visualisation-bilan-patient/visualisation-bilan-patient.component').then(m => m.VisualisationBilanPatientComponent) },
+     
     ]
   },
 

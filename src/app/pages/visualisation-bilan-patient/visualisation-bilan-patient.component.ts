@@ -12,6 +12,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 
 interface DataRow {
+  idBilan:number;
   date: string;
   type: string;
   statut: string;
@@ -38,6 +39,7 @@ export class VisualisationBilanPatientComponent implements OnInit {
   searchText: string = '';
 
   columns: Column[] = [
+    { key: 'idBilan', label: 'IdBilan' },
     { key: 'date', label: 'Date' },
     { key: 'type', label: 'Type de Bilan' },
     { key: 'statut', label: 'Statut' },
@@ -47,78 +49,53 @@ export class VisualisationBilanPatientComponent implements OnInit {
 
   data: DataRow[] = [
     {
+      idBilan: 1, // Identifiant unique
       date: '25/12/2024',
       type: 'Biologique',
       statut: 'Traité',
-      actions: `<div class="flex justify-center space-x-4">
-        <button class="action-button" aria-label="Download">
-          <img src="../../../assets/download.svg" alt="Download" class="h-6 cursor-pointer" />
-        </button>
-        <button class="action-button" aria-label="View Results">
-          <img src="../../../assets/viewIcon.svg" alt="View Results" class="h-6 cursor-pointer" />
-        </button>
-      </div>`,
-      graphique: `<div class="flex justify-center">
-        <button class="action-button" aria-label="View Graph">
-          <img src="../../../assets/viewIcon.svg" alt="View Graph" class="h-6 cursor-pointer" />
-        </button>
-      </div>`,
+      actions: '',
+      graphique: '',
     },
     {
+      idBilan: 2, // Identifiant unique
       date: '20/12/2024',
       type: 'Radiologique',
       statut: 'Traité',
-      actions: `<div class="flex justify-center space-x-4">
-        <button class="action-button" aria-label="Download">
-          <img src="../../../assets/download.svg" alt="Download" class="h-6 cursor-pointer" />
-        </button>
-        <button class="action-button" aria-label="View Results">
-          <img src="../../../assets/viewIcon.svg" alt="View Results" class="h-6 cursor-pointer" />
-        </button>
-      </div>`,
-      graphique: `<div class="flex justify-center">
-        <button class="action-button" aria-label="View Graph">
-          <img src="../../../assets/viewIcon.svg" alt="View Graph" class="h-6 cursor-pointer" />
-        </button>
-      </div>`,
+      actions: '',
+      graphique: '',
     },
     {
+      idBilan: 3, // Identifiant unique
       date: '18/12/2024',
       type: 'Biologique',
       statut: 'En attente',
-      actions: `<div class="flex justify-center space-x-4">
-        <button class="action-button" aria-label="Download">
-          <img src="../../../assets/download.svg" alt="Download" class="h-6 cursor-pointer" />
-        </button>
-        <button class="action-button" aria-label="View Results">
-          <img src="../../../assets/viewIcon.svg" alt="View Results" class="h-6 cursor-pointer" />
-        </button>
-      </div>`,
-      graphique: `<div class="flex justify-center">
-        <button class="action-button" aria-label="View Graph">
-          <img src="../../../assets/viewIcon.svg" alt="View Graph" class="h-6 cursor-pointer" />
-        </button>
-      </div>`,
+      actions: '',
+      graphique: '',
     },
     {
+      idBilan: 4, // Identifiant unique
       date: '15/12/2024',
       type: 'Radiologique',
       statut: 'En attente',
-      actions: `<div class="flex justify-center space-x-4">
-        <button class="action-button" aria-label="Download">
-          <img src="../../../assets/download.svg" alt="Download" class="h-6 cursor-pointer" />
-        </button>
-        <button class="action-button" aria-label="View Results">
-          <img src="../../../assets/viewIcon.svg" alt="View Results" class="h-6 cursor-pointer" />
-        </button>
-      </div>`,
-      graphique: `<div class="flex justify-center">
-        <button class="action-button" aria-label="View Graph">
-          <img src="../../../assets/viewIcon.svg" alt="View Graph" class="h-6 cursor-pointer" />
-        </button>
-      </div>`,
+      actions: '',
+      graphique: '',
     },
   ];
+  
+  onDownload(row: DataRow): void {
+    console.log('Download clicked for:', row);
+    // Implement the download functionality here
+  }
+
+  onViewResults(row: DataRow): void {
+    console.log('View Results clicked for:', row);
+    // Implement the view results functionality here
+  }
+
+  onViewGraph(row: DataRow): void {
+    console.log('View Graph clicked for:', row);
+   this.router.navigate(['/pageGraphics',row.idBilan])
+  }
   
 
   filterableKeys: { key: keyof DataRow; label: string }[] = [
@@ -190,11 +167,26 @@ export class VisualisationBilanPatientComponent implements OnInit {
       }
     }
 
-  applyFilter(): void {
-    this.filteredData = [...this.data].sort((a, b) =>
-      a[this.filterBy].localeCompare(b[this.filterBy])
-    );
-  }
+    applyFilter(): void {
+      this.filteredData = [...this.data].sort((a, b) => {
+        // Exclude 'idBilan' from sorting
+        if (this.filterBy === 'idBilan') {
+          return 0;
+        }
+    
+        const valueA = a[this.filterBy];
+        const valueB = b[this.filterBy];
+    
+        // Check if values are numbers
+        if (typeof valueA === 'number' && typeof valueB === 'number') {
+          return valueA - valueB; // Sort numerically
+        }
+    
+        // Otherwise, sort as strings
+        return String(valueA).localeCompare(String(valueB));
+      });
+    }
+    
 
   toggleDropdown(): void {
     this.toggleFilterDropdown = !this.toggleFilterDropdown;

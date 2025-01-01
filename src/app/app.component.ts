@@ -13,31 +13,20 @@ import { TopRightSectionComponent } from './components/top-right-section/top-rig
 import { BilanRadiologiquePageComponent } from './pages/bilan-radiologique-page/bilan-radiologique-page.component';
 
 @Component({
-<<<<<<< HEAD
   selector: 'app-root',
   standalone: true,
   imports: [
     HttpClientModule,
     CommonModule,
     RouterOutlet,
-    RouterLink,
+   
     FormsModule,
     NavbarComponent,
    // SidebarComponent,
-    LoginPageComponent,
-    DpiPageComponent,
-   // HistoriqueMedicalePageComponent,
-    TopRightSectionComponent,
-    BilanRadiologiquePageComponent
+   
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
-=======
-    selector: 'app-root',
-    imports: [CommonModule, RouterOutlet, RouterLink, SidebarComponent, LoginPageComponent, DpiPageComponent, HistoriqueMedicalePageComponent, TopRightSectionComponent ], // Correctly include SidebarComponent
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss']
->>>>>>> ajouter-soins
 })
 export class AppComponent {
   title = 'app-root';

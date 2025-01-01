@@ -126,13 +126,68 @@
     </thead>
     <!-- Data Rows -->
     <tbody *ngIf="filteredData.length > 0; else noResults">
-      <tr *ngFor="let row of filteredData" class="hover:bg-light-blue transition">
+      <tr *ngFor="let row of filteredData" class="even:bg-gray-50 hover:bg-gray-100 transition">
         <td *ngFor="let column of columns" [class]="getCellClass(column.key)" class="px-4 py-2 border">
-          <span *ngIf="column.key !== 'actions' && column.key !== 'graphique'">{{ row[column.key] }}</span>
-          <span *ngIf="column.key === 'actions'" [innerHTML]="row[column.key]"></span>
-          <span *ngIf="column.key === 'graphique'" [innerHTML]="row[column.key]"></span>
+          <!-- Affichage du contenu normal -->
+          <ng-container *ngIf="column.key !== 'actions' && column.key !== 'graphique'">
+            {{ row[column.key] }}
+          </ng-container>
+      
+          <!-- Affichage des actions dynamiquement -->
+          <ng-container *ngIf="column.key === 'actions'">
+            <div class="flex justify-center space-x-4">
+              <button
+                class="focus:outline-none"
+                aria-label="Download"
+                (click)="onDownload(row)"
+              >
+                <img
+                  src="../../../assets/download.svg"
+                  alt="Download"
+                  class="h-6 hover:scale-110 transition-transform duration-200"
+                />
+              </button>
+              <button
+                class="focus:outline-none"
+                aria-label="View Results"
+                (click)="onViewResults(row)"
+              >
+                <img
+                  src="../../../assets/viewIcon.svg"
+                  alt="View Results"
+                  class="h-6 hover:scale-110 transition-transform duration-200"
+                />
+              </button>
+            </div>
+          </ng-container>
+      
+          <!-- Affichage conditionnel du graphique -->
+          <ng-container *ngIf="column.key === 'graphique'">
+            <div class="flex justify-center">
+              <!-- Si le type est "Radiologique", afficher "--" -->
+              <ng-container *ngIf="row.type === 'Radiologique'; else showGraphIcon">
+                <span class="text-gray-500">--</span>
+              </ng-container>
+      
+              <!-- Sinon, afficher le bouton graphique -->
+              <ng-template #showGraphIcon>
+                <button
+                  class="focus:outline-none"
+                  aria-label="View Graph"
+                  (click)="onViewGraph(row)"
+                >
+                  <img
+                    src="../../../assets/graphics.svg"
+                    alt="View Graph"
+                    class="h-6 hover:scale-110 transition-transform duration-200"
+                  />
+                </button>
+              </ng-template>
+            </div>
+          </ng-container>
         </td>
       </tr>
+      
     </tbody>
     <!-- No Results Template -->
     <ng-template #noResults>
