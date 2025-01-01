@@ -36,7 +36,7 @@
           </p>
           <div class=" flex mb-3 ">
             <p class=" font-semibold">Numéro de sécurité sociale (NSS): </p>
-            <input type="number" formControlName="nss" name="" id=""
+            <input type="text" formControlName="nss" name="" id=""
               class=" w-full ml-3 border-b-2 focus:outline-none border-blue-300 h-7">
           </div>
         </div>
@@ -53,8 +53,8 @@
             Adresse is required*
           </p>
           <div class=" flex w-full mb-3 ">
-            <p class=" font-semibold text-nowrap">Adresse : </p>
-            <input type="text" formControlName="adresse" name="" id=""
+            <p class=" font-semibold text-nowrap">Adresse email : </p>
+            <input type="email" formControlName="adresse" name="" id=""
               class=" w-full ml-3 border-b-2 focus:outline-none border-blue-300 h-7">
           </div>
           <p *ngIf="patientForm.get('telephone')?.invalid && patientForm.get('telephone')?.touched"
@@ -63,7 +63,7 @@
           </p>
           <div class=" flex w-full mb-3">
             <p class=" font-semibold text-nowrap">Telephone : </p>
-            <input type="number" formControlName="telephone" name="" id=""
+            <input type="text" formControlName="telephone" name="" id=""
               class=" w-full ml-3 border-b-2 focus:outline-none border-blue-300 h-7">
           </div>
         </div>
@@ -119,6 +119,14 @@
           <p class=" font-semibold ">Prénom: </p>
           <input type="text" formControlName="personneAconntacterPrenom" name="" id=""
             class="w-full ml-3 border-b-2 focus:outline-none border-blue-300 h-7">
+        </div>
+        <p *ngIf="patientForm.get('personneAconntacterEmail')?.invalid && patientForm.get('personneAconntacterEmail')?.touched" class="text-red-500">
+          Adresse email is required*
+        </p>
+        <div class=" flex w-full mb-3 ">
+          <p class=" font-semibold text-nowrap">Adresse email : </p>
+          <input type="email" formControlName="personneAconntacterEmail" name="" id=""
+            class=" w-full ml-3 border-b-2 focus:outline-none border-blue-300 h-7">
         </div>
       </div>
       <p *ngIf="patientForm.get('personneAconntacterTelephone')?.invalid && patientForm.get('personneAconntacterTelephone')?.touched"
@@ -237,20 +245,6 @@
 
 
         </div>
-        <!-- <div>
-          <div class=" rounded-full w-40 h-40 bg-blue-200 mx-auto overflow-hidden mb-5 p-5">
-            <img [src]="photoCodeQrPreview" alt="Image Preview" *ngIf="photoCodeQrPreview"
-              class=" h-auto border rounded" />
-          </div>
-          <p *ngIf="patientForm.get('codeqr')?.invalid" class="text-red-500 mb-3 ml-3">
-            codeQrPatient is required*
-          </p>
-          <label for="codeqrInput"
-            class=" cursor-pointer bg-blue-400 text-white capitalize px-5 py-3 m-3 rounded-lg">attacher codeQR
-            patient</label>
-          <input type="file" id="codeqrInput" (change)="onFileSelected($event,'codeQr')" accept="image/*"
-            class=" hidden" />
-        </div> -->
 
       </div>
 

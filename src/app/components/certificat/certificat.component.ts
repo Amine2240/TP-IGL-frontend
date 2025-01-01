@@ -2,11 +2,11 @@ import { Component, Input } from '@angular/core';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 @Component({
-  selector: 'app-certificat',
-  standalone: true,
-  imports: [],
-  templateUrl: './certificat.component.html',
-  styleUrl: './certificat.component.scss'
+    selector: 'app-certificat',
+    standalone: true,
+    imports: [],
+    templateUrl: './certificat.component.html',
+    styleUrl: './certificat.component.scss'
 })
 export class CertificatComponent {
   downloadSection(): void {

@@ -10,6 +10,7 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './bilan-radiologique-page.component.html',
   styleUrls: ['./bilan-radiologique-page.component.scss']
 })
+
 export class BilanRadiologiquePageComponent {
   uploadedImages: File[] = []; 
   uploadedImages2: string[] = []; 

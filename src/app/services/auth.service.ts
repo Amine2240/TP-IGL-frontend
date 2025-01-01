@@ -112,4 +112,8 @@ export class AuthService {
     }
     
   }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> amine

@@ -1,0 +1,173 @@
+<div class="flex place-content-center">
+  <div class=" p-6  min-h-screen w-[60%]" style="line-height: 1.8;" id="dpi-page-content">
+    <!-- Top Right Section 
+     <div class="top-right-section  top-0 right-28 md:right-12 sm:right-6 flex items-center gap-4 p-4">
+  </div>
+  -->
+    <div class="top-right-section  top-0 right-28 md:right-12 sm:right-6 flex items-center space-x-4 p-4">
+      <!-- QR Code -->
+      <div>
+        <img [src]="infosPatient.qrCode" alt="QR Code DPI" class="w-8 h-8 border border-gray-300 rounded" />
+      </div>
+      <!-- Download icon -->
+      <div>
+        <img class="w-auto h-8" src="assets/icons/download.png" alt="download" (click)="downloadPdf()" />
+      </div>
+      <!-- User Icon -->
+      <div>
+        <img class="w-auto h-8" [src]="infosPatient.photoProfil" alt="user" (click)="toggleMedecinInfo()" />
+      </div>
+    </div>
+
+    <!-- Médecin's Information 
+     <div class="medecin-info  top-16 right-6 z-50 bg-white p-4 border border-gray-300 rounded-lg shadow-md w-64 sm:w-48">
+  </div>
+  -->
+    <div *ngIf="isMedecinVisible"
+      class="medecin-info  right-6 top-16 z-50 bg-white p-4 rounded-md shadow-lg border border-gray-200 w-64">
+      <h3 class="text-lg font-bold text-gray-700">Informations du Médecin</h3>
+      <p class="mt-2"><strong>Nom :</strong> {{ medecinConnecte.nom }}</p>
+      <p><strong>Prénom :</strong> {{ medecinConnecte.prenom }}</p>
+      <p><strong>Spécialité :</strong> {{ medecinConnecte.specialite }}</p>
+      <button class="mt-4 bg-dark-blue text-white py-1 px-4 rounded hover:bg-blue-600" (click)="logout()">
+        Déconnexion
+      </button>
+    </div>
+
+    <!-- Informations sur le patient -->
+    <div class=" top-20 left-[5.5rem] 
+                sm:top-18 sm:left-[4.5rem] 
+                md:top-18 md:left-[5rem] 
+                lg:top-19 lg:left-[5.25rem] 
+                xl:top-20 xl:left-[5.5rem]">
+      <div class="flex items-center  space-x-4 mb-6">
+        <!-- Photo du patient -->
+        <label for="imageInput" class="cursor-pointer flex-shrink-0">
+          <img [src]="infosPatient.photoProfil" alt="Photo du patient"
+            class="w-24 h-40 border border-gray-300 rounded object-cover top-20 " />
+          <input type="file" id="imageInput" (change)="onImageChange($event)" class="hidden" />
+        </label>
+        <!-- Informations personnelles
+         <div class="grid grid-cols-2 gap-x-4 gap-y-4 sm:gap-x-2 sm:gap-y-2 md:gap-x-4 md:gap-y-4 lg:gap-x-8 lg:gap-y-8">
+  -->
+        <div>
+          <h3
+            class=" Informations-personnelle bg-blue-100 text-dark-blue text-lg font-bold  rounded-md p-2 mb-8 shadow mt-8 ">
+            Informations Personnelles
+          </h3>
+          <div class="grid grid-cols-2 gap-y-4 gap-x-128 sm:gap-x-128 sm:gap-y-2">
+            <p class="responsive-text">
+              <strong class="inline">Nom : </strong>
+              <span class="inline" *ngIf="!isEditMode">{{ infosPatient.nom }}</span>
+              <input *ngIf="isEditMode" type="text" [(ngModel)]="infosPatient.nom"
+                class="border border-dark-blue rounded p-2" />
+            </p>
+            <p class="responsive-text">
+              <strong>Prénom : </strong>
+              <span *ngIf="!isEditMode">{{ infosPatient.prenom }}</span>
+              <input *ngIf="isEditMode" type="text" [(ngModel)]="infosPatient.prenom"
+                class="border border-dark-blue rounded p-1" />
+            </p>
+            <p class="responsive-text">
+              <strong class="inline">Date de naissance : </strong>
+              <span class="inline" *ngIf="!isEditMode">{{ infosPatient.dateDeNaissance }}</span>
+              <input *ngIf="isEditMode" type="date" [(ngModel)]="infosPatient.dateDeNaissance"
+                class="border border-dark-blue rounded p-1" />
+            </p>
+            <p class="responsive-text">
+              <strong class="inline">Adresse : </strong>
+              <span class="inline" *ngIf="!isEditMode">{{ infosPatient.email }}</span>
+              <input *ngIf="isEditMode" type="text" [(ngModel)]="infosPatient.adresse"
+                class="border border-gray-300 rounded p-1" />
+            </p>
+            <p class="responsive-text">
+              <strong>NSS : </strong>
+              <span *ngIf="!isEditMode">{{ infosPatient.NSS }}</span>
+              <input *ngIf="isEditMode" type="text" [(ngModel)]="infosPatient.NSS"
+                class="border border-dark-blue rounded p-1" />
+            </p>
+            <p class="responsive-text">
+              <strong>Téléphone : </strong>
+              <span *ngIf="!isEditMode">{{ infosPatient.telephone }}</span>
+              <input *ngIf="isEditMode" type="text" [(ngModel)]="infosPatient.telephone "
+                class="border border-dark-blue rounded p-1" />
+            </p>
+
+          </div>
+
+        </div>
+      </div>
+
+      <!-- QR Code et Informations Administratives -->
+      <div>
+        <!-- Informations Administratives -->
+        <h3
+          class="Informations-personnelle bg-blue-100 text-dark-blue text-lg font-bold rounded-md p-2 mb-8 shadow mt-8 w-full ">
+          Informations Administratives
+        </h3>
+        <div class="grid grid-cols-2 gap-y-4 gap-x-128">
+          <p class="responsive-text">
+            <strong>Nom de la mutuelle : </strong>
+            <span *ngIf="!isEditMode">{{ infosPatient.mutuelle }}</span>
+            <input *ngIf="isEditMode" type="text" [(ngModel)]="infosPatient.mutuelle "
+              class="border border-dark-blue rounded p-1" />
+          </p>
+          <p class="responsive-text">
+            <strong>Numéro d’identification : </strong>
+            <!-- <span *ngIf="!isEditMode">{{ infosPatient.numeroIdentification }}</span> -->
+            <span *ngIf="!isEditMode">12345</span>
+            <input *ngIf="isEditMode" type="text" [(ngModel)]="infosPatient.numeroIdentification  "
+              class="border border-dark-blue rounded p-1" />
+          </p>
+        </div>
+
+        <!-- Personne à contacter -->
+        <h4 class="bg-blue-100 text-dark-blue text-lg font-bold rounded-md p-2 mb-8 shadow mt-8">
+          Personne à contacter
+        </h4>
+        <div class="grid grid-cols-2 gap-y-4 gap-x-128 sm:gap-x-128 sm:gap-y-2">
+          <p class="responsive-text">
+            <strong>Nom : </strong>
+            <span *ngIf="!isEditMode">{{ infosPatient.contact_urgence.nom }}</span>
+            <input *ngIf="isEditMode" type="text" [(ngModel)]="infosPatient.contact.nom "
+              class="border border-dark-blue rounded p-1" />
+          </p>
+          <p class="responsive-text">
+            <strong>Prénom : </strong>
+            <span *ngIf="!isEditMode">{{ infosPatient.contact_urgence.prenom }}</span>
+            <input *ngIf="isEditMode" type="text" [(ngModel)]="infosPatient.contact.prenom  "
+              class="border border-dark-blue rounded p-1" />
+          </p>
+          <p class="responsive-text">
+            <strong>Téléphone : </strong>
+            <span *ngIf="!isEditMode">{{ infosPatient.contact_urgence.telephone }}</span>
+            <input *ngIf="isEditMode" type="text" [(ngModel)]="infosPatient.contact.telephone  "
+              class="border border-dark-blue rounded p-1" />
+          </p>
+          <p class="responsive-text">
+            <strong>email : </strong>
+            <span *ngIf="!isEditMode">{{ infosPatient.contact_urgence.email }}</span>
+            <input *ngIf="isEditMode" type="text" [(ngModel)]="infosPatient.contact.telephone  "
+              class="border border-dark-blue rounded p-1" />
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Boutons Modifier / Sauvegarder -->
+    <!-- <button
+        class=" bottom-buttond fixed bottom-8 right-28 bg-blue-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-blue-600"
+        (click)="toggleEditMode()">
+        {{ isEditMode ? 'Sauvegarder' : 'Modifier' }}
+      </button> -->
+    <div class=" flex place-content-center flex-col items-center">
+      <div *ngIf="infosPatient.qrCode" class=" rounded-full w-40 h-40 bg-blue-200 mx-auto overflow-hidden mb-5 p-5">
+        <img [src]="'data:image/png;base64,' + infosPatient.qrCode" alt="code qr" class=" border rounded" />
+      </div>
+      <p *ngIf="infosPatient.qrCode" class=" font-semibold text-2xl">code qr du {{infosPatient.nom}}
+        {{infosPatient.prenom}}</p>
+      <p *ngIf="!infosPatient.qrCode" class=" font-semibold text-2xl">Loading QR Code...</p>
+    </div>
+  </div>
+
+</div>

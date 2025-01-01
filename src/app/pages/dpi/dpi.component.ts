@@ -3,11 +3,11 @@ import { SidebardpiComponent } from "../../components/sidebardpi-medecin/sidebar
 import {  ActivatedRoute, RouterOutlet } from '@angular/router';
 
 @Component({
-  selector: 'app-dpi',
-  standalone: true,
-  imports: [RouterOutlet, SidebardpiComponent],
-  templateUrl: './dpi.component.html',
-  styleUrl: './dpi.component.scss'
+    selector: 'app-dpi',
+    standalone: true,
+    imports: [RouterOutlet, SidebardpiComponent],
+    templateUrl: './dpi.component.html',
+    styleUrl: './dpi.component.scss'
 })
 export class DpiComponent {
   id: string | null = null; 

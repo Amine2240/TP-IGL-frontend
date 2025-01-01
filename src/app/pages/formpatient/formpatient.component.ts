@@ -1,3 +1,4 @@
+import { DpiService } from './../../services/dpi.service';
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -34,15 +35,16 @@ interface Allergie {
   list: AllergieType[];
 }
 @Component({
-  selector: 'app-formpatient',
-  standalone: true,
-  imports: [CommonModule , FormsModule , ReactiveFormsModule],
-  templateUrl: './formpatient.component.html',
-  styleUrl: './formpatient.component.scss'
+    selector: 'app-formpatient',
+    standalone: true,
+    imports: [CommonModule, FormsModule, ReactiveFormsModule],
+    templateUrl: './formpatient.component.html',
+    styleUrl: './formpatient.component.scss'
 })
 
 
 export class FormpatientComponent {
+  
   
   public soustraitementList : Item[] = [
     {
@@ -231,7 +233,7 @@ public perosonneAcontacter = {
   }
   patientForm: FormGroup;
   // we use constructor instead of formcontrol for clean code 
-  constructor(private fb: FormBuilder,private router: Router, private globalService: GlobalService  ) {
+  constructor(private fb: FormBuilder , private dpiservice : DpiService) {
     this.patientForm = this.fb.group({
       // Text inputs
       nom: ['', Validators.required],
@@ -244,8 +246,7 @@ public perosonneAcontacter = {
 
       // Number inputs
       nss: ['', [Validators.required, Validators.min(1)]],
-      
-      telephone: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
+      telephone: ['', [Validators.required]],
       numIdentification: ['', Validators.required],
       
 
@@ -259,24 +260,77 @@ public perosonneAcontacter = {
       maladies: this.fb.array([]), // Dynamically track selected items
       allergies: this.fb.array([]), 
       interventions: this.fb.array([]),
-      
 
       personneAconntacterNom: ['', Validators.required],
       personneAconntacterPrenom: ['', Validators.required],
       personneAconntacterTelephone: ['', Validators.required],
+      personneAconntacterEmail: ['', Validators.required],
       
-      photoPatient : ['', Validators.required],
+      photoPatient : [''],
       // codeqr : ['', Validators.required]
     });
     console.log(this.patientForm.value.nss);
   }
 
- 
   
-  public submitForm(): void {
+
+  public async submitForm(): Promise<void> {
     if (this.patientForm.valid) {
-      console.log('Form submitted!');
-  
+      const dpiPayload = { // so it will matches the dpi patient serializer
+        patient: {
+          user : {
+            nom: this.patientForm.value.nom,
+          prenom: this.patientForm.value.prenom,
+          date_naissance: this.patientForm.value.dateNaissance,
+          email: this.patientForm.value.adresse,
+          telephone: this.patientForm.value.telephone,
+          // photo_profil:"https://example.com/profile.jpg", 
+          role : "patient",
+          // num_identification: this.patientForm.value.numIdentification, // Add if required
+          // vaccine: this.patientForm.value.vaccine, // Add if required
+          // sous_traitement: this.patientForm.value.sousTraitement, 
+
+          },
+          NSS: this.patientForm.value.nss, 
+        },
+
+        contact_urgence: {
+          nom: this.patientForm.value.personneAconntacterNom,
+          prenom: this.patientForm.value.personneAconntacterPrenom,
+          telephone: this.patientForm.value.personneAconntacterTelephone,
+          email : this.patientForm.value.personneAconntacterEmail
+        },
+        hopital_initial_id: 1, // Replace this with the correct hospital ID
+        mutuelle: this.patientForm.value.mutuelle,
+        antecedants: [
+          ...this.patientForm.value.allergies,
+          ...this.patientForm.value.interventions,
+          ...this.patientForm.value.maladies
+        ],
+      };
+      console.log('dpiPayload' , dpiPayload);
+      
+     await  this.dpiservice.postDpi(dpiPayload).then((dpi) => {
+        console.log("DPI response before calling ajouterPhotoPatient:", dpi); // Debugging step
+        
+        // Check if `dpi`, `patient`, and `id` are valid
+        if (dpi?.dpi?.patient?.id) {
+          const patientId = dpi.dpi.patient.id;
+          this.dpiservice.ajouterPhotoPatient(patientId, this.photoPatientFile)
+            .then((response) => {
+              console.log("Photo uploaded successfully:", response);
+            })
+            .catch((error) => {
+              console.error("Error uploading patient photo:", error);
+            });
+        } else {
+          console.error("Invalid DPI response or missing patient ID:", dpi);
+        }
+      }).catch((error) => {
+        console.error("Error creating DPI:", error);
+      });
+      console.log('Form submitted!', this.patientForm.value);
+      // console.log("patient : ", this.patient);
       
       }
     
@@ -291,29 +345,14 @@ public perosonneAcontacter = {
 
   public saveForm(): void {
     this.submitForm();
-    this.resetForm();
-    const formValues = this.patientForm.value; // Extract values for further use
-      
-       const id =formValues.nss;
-      const pageToRedirect = this.globalService.pageToRedirect;
-      console.log(id);
-     
-      if (this.globalService.pageToRedirect === 'pageMedecin') {
-        // Naviguer vers '/dpi' avec l'ID en paramètre
-        this.router.navigate(['/dpi',1]);
-      } 
-      else 
-      if (this.globalService.pageToRedirect === 'pageAdministratiff') 
-        {
-        // Naviguer vers '/pageadminnistratif' avec l'ID en paramètre
-        this.router.navigate(['/pageadminnistratif', 2]);
-        } 
+    // this.resetForm();
   }
 
 
   photoPatientPreview: string | ArrayBuffer | null = null; // Holds the image preview URL or data URL
   // photoCodeQrPreview: string | ArrayBuffer | null = null; // Holds the image preview URL or data URL
-
+  photoPatientFile : any;
+  
   // Handle file selection
   onFileSelected(event: Event , type : "patient" | "codeQr") {
     const fileInput = event.target as HTMLInputElement;
@@ -325,7 +364,8 @@ public perosonneAcontacter = {
         alert('Please select a valid image file.');
         return;
       }
-
+    
+      this.photoPatientFile = file;
       // Preview the image
       const reader = new FileReader();
       reader.onload = () => {
@@ -349,39 +389,42 @@ public perosonneAcontacter = {
     }
   }
 
-  // public patient = {
-  //   id : 0,
-  //   nom: '',
-  //   prenom: '',
-  //   dateNaissance: Date,
-  //   nss : 0 , 
-  //   adresse : '',
-  //   telephone : 0,
-  //   mutuelle : "",
-  //   numIdentification : 0,
-  //   personneAconntacter : this.perosonneAcontacter,
-  //   sousTraitement : false,
-  //   maladies  : [] as Maladie[],
-  //   allergies : [] as AllergieType[],
-  //   interventions : [] as Item[],
-  //   vaccine : false,
-  //   photo : this.photoPatientPreview,
-  //   codeqr : this.photoCodeQrPreview
-  // } 
-
-  onCheckboxChange(event: Event, formArrayName: string, value: Allergie | Maladie | Item): void {
+  onCheckboxChange(event: Event, formArrayName: string, value: Item | Allergie | Maladie | Item2): void {
     const formArray = this.patientForm.get(formArrayName) as FormArray;
     const isChecked = (event.target as HTMLInputElement).checked;
 
-    if (isChecked) {
-      formArray.push(this.fb.control(value));
-    } else {
-      const index = formArray.controls.findIndex((control) => control.value === value);
-      if (index !== -1) {
-        formArray.removeAt(index);
-      }
+    // Prepare the antecedent object structure
+    let antecedent = {
+        nom: 'label' in value ? value.label : value.nom,  // The label is the 'nom' or 'label'
+        type: ''           // The type will be determined below
+    };
+
+    // Handle different formArrayNames and map to correct type
+    if (formArrayName === 'allergies') {
+        // Define the allergy type based on the list
+        antecedent.type = 'Allergie';  // allergy's type is its parent name (nom)
     }
-  }
+    else if (formArrayName === 'maladies') {
+        // Define the maladie type
+        antecedent.type = 'Maladie';
+    }
+    else if (formArrayName === 'interventions') {
+        // Define the intervention type
+        antecedent.type = 'Intervention';
+    }
+
+    // If the checkbox is checked, add the antecedent to the formArray, otherwise remove it
+    if (isChecked) {
+        formArray.push(this.fb.control(antecedent));
+    } else {
+        const index = formArray.controls.findIndex(control => 
+            control.value.nom === antecedent.nom && control.value.type === antecedent.type
+        );
+        if (index !== -1) {
+            formArray.removeAt(index);
+        }
+    }
+}
 
   onRadioboxChange(event: Event, formControlName: string): void {
     const selectedValue = (event.target as HTMLInputElement).value;

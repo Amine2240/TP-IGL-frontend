@@ -1,20 +1,30 @@
 import { RouterLink , RouterModule, RouterOutlet } from '@angular/router';
 import { CommonModule, Time  } from '@angular/common';
+<<<<<<< HEAD
 import { Component } from '@angular/core';
 import { TopRightSectionComponent } from '../../components/top-right-section/top-right-section.component';
+=======
+import { Component, OnInit } from '@angular/core';
+import { DpiService } from './../../services/dpi.service';
+>>>>>>> amine
 interface DataRow {
   date: Date;
   heure: String;
-  ordonnance: string;
-  diagnostic: string;
-  resume: string;
+  // ordonnance: string;
+  // diagnostic: string;
+  // resume: string;
+  medecinPrincipalEmail : String;
+  medecinPrincipalTelephone : String;
+  hoptialNom : String; 
 }
+
 
 interface Column {
   key: keyof DataRow;
   label: string;
 }
 @Component({
+<<<<<<< HEAD
   selector: 'app-consultations',
   standalone: true,
   imports: [CommonModule ,  RouterLink , RouterModule ,TopRightSectionComponent],
@@ -23,21 +33,50 @@ interface Column {
 })
 export class ConsultationsComponent {
   isMedecinVisible: boolean = false;
+=======
+    selector: 'app-consultations',
+    standalone: true,
+    imports: [CommonModule, RouterLink, RouterModule, RouterOutlet],
+    templateUrl: './consultations.component.html',
+    styleUrl: './consultations.component.scss'
+})
+export class ConsultationsComponent implements OnInit {
+  constructor(private dpiService: DpiService,) {
+  }
+  consultations = [];
+  async ngOnInit(): Promise<void> {
+    console.log("hiiiiii");
+  
+    try {
+      
+       this.consultations = await this.dpiService.getConsultations();
+       this.rows = this.consultations.map((consultation: any) => {
+        return {
+          date: consultation.date_de_consultation,
+          heure: consultation.heure,
+          medecinPrincipalEmail: consultation.medecin_principal.user.email,
+          medecinPrincipalTelephone: consultation.medecin_principal.user.telephone,
+          hoptialNom: consultation.hopital.nom,
+        };
+      }),
+      console.log('consultations from component :', this.consultations);
+      // this.rows = consultations; // Assuming consultations is an array of DataRow
+    } catch (error) {
+      console.error('Error fetching consultations:', error);
+    }
+  }
+  
+
+>>>>>>> amine
   columns: Column[] = [
     { key: 'date', label: 'Date' },
     { key: 'heure', label: 'Heure' },
-    { key: 'ordonnance', label: 'Ordonnance' },
-    { key: 'diagnostic', label: 'Diagnostic' },
-    { key: 'resume', label: 'Resume' },
+    { key: 'medecinPrincipalEmail', label: 'email medecin' },
+    { key: 'medecinPrincipalTelephone', label: 'telephone medecin' },
+    { key: 'hoptialNom', label: 'nom hopital' },
   ];
 
-  rows: DataRow[] = [
-    { date: new Date(), heure: '10:00', ordonnance: 'ordonnance', diagnostic: 'diagnostic', resume: 'resume' },
-    { date: new Date(), heure: '11:00', ordonnance: 'ordonnance', diagnostic: 'diagnostic', resume: 'resume' },
-    { date: new Date(), heure: '12:00', ordonnance: 'ordonnance', diagnostic: 'diagnostic', resume: 'resume' },
-    { date: new Date(), heure: '13:00', ordonnance: 'ordonnance', diagnostic: 'diagnostic', resume: 'resume' },
-    { date: new Date(), heure: '14:00', ordonnance: 'ordonnance', diagnostic: 'diagnostic', resume: 'resume' },
-  ];
+  rows: DataRow[] = [];
 
   patientData = {
     qrCode: 'assets/qrcode.png',

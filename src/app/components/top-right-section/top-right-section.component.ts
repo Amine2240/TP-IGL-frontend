@@ -2,6 +2,10 @@ import { Component , Input, Output, EventEmitter} from '@angular/core';
 
 @Component({
     selector: 'app-top-right-section',
+<<<<<<< HEAD
+=======
+    standalone: true,
+>>>>>>> amine
     imports: [],
     templateUrl: './top-right-section.component.html',
     styleUrl: './top-right-section.component.scss'

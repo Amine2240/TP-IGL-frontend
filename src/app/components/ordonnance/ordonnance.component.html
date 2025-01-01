@@ -7,8 +7,10 @@
     </div>
     <div class=" flex flex-col items-end mr-10">
 
-      <p class=" font-semibold text-xl">Dr. Samir Benyahia</p>
-      <p>Radiologue</p>
+      <p class=" font-semibold text-xl">Dr. {{ user.role == "medecin" ? user.nom : "Benkrid"}} {{user.role == "medecin"
+        ? user.prenom : "Soumia"}} </p>
+      <!--  -->
+      <p> {{user.role == "medecin" ? user.specialite : "Radiologue"}} </p>
     </div>
 
     <div class=" ml-10">
@@ -31,6 +33,41 @@
       <p class=" font-semibold text-blue-400 pt-10 text-2xl">
         médicaments prescrits :
       </p>
+      <table class="table-auto border-collapse w-full table sm:table">
+        <!-- Column headers -->
+        <thead class=" bg-blue-400">
+          <tr class="bg-sky-blue text-black">
+            <th *ngFor="let column of columns" class="px-4 py-3 font-bold border border-dark-blue text-center">
+              {{ column.label }}
+            </th>
+          </tr>
+        </thead>
+        <!-- Data rows -->
+        <tbody>
+          <tr *ngFor="let row of rows" class="hover:bg-blue-300 transition">
+            <td *ngFor="let column of columns" class="px-4 py-2 border">
+              <ng-container [ngSwitch]="column.key">
+
+                <input type="text" [disabled]="row.disabled" name="" id="" *ngSwitchCase="'medicament'"
+                  [(ngModel)]="row.medicament">
+                <input type="number" [disabled]="row.disabled" name="" id="" *ngSwitchCase="'duree'"
+                  [(ngModel)]="row.duree">
+                <input type="text" [disabled]="row.disabled" name="" id="" *ngSwitchCase="'dose'"
+                  [(ngModel)]="row.dose">
+                <input type="number" [disabled]="row.disabled" name="" id="" *ngSwitchCase="'nbrPrises'"
+                  [(ngModel)]="row.nbrPrises">
+
+              </ng-container>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class=" flex place-content-end">
+        <button (click)="ajouterPrescription()"
+          class=" text-center text-nowrap disabled:bg-blue-300 bg-blue-500 text-white capitalize px-5 py-3 m-3 rounded-lg ">
+          ajouter médicament
+        </button>
+      </div>
     </div>
 
     <div class=" flex place-content-end mt-10 text-xl">
@@ -55,22 +92,29 @@
         <div class=" flex md:w-96 place-content-start flex-wrap items-end">
           <div class=" flex items-center">
             <img class=" scale-50" src="assets/images/hopitalicon.svg" alt="">
-            <p>Nom de l'hôpitale</p>
+            <p>hôpitale kadoum</p>
           </div>
           <div class=" flex items-center ml-10">
             <img class=" scale-50" src="assets/images/emailicon.svg" alt="">
-            <p class="">adresseEmail</p>
+            <p class="">{{user.email }}</p>
           </div>
         </div>
         <div class=" flex items-center">
           <img class=" scale-50" src="assets/images/tlphnicon.svg" alt="">
-          <p>0541791761</p>
+          <p>{{user.telephone}} </p>
         </div>
 
       </div>
     </div>
 
   </section>
-  <button (click)="downloadSection()" class=" bg-blue-400 text-white capitalize px-5 py-3 m-3 rounded-lg">télécharger ordonnance</button>
+  <div class=" flex place-content-end">
+    <button (click)="nivagationToFormConsultation()"
+      class=" text-center text-nowrap disabled:bg-blue-300 bg-blue-500 text-white capitalize px-5 py-3 m-3 rounded-lg ">
+      ajouter ordonnance
+    </button>
+  </div>
+  <button (click)="downloadSection()" class=" bg-blue-400 text-white capitalize px-5 py-3 m-3 rounded-lg">télécharger
+    ordonnance</button>
 
 </div>

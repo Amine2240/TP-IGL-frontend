@@ -45,7 +45,7 @@ export const routes: Routes = [
       
       { path: 'certificat/:idPatient', loadComponent: () => import('./components/certificat/certificat.component').then(m => m.CertificatComponent) },
       { path: 'consultations-medicales/:idPatient', loadComponent: () => import('./components/consultations/consultations.component').then(m => m.ConsultationsComponent) },
-      { path: 'page-historique/:idPatient', loadComponent: () => import('./pages/historique-medicale-page/historique-medicale-page.component').then(m => m.HistoriqueMedicalePageComponent) },
+     // { path: 'page-historique/:idPatient', loadComponent: () => import('./pages/historique-medicale-page/historique-medicale-page.component').then(m => m.HistoriqueMedicalePageComponent) },
       { path: 'page-dpi/:idPatient', loadComponent: () => import('./pages/dpi-page/dpi-page.component').then(m => m.DpiPageComponent) },
       { path: 'consultations-medicales/form-consultation/:idPatient', loadComponent: () => import('./components/formconsultation/formconsultation.component').then(m => m.FormconsultationComponent) },
       { path: 'consultations-medicales/form-consultation/ordonnance/:idPatient', loadComponent: () => import('./components/ordonnance/ordonnance.component').then(m => m.OrdonnanceComponent) },
@@ -61,7 +61,7 @@ export const routes: Routes = [
     children: [
       { path: 'certificat/:idPatient', loadComponent: () => import('./components/certificat/certificat.component').then(m => m.CertificatComponent) },
       { path: 'consultations-medicales/:idPatient', loadComponent: () => import('./components/consultations/consultations.component').then(m => m.ConsultationsComponent) },
-      { path: 'page-historique/:idPatient', loadComponent: () => import('./pages/historique-medicale-page/historique-medicale-page.component').then(m => m.HistoriqueMedicalePageComponent) },
+      //{ path: 'page-historique/:idPatient', loadComponent: () => import('./pages/historique-medicale-page/historique-medicale-page.component').then(m => m.HistoriqueMedicalePageComponent) },
       { path: 'page-dpi/:idPatient', loadComponent: () => import('./pages/dpi-page/dpi-page.component').then(m => m.DpiPageComponent) },
       { path: 'consultations-medicales/form-consultation/:idPatient', loadComponent: () => import('./components/formconsultation/formconsultation.component').then(m => m.FormconsultationComponent) },
       { path: 'consultations-medicales/form-consultation/ordonnance/:idPatient', loadComponent: () => import('./components/ordonnance/ordonnance.component').then(m => m.OrdonnanceComponent) },
@@ -76,7 +76,7 @@ export const routes: Routes = [
     children: [
       { path: 'certificat/:idPatient', loadComponent: () => import('./components/certificat/certificat.component').then(m => m.CertificatComponent) },
       { path: 'consultations-medicales/:idPatient', loadComponent: () => import('./components/consultations/consultations.component').then(m => m.ConsultationsComponent) },
-      { path: 'page-historique/:idPatient', loadComponent: () => import('./pages/historique-medicale-page/historique-medicale-page.component').then(m => m.HistoriqueMedicalePageComponent) },
+      //{ path: 'page-historique/:idPatient', loadComponent: () => import('./pages/historique-medicale-page/historique-medicale-page.component').then(m => m.HistoriqueMedicalePageComponent) },
       { path: 'page-dpi/:idPatient', loadComponent: () => import('./pages/dpi-page/dpi-page.component').then(m => m.DpiPageComponent) },
       { path: 'consultations-medicales/form-consultation/:idPatient', loadComponent: () => import('./components/formconsultation/formconsultation.component').then(m => m.FormconsultationComponent) },
       { path: 'consultations-medicales/form-consultation/ordonnance/:idPatient', loadComponent: () => import('./components/ordonnance/ordonnance.component').then(m => m.OrdonnanceComponent) }

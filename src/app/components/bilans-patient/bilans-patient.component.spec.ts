@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DpiPageComponent } from './dpi-page.component';
+import { BilansPatientComponent } from './bilans-patient.component';
 
-describe('DpiPageComponent', () => {
-  let component: DpiPageComponent;
-  let fixture: ComponentFixture<DpiPageComponent>;
+describe('BilansPatientComponent', () => {
+  let component: BilansPatientComponent;
+  let fixture: ComponentFixture<BilansPatientComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DpiPageComponent]
+      imports: [BilansPatientComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(DpiPageComponent);
+    fixture = TestBed.createComponent(BilansPatientComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
