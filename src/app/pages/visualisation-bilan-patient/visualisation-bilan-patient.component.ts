@@ -39,7 +39,7 @@ export class VisualisationBilanPatientComponent implements OnInit {
   searchText: string = '';
 
   columns: Column[] = [
-    { key: 'idBilan', label: 'IdBilan' },
+  
     { key: 'date', label: 'Date' },
     { key: 'type', label: 'Type de Bilan' },
     { key: 'statut', label: 'Statut' },
@@ -89,8 +89,15 @@ export class VisualisationBilanPatientComponent implements OnInit {
 
   onViewResults(row: DataRow): void {
     console.log('View Results clicked for:', row);
-    // Implement the view results functionality here
-  }
+    if(row.type.toLocaleLowerCase() =='biologique'){
+      this.router.navigate(['/visualiserBilanBiologique',row.idBilan])
+    }
+    else {
+     
+        this.router.navigate(['/visualiserBilanRadiologique',row.idBilan])
+      }
+    }
+  
 
   onViewGraph(row: DataRow): void {
     console.log('View Graph clicked for:', row);
@@ -121,7 +128,8 @@ export class VisualisationBilanPatientComponent implements OnInit {
   
  
   ngOnInit(): void {
-    this.applySearchFilter();
+    this.applySearchFilter(); // Apply the search filter first
+    this.applyFilter(); 
 
     this.renderer.listen('document', 'click', (event: Event) => {
       const clickedInside = this.el.nativeElement.contains(event.target);
@@ -170,6 +178,15 @@ export class VisualisationBilanPatientComponent implements OnInit {
     applyFilter(): void {
       this.filteredData = [...this.data].sort((a, b) => {
         // Exclude 'idBilan' from sorting
+       
+    
+        if (this.filterBy === 'date') {
+          const dateA = new Date(a[this.filterBy]);
+          const dateB = new Date(b[this.filterBy]);
+          return dateB.getTime() - dateA.getTime(); // Tri décroissant
+        }
+    
+        // Exclure 'idBilan' du tri
         if (this.filterBy === 'idBilan') {
           return 0;
         }
@@ -177,13 +194,13 @@ export class VisualisationBilanPatientComponent implements OnInit {
         const valueA = a[this.filterBy];
         const valueB = b[this.filterBy];
     
-        // Check if values are numbers
+        // Si les valeurs sont des nombres, trier numériquement
         if (typeof valueA === 'number' && typeof valueB === 'number') {
-          return valueA - valueB; // Sort numerically
+          return valueB - valueA; // Tri décroissant pour les nombres
         }
     
-        // Otherwise, sort as strings
-        return String(valueA).localeCompare(String(valueB));
+        // Sinon, trier par chaîne de caractères
+        return String(valueB).localeCompare(String(valueA)); // Tri décroissant pour les chaînes
       });
     }
     

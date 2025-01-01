@@ -15,6 +15,8 @@ import { PageInfirmierComponent } from './pages/page-infirmier/page-infirmier.co
 import { BilanBioTableauComponent } from './components/bilan-bio-tableau/bilan-bio-tableau.component';
 import { BilanRadioTableauComponent } from './components/bilan-radio-tableau/bilan-radio-tableau.component';
 import { GraphPageComponent } from './pages/graphe-page/graphe-page.component';
+import { BilanBiologiquePageVisComponent } from './pages/bilan-biologique-page-vis/bilan-biologique-page-vis.component';
+import { BilanRadiologiqueVisPageComponent } from './pages/bilan-radiologique-vis-page/bilan-radiologique-vis-page.component';
 
 export const routes: Routes = [
   // Routes for pages
@@ -32,7 +34,8 @@ export const routes: Routes = [
   { path: 'pageLaboratin/bilan-bio-tableau/:id', component: BilanBioTableauComponent },
   { path: 'pageRadiologue/bilan-radio-tableau/:id', component: BilanRadioTableauComponent },
   { path: 'pageGraphics/:idPatient',component: GraphPageComponent },
-
+  { path: 'visualiserBilanBiologique/:id', component:BilanBiologiquePageVisComponent },
+  { path: 'visualiserBilanRadiologique/:id', component:BilanRadiologiqueVisPageComponent },
  
 
  

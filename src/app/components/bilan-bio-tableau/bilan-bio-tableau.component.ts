@@ -101,6 +101,7 @@ export class BilanBioTableauComponent implements OnInit {
   
   ngOnInit(): void {
     this.applySearchFilter();
+    this.applyFilter();
 
     this.renderer.listen('document', 'click', (event: Event) => {
       const clickedInside = this.elementRef.nativeElement.contains(event.target);
@@ -118,16 +119,21 @@ export class BilanBioTableauComponent implements OnInit {
   onRowClick(row: any): void {
     
     
-      this.router.navigate(['/visualisationBilanBiologique',row.id]);
+      this.router.navigate(['/visualiserBilanBiologique',row.id]);
    
     }
   
   
-  applyFilter(): void {
-    this.filteredData = [...this.data].sort((a, b) =>
-      a[this.filterBy].localeCompare(b[this.filterBy])
-    );
-  }
+    applyFilter(): void {
+      this.filteredData = [...this.data].sort((a, b) => {
+        // Conversion des dates au format "jj/mm/aaaa" en objets Date pour comparer les dates
+        const dateA = new Date(a.date.split('/').reverse().join('-')); // "25/12/2024" -> "2024-12-25"
+        const dateB = new Date(b.date.split('/').reverse().join('-')); // "20/12/2024" -> "2024-12-20"
+    
+        // Trier par date décroissante
+        return dateB.getTime() - dateA.getTime(); // Décroissant (dateB - dateA)
+      });
+    }
 
   toggleDropdown(): void {
     this.toggleFilterDropdown = !this.toggleFilterDropdown;
@@ -156,6 +162,8 @@ export class BilanBioTableauComponent implements OnInit {
         row.id.toLowerCase().startsWith(this.searchText.toLowerCase()) //beh nkoun sur yebda de droite a gauche
     );
   }
+
+  
 
 
 
