@@ -1,12 +1,7 @@
 import { RouterLink , RouterModule, RouterOutlet } from '@angular/router';
 import { CommonModule, Time  } from '@angular/common';
-<<<<<<< HEAD
-import { Component } from '@angular/core';
-import { TopRightSectionComponent } from '../../components/top-right-section/top-right-section.component';
-=======
 import { Component, OnInit } from '@angular/core';
 import { DpiService } from './../../services/dpi.service';
->>>>>>> amine
 interface DataRow {
   date: Date;
   heure: String;
@@ -18,22 +13,11 @@ interface DataRow {
   hoptialNom : String; 
 }
 
-
 interface Column {
   key: keyof DataRow;
   label: string;
 }
 @Component({
-<<<<<<< HEAD
-  selector: 'app-consultations',
-  standalone: true,
-  imports: [CommonModule ,  RouterLink , RouterModule ,TopRightSectionComponent],
-  templateUrl: './consultations.component.html',
-  styleUrl: './consultations.component.scss'
-})
-export class ConsultationsComponent {
-  isMedecinVisible: boolean = false;
-=======
     selector: 'app-consultations',
     standalone: true,
     imports: [CommonModule, RouterLink, RouterModule, RouterOutlet],
@@ -41,6 +25,7 @@ export class ConsultationsComponent {
     styleUrl: './consultations.component.scss'
 })
 export class ConsultationsComponent implements OnInit {
+  isMedecinVisible: boolean = false;
   constructor(private dpiService: DpiService,) {
   }
   consultations = [];
@@ -67,7 +52,6 @@ export class ConsultationsComponent implements OnInit {
   }
   
 
->>>>>>> amine
   columns: Column[] = [
     { key: 'date', label: 'Date' },
     { key: 'heure', label: 'Heure' },
