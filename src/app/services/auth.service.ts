@@ -9,7 +9,7 @@ export class AuthService {
   private tokenKey = 'auth_token';
   private userKey = 'auth_user';
   private user: any = null;
-   axiosInstance: AxiosInstance; // we use it in all servicesn 
+  axiosInstance: AxiosInstance; // we use it in all servicesn
 
   constructor() {
     this.axiosInstance = axios.create({
@@ -25,10 +25,10 @@ export class AuthService {
 
   getToken(): string | null {
     const token = localStorage.getItem(this.tokenKey);
-  if (!token) {
-    console.warn('Token not found in localStorage');
-  }
-  return token;
+    if (!token) {
+      console.warn('Token not found in localStorage');
+    }
+    return token;
   }
 
   clearAuth(): void {
@@ -41,20 +41,13 @@ export class AuthService {
     try {
       const token = this.getToken();
       console.log('fetching user , token : ', token);
-      
-      
-    if (!token) {
-      throw new Error('Authentication token is missing.');
-    }
-    // const headers = {
-    //   'Content-Type': 'application/json',
-    //   Authorization: `Bearer ${token}`,
-    // };
-    // console.log('Request Headers:', );
+
+      if (!token) {
+        throw new Error('Authentication token is missing.');
+      }
       const response = await this.axiosInstance.get('/users/user-info/');
       console.log('response fetching user:', response);
-      
-      
+
       return response.data;
     } catch (error) {
       console.error('Error fetching user:', error);
@@ -67,7 +60,6 @@ export class AuthService {
   async loadUser(): Promise<void> {
     const cachedUser = localStorage.getItem(this.userKey);
     console.log('cached user:', cachedUser);
-    
 
     if (cachedUser) {
       this.user = JSON.parse(cachedUser);
@@ -90,7 +82,7 @@ export class AuthService {
   isLoggedIn(): boolean {
     return !!this.user;
   }
-  async login(username:string , password : string) {
+  async login(username: string, password: string) {
     const loginPayload = { username, password };
     try {
       const response = await this.axiosInstance.post(
@@ -98,18 +90,17 @@ export class AuthService {
         loginPayload,
         {
           headers: { 'Content-Type': 'application/json' },
-        }
+        },
       );
       this.setToken(response.data.token);
       // Store the auth token in a cookie
       document.cookie = `auth_token=${response.data.token}; path=/; max-age=3600; secure; SameSite=None`;
       console.log('hiiiiii');
       console.log('response datat:', response.data);
-      
+
       return response.data;
     } catch (error: any) {
       throw error;
     }
-    
   }
 }

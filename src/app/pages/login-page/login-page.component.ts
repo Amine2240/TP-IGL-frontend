@@ -9,20 +9,21 @@ import {
 } from '@angular/forms';
 import axios from 'axios';
 import { Router } from '@angular/router';
+import { GlobalService } from '../../global.service';
 @Component({
-    selector: 'app-login-page',
-    standalone: true,
-    imports: [CommonModule, ReactiveFormsModule], // Import ReactiveFormsModule here
-    templateUrl: './login-page.component.html',
-    styleUrls: ['./login-page.component.scss']
+  selector: 'app-login-page',
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule], // Import ReactiveFormsModule here
+  templateUrl: './login-page.component.html',
+  styleUrls: ['./login-page.component.scss'],
 })
 export class LoginPageComponent implements OnInit {
   loginForm: FormGroup;
   errorMessage: string | null = null;
-
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
+    private globalService: GlobalService,
     private router: Router,
   ) {
     this.loginForm = this.fb.group({
@@ -40,9 +41,21 @@ export class LoginPageComponent implements OnInit {
       ],
     });
   }
-  ngOnInit(): void {
-    // console.log(this.authService.getToken());
-    
+  redirectToHome() {
+    this.router.navigate(['pageLanding']);
+  }
+  async ngOnInit(): Promise<void> {
+    await this.authService.loadUser();
+    if (this.authService.isLoggedIn()) {
+      const user = this.authService.getUser();
+      const targetRoute = this.globalService.roleRouteMap[user.role];
+
+      if (targetRoute) {
+        this.router.navigate([targetRoute]);
+      } else {
+        console.error(`No route defined for role: ${user.role}`);
+      }
+    }
   }
 
   get email() {
@@ -67,39 +80,21 @@ export class LoginPageComponent implements OnInit {
           username: this.loginForm.value.email,
           password: this.loginForm.value.password,
         };
-        const response = await this.authService.login(loginPayload.username, loginPayload.password);
+        const response = await this.authService.login(
+          loginPayload.username,
+          loginPayload.password,
+        );
         console.log('Login Successful:', response);
         await this.authService.loadUser();
-        if (this.authService.getUser().role === 'administratif') {
-          this.router.navigate(['/formpatient']);
-        } else if (this.authService.getUser().role === 'medecin') {
-          this.router.navigate(['/formpatient']);
-          
-          
-        }else if (this.authService.getUser().role === 'admin') {
-        
-        }else if (this.authService.getUser().role === 'pharmacien') {
-          
-          
+        const userRole = this.authService.getUser().role;
+        const targetRoute = this.globalService.roleRouteMap[userRole];
+
+        // redirecting to the appropriate dashboard (based on user role)
+        if (targetRoute) {
+          this.router.navigate([targetRoute]);
+        } else {
+          console.error(`No route defined for role: ${userRole}`);
         }
-        else if (this.authService.getUser().role === 'laboratin') {
-    
-          
-        }
-        else if (this.authService.getUser().role === 'radiologue') {
-    
-          
-        }
-        else if (this.authService.getUser().role === 'infermier') {
-    
-          
-        }
-        else if (this.authService.getUser().role === 'patient') {
-          this.router.navigate(['/dpi']);
-    
-          
-        }
-        console.log('User Loaded:', this.authService.getUser());
       } catch (error: any) {
         if (error.response && error.response.status == 401) {
           this.errorMessage =
