@@ -11,7 +11,7 @@ export class AuthService {
   private user: any = null;
   axiosInstance: AxiosInstance; // we use it in all servicesn
 
-  constructor() {
+  constructor(private router: Router) {
     this.axiosInstance = axios.create({
       baseURL: 'http://localhost:8000/api',
       withCredentials: true,
@@ -101,6 +101,15 @@ export class AuthService {
       return response.data;
     } catch (error: any) {
       throw error;
+    }
+  }
+  async logout(): Promise<void> {
+    try {
+      await this.axiosInstance.post('/users/logout/');
+      this.clearAuth();
+      this.router.navigate(['/login']);
+    } catch (error) {
+      console.error('Error during logout:', error);
     }
   }
 }

@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { BilanRadioTableauComponent } from '../../components/bilan-radio-tableau/bilan-radio-tableau.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GlobalService } from '../../global.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-page-radiologue',
@@ -14,31 +15,23 @@ import { GlobalService } from '../../global.service';
 export class PageRadiologueComponent {
   isMenuOpen = false;
 
-  
   constructor(
-   
     private elementRef: ElementRef,
     private router: Router,
-    private route: ActivatedRoute
-      // Combine all dependencies into one constructor
+    private route: ActivatedRoute,
+    private authService: AuthService,
   ) {}
 
-  id: string | null = null; 
-
+  id: string | null = null;
 
   ngOnInit(): void {
     this.id = this.route.snapshot.paramMap.get('id'); // Récupérer l'ID
     console.log('ID reçu :', this.id);
     // Utilisez cet ID pour charger les données ou effectuer des actions
   }
- 
-  
 
   onRowClick(): void {
-    
-    
     this.router.navigate(['/ajouterBilanRadiologique']);
- 
   }
 
   toggleMenu(event: MouseEvent) {
@@ -55,7 +48,7 @@ export class PageRadiologueComponent {
 
   logout() {
     console.log('Logging out...');
-    // Add logout logic here
+    this.authService.logout();
   }
 
   // Close the menu if clicked outside of the menu and button

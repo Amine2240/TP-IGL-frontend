@@ -5,7 +5,8 @@ import { BilanRadioTableauComponent } from '../../components/bilan-radio-tableau
 import { BilanBioTableauComponent } from '../../components/bilan-bio-tableau/bilan-bio-tableau.component';
 import { FormsModule } from '@angular/forms';
 import { GlobalService } from '../../global.service';
-import { RouterModule ,Router } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-page-infirmier',
@@ -16,8 +17,12 @@ import { RouterModule ,Router } from '@angular/router';
 export class PageInfirmierComponent {
   isMenuOpen = false;
 
-  
-   constructor(private elementRef: ElementRef,private globalService: GlobalService, private router: Router) {}
+  constructor(
+    private elementRef: ElementRef,
+    private globalService: GlobalService,
+    private router: Router,
+    private authService: AuthService,
+  ) {}
 
   toggleMenu(event: MouseEvent) {
     console.log('rami maftoha');
@@ -32,8 +37,7 @@ export class PageInfirmierComponent {
   }
 
   logout() {
-    console.log('Logging out...');
-    // Add logout logic here
+    this.authService.logout();
   }
 
   // Close the menu if clicked outside of the menu and button
