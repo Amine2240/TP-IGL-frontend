@@ -11,12 +11,12 @@ import { FormsModule } from '@angular/forms';
 import jsQR from 'jsqr';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { GlobalService } from '../../global.service';
+import { AuthService } from '../../services/auth.service';
 
 interface DataRow {
   id: string;
   date: string;
   observation: string;
-  
 }
 
 interface Column {
@@ -27,28 +27,27 @@ interface Column {
 @Component({
   selector: 'app-bilan-radio-tableau',
   standalone: true,
-  imports: [FormsModule, CommonModule,RouterLink],
+  imports: [FormsModule, CommonModule, RouterLink],
   templateUrl: './bilan-radio-tableau.component.html',
   //styleUrls: ['./dpi-tableau.component.css'],
 })
 export class BilanRadioTableauComponent implements OnInit {
-  toggleFilterDropdown: boolean = false; 
-  selectedFilter: string = 'Date'; 
+  toggleFilterDropdown: boolean = false;
+  selectedFilter: string = 'Date';
   filterBy: keyof DataRow = 'date';
   filteredData: DataRow[] = [];
   isMenuOpen = false;
- 
+
   constructor(
-      private renderer: Renderer2,
-      private elementRef: ElementRef,
-      private router: Router,
-      
-      private route: ActivatedRoute,  // Combine all dependencies into one constructor
-    ) {}
+    private renderer: Renderer2,
+    private elementRef: ElementRef,
+    private router: Router,
+    private authService: AuthService,
+    private route: ActivatedRoute, // Combine all dependencies into one constructor
+  ) {}
   filterableKeys: { key: keyof DataRow; label: string }[] = [
     { key: 'id', label: 'Bilan_Id' },
     { key: 'date', label: 'Date' },
-   
   ];
   @ViewChild('fileInput') fileInput: any;
   searchText: string = '';
@@ -57,7 +56,6 @@ export class BilanRadioTableauComponent implements OnInit {
     { key: 'id', label: 'Bilan_Id' },
     { key: 'date', label: 'Date' },
     { key: 'observation', label: 'Observation' },
-   
   ];
 
   data: DataRow[] = [
@@ -93,10 +91,8 @@ export class BilanRadioTableauComponent implements OnInit {
     },
   ];
 
-  id: string | null = null; 
-    
-  
-    
+  id: string | null = null;
+   
     
    
     
@@ -138,7 +134,7 @@ export class BilanRadioTableauComponent implements OnInit {
   }
 
   getCellClass(key: string): string {
-    if (key === 'observation' ) {
+    if (key === 'observation') {
       // Specific classes for 'nom' and 'prenom'
       return 'px-4 py-2 border-[1px] border-dark-blue text-center break-words max-w-[150px] min-h-[4px] truncate whitespace-normal';
     } else {
@@ -152,7 +148,9 @@ export class BilanRadioTableauComponent implements OnInit {
     this.applyFilter();
 
     this.renderer.listen('document', 'click', (event: Event) => {
-      const clickedInside = this.elementRef.nativeElement.contains(event.target);
+      const clickedInside = this.elementRef.nativeElement.contains(
+        event.target,
+      );
       if (!clickedInside) {
         this.toggleFilterDropdown = false;
       }
@@ -161,42 +159,37 @@ export class BilanRadioTableauComponent implements OnInit {
     console.log('ID reçu :', this.id);
   }
 
- 
-
   applySearchFilter(): void {
     this.filteredData = this.data.filter(
       (row) =>
         row.date.toLowerCase().includes(this.searchText.toLowerCase()) ||
-      
-        row.id.toLowerCase().startsWith(this.searchText.toLowerCase()) //beh nkoun sur yebda de droite a gauche
+        row.id.toLowerCase().startsWith(this.searchText.toLowerCase()), //beh nkoun sur yebda de droite a gauche
     );
   }
 
- toggleMenu(event: MouseEvent) {
-      console.log('rami maftoha');
-      event.stopPropagation();
-      this.isMenuOpen = !this.isMenuOpen;
-      console.log('rami ta8la9t');
-    }
-  
-    profil() {
-      console.log('Navigating to profile...');
-      // Add profile navigation logic here
-    }
-  
-    logout() {
-      console.log('Logging out...');
-      // Add logout logic here
-    }
-  
-    // Close the menu if clicked outside of the menu and button
-    @HostListener('document:click', ['$event'])
-    onClickOutside(event: MouseEvent) {
-      const clickedInside = this.elementRef.nativeElement.contains(event.target);
-      if (!clickedInside) {
-        this.isMenuOpen = false;
-      }
-    }
+  toggleMenu(event: MouseEvent) {
+    console.log('rami maftoha');
+    event.stopPropagation();
+    this.isMenuOpen = !this.isMenuOpen;
+    console.log('rami ta8la9t');
+  }
 
-  
+  profil() {
+    console.log('Navigating to profile...');
+    // Add profile navigation logic here
+  }
+
+  logout() {
+    console.log('Logging out...');
+    this.authService.logout();
+  }
+
+  // Close the menu if clicked outside of the menu and button
+  @HostListener('document:click', ['$event'])
+  onClickOutside(event: MouseEvent) {
+    const clickedInside = this.elementRef.nativeElement.contains(event.target);
+    if (!clickedInside) {
+      this.isMenuOpen = false;
+    }
+  }
 }

@@ -1,58 +1,66 @@
-import { RouterLink , RouterModule, RouterOutlet } from '@angular/router';
-import { CommonModule, Time  } from '@angular/common';
+import { RouterLink, RouterModule, RouterOutlet } from '@angular/router';
+import { CommonModule, Time } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { DpiService } from './../../services/dpi.service';
 import { TopRightSectionComponent } from '../top-right-section/top-right-section.component';
+import { AuthService } from '../../services/auth.service';
 interface DataRow {
   date: Date;
   heure: String;
   // ordonnance: string;
   // diagnostic: string;
   // resume: string;
-  medecinPrincipalEmail : String;
-  medecinPrincipalTelephone : String;
-  hoptialNom : String; 
+  medecinPrincipalEmail: String;
+  medecinPrincipalTelephone: String;
+  hoptialNom: String;
 }
-
 
 interface Column {
   key: keyof DataRow;
   label: string;
 }
 @Component({
-    selector: 'app-consultations',
-    standalone: true,
-    imports: [CommonModule, RouterLink, RouterModule,TopRightSectionComponent],
-    templateUrl: './consultations.component.html',
-    styleUrl: './consultations.component.scss'
+  selector: 'app-consultations',
+  standalone: true,
+  imports: [
+    CommonModule,
+    RouterLink,
+    RouterModule,
+    RouterOutlet,
+    TopRightSectionComponent,
+  ],
+  templateUrl: './consultations.component.html',
+  styleUrl: './consultations.component.scss',
 })
 export class ConsultationsComponent implements OnInit {
-  isMedecinVisible =true;
-  constructor(private dpiService: DpiService,) {
-  }
+  isMedecinVisible = true;
+  constructor(
+    private dpiService: DpiService,
+    private authService: AuthService,
+  ) {}
   consultations = [];
   async ngOnInit(): Promise<void> {
-    console.log("hiiiiii");
-  
+    console.log('hiiiiii');
+
     try {
-      
-       this.consultations = await this.dpiService.getConsultations();
-       this.rows = this.consultations.map((consultation: any) => {
+      this.consultations = await this.dpiService.getConsultations();
+      (this.rows = this.consultations.map((consultation: any) => {
         return {
           date: consultation.date_de_consultation,
           heure: consultation.heure,
           medecinPrincipalEmail: consultation.medecin_principal.user.email,
-          medecinPrincipalTelephone: consultation.medecin_principal.user.telephone,
+          medecinPrincipalTelephone:
+            consultation.medecin_principal.user.telephone,
           hoptialNom: consultation.hopital.nom,
         };
-      }),
-      console.log('consultations from component :', this.consultations);
+      })),
+        console.log('consultations from component :', this.consultations);
       // this.rows = consultations; // Assuming consultations is an array of DataRow
     } catch (error) {
       console.error('Error fetching consultations:', error);
     }
   }
-  
+
   columns: Column[] = [
     { key: 'date', label: 'Date' },
     { key: 'heure', label: 'Heure' },
@@ -72,16 +80,14 @@ export class ConsultationsComponent implements OnInit {
     prenom: 'Alice',
     specialite: 'Cardiologie',
   };
-  
 
-  
   toggleMedecinInfo() {
     this.isMedecinVisible = !this.isMedecinVisible;
   }
 
   logout(): void {
     console.log('Médecin déconnecté');
-    // Add logout logic here
-  this.isMedecinVisible = false;}
-
+    this.authService.logout();
+    this.isMedecinVisible = false;
+  }
 }

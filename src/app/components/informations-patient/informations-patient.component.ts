@@ -46,7 +46,7 @@ export class InformationsPatientComponent implements OnInit {
   infosPatient: any = {};
   constructor(
     private dpiService: DpiService,
-    private authService: AuthService
+    private authService: AuthService,
   ) {}
   async ngOnInit(): Promise<void> {
     console.log('hiiiiii');
@@ -56,11 +56,11 @@ export class InformationsPatientComponent implements OnInit {
       const user = this.authService.getUser();
       // this.infosPatient = await this.dpiService.getDpi(); does not contain the all information like photo..
       if (user.role === 'patient') {
-        console.log("user.roleId", user.roleId);
-        
+        console.log('user.roleId', user.roleId);
+
         this.infosPatient = await this.dpiService.getPatient(user.roleId);
-        console.log("infosPatient", this.infosPatient);
-        
+        console.log('infosPatient', this.infosPatient);
+
         const infosAajouter = await this.dpiService.getDpi(user.roleId); // contact urgence et mutuelle
         this.infosPatient = {
           ...this.infosPatient,
@@ -128,7 +128,7 @@ export class InformationsPatientComponent implements OnInit {
 
   logout(): void {
     console.log('Médecin déconnecté');
-    // Add logout logic here
+    this.authService.logout();
     this.isMedecinVisible = false;
   }
 

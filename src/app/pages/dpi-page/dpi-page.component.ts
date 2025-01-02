@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';  // Import CommonModule
+import { CommonModule } from '@angular/common'; // Import CommonModule
 import { jsPDF } from 'jspdf';
-import html2canvas from 'html2canvas'
+import html2canvas from 'html2canvas';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-
+import { AuthService } from '../../services/auth.service';
 
 @Component({
-    selector: 'app-dpi-page',
-    imports: [FormsModule, CommonModule], // Add CommonModule here
-    templateUrl: './dpi-page.component.html',
-    styleUrls: ['./dpi-page.component.scss']
+  selector: 'app-dpi-page',
+  imports: [FormsModule, CommonModule], // Add CommonModule here
+  templateUrl: './dpi-page.component.html',
+  styleUrls: ['./dpi-page.component.scss'],
 })
 export class DpiPageComponent {
   // Define isMedecinVisible to toggle visibility of médecin's info
@@ -42,8 +42,7 @@ export class DpiPageComponent {
     specialite: 'Cardiologie',
   };
   dpiId: string | null = null;
-
- 
+  constructor(private authService: AuthService) {}
 
   // Function to toggle visibility of médecin's information
   toggleMedecinInfo() {
@@ -76,26 +75,28 @@ export class DpiPageComponent {
 
   logout(): void {
     console.log('Médecin déconnecté');
-    // Add logout logic here
-    this.isMedecinVisible = false;}
 
-    toggleEditMode(): void {
-      if (this.isEditMode) {
-        // Ici, vous pouvez ajouter une logique pour sauvegarder les modifications, comme envoyer les données à un backend.
-        console.log('Données sauvegardées :', this.dpiData);
-      }
-      this.isEditMode = !this.isEditMode;
+    this.authService.logout();
+    this.isMedecinVisible = false;
+  }
+
+  toggleEditMode(): void {
+    if (this.isEditMode) {
+      // Ici, vous pouvez ajouter une logique pour sauvegarder les modifications, comme envoyer les données à un backend.
+      console.log('Données sauvegardées :', this.dpiData);
     }
+    this.isEditMode = !this.isEditMode;
+  }
 
-    // Fonction pour changer l'image
+  // Fonction pour changer l'image
   onImageChange(event: any): void {
-    const file = event.target.files[0];  // Récupère le fichier sélectionné
+    const file = event.target.files[0]; // Récupère le fichier sélectionné
     if (file) {
       const reader = new FileReader();
       reader.onload = (e: any) => {
-        this.dpiData.photo = e.target.result;  // Met à jour l'image avec le fichier choisi
+        this.dpiData.photo = e.target.result; // Met à jour l'image avec le fichier choisi
       };
-      reader.readAsDataURL(file);  // Lis le fichier comme une URL de données
-    }}
-  
+      reader.readAsDataURL(file); // Lis le fichier comme une URL de données
+    }
+  }
 }
