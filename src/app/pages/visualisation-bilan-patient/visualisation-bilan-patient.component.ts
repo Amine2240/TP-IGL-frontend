@@ -47,7 +47,8 @@ export class VisualisationBilanPatientComponent implements OnInit {
     { key: 'graphique', label: 'Graphique' },
   ];
 
-  data: DataRow[] = [
+  data: DataRow[] = [];
+  /* data: DataRow[] = [
     {
       idBilan: 1, // Identifiant unique
       date: '25/12/2024',
@@ -81,7 +82,7 @@ export class VisualisationBilanPatientComponent implements OnInit {
       graphique: '',
     },
   ];
-
+*/
   onDownload(row: DataRow): void {
     console.log('Download clicked for:', row);
     // Implement the download functionality here
@@ -125,16 +126,45 @@ export class VisualisationBilanPatientComponent implements OnInit {
 
   ngOnInit(): void {
     this.applySearchFilter();
-
     this.renderer.listen('document', 'click', (event: Event) => {
       const clickedInside = this.el.nativeElement.contains(event.target);
       if (!clickedInside) {
         this.toggleFilterDropdown = false;
       }
     });
-    this.idPatient = this.route.snapshot.paramMap.get('id'); // Récupérer l'ID
+    this.idPatient = this.route.snapshot.paramMap.get('idPatient'); // Récupérer l'ID
     console.log('ID reçu dans sideBar :', this.idPatient);
+    if (this.idPatient) {
+      this.fetchBilans(this.idPatient);
+    }
   }
+
+  async fetchBilans(patientId: string): Promise<void> {
+    try {
+      const response = await this.authService.axiosInstance.get(
+        `/dpi/examens-patient/?patient_id=${patientId}`,
+      );
+      console.log('Response data:', response.data);
+
+      if (response.data.length > 0) {
+        this.data = response.data.map((exam: any) => ({
+          idBilan: exam.id,
+          date: new Date(exam.date).toLocaleDateString(),
+          type: exam.type,
+          statut: exam.traite ? 'Traité' : 'En attente',
+        }));
+      } else {
+        console.warn('No bilans found for the given patient.');
+        this.data = [];
+      }
+
+      this.applySearchFilter();
+    } catch (error) {
+      console.error('Error fetching bilans:', error);
+      this.data = [];
+    }
+  }
+
   isMenuOpen = false;
 
   toggleMenu(event: MouseEvent) {
