@@ -5,12 +5,16 @@ import { TopRightSectionComponent } from '../../components/top-right-section/top
 import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
 import { AuthService } from '../../services/auth.service';
-
+interface Antecedent {
+  id: number;
+  nom: string;
+  type: string;
+}
 @Component({
-  selector: 'app-historique-medicale-page',
+  selector: 'app-historique-medicale',
   imports: [CommonModule, TopRightSectionComponent],
-  templateUrl: './historique-medicale-page.component.html',
-  styleUrl: './historique-medicale-page.component.scss',
+  templateUrl: './historique-medicale.component.html',
+  styleUrl: './historique-medicale.component.scss',
 })
 export class HistoriqueMedicalePageComponent implements OnInit {
   patientId: string = '';
@@ -29,29 +33,34 @@ export class HistoriqueMedicalePageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.patientId = this.route.snapshot.paramMap.get('id') || '';
+    this.patientId = this.route.snapshot.paramMap.get('idPatient') || '';
     this.loadHistorique();
   }
 
   loadHistorique(): void {
-    // Fetch patient history (placeholder for actual API call)
-    this.historiqueData = {
-      historiques: ['Diabète', 'Hypertension artérielle', 'Asthme'],
-      interventionsChirurgicales: [
-        'Appendicectomie (2010)',
-        'Prothèse de hanche (2015)',
-      ],
-      antecedentsFamiliaux: [
-        'Antécédents de cancer (parent proche)',
-        'Diabète héréditaire',
-      ],
-      allergies: ['Allergie aux antibiotiques', 'Allergie au lactose'],
-      vaccinations: [
-        'Dernier vaccin contre la grippe (2023)',
-        'Vaccin contre la COVID-19 (2021)',
-      ],
-      qrCode: 'assets/qrcode.png',
-    };
+    this.authService.axiosInstance
+      .get(`/users/patients/${this.patientId}/antecedants/`)
+      .then((response) => {
+        const data = response.data;
+
+        this.historiqueData = {
+          historiques: data
+            .filter((item: Antecedent) => item.type === 'Maladie')
+            .map((item: Antecedent) => item.nom),
+          interventionsChirurgicales: [],
+          antecedentsFamiliaux: data
+            .filter((item: Antecedent) => item.type === 'Antécédent')
+            .map((item: Antecedent) => item.nom),
+          allergies: data
+            .filter((item: Antecedent) => item.type === 'Allergie')
+            .map((item: Antecedent) => item.nom),
+          vaccinations: [],
+          qrCode: '../../../assets/qrCode.svg',
+        };
+      })
+      .catch((error) => {
+        console.error('Error fetching patient history:', error);
+      });
   }
 
   // Function to toggle visibility of médecin's information
@@ -87,16 +96,8 @@ export class HistoriqueMedicalePageComponent implements OnInit {
   // Add item to any section (checking for array type)
   addItem(section: keyof typeof this.historiqueData): void {
     if (Array.isArray(this.historiqueData[section])) {
-      const newItem = prompt(
-        `Ajouter un nouvel élément à la section ${section}:`,
-      );
-      if (newItem) {
-        (this.historiqueData[section] as string[]).push(newItem);
-      }
     } else {
-      console.error(
-        `Section "${section}" is not an array and cannot accept new items.`,
-      );
+      console.error();
     }
   }
 
