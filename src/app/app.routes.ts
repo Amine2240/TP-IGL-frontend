@@ -35,7 +35,7 @@ export const routes: Routes = [
   },
   { path: 'ajouterSoin/:id', component: SoinPageComponent },
   { path: 'pageMedecin', component: PageMedecinComponent },
-  { path: ':pageType/formPatient', component: FormpatientComponent },
+  { path: 'formPatient', component: FormpatientComponent },
   {
     path: 'pageLaboratin/bilan-bio-tableau/:id',
     component: BilanBioTableauComponent,

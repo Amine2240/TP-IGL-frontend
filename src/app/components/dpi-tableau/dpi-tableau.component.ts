@@ -10,6 +10,8 @@ import { FormsModule } from '@angular/forms';
 import jsQR from 'jsqr';
 import { Router } from '@angular/router';
 import { GlobalService } from '../../global.service';
+import { PatientsService } from '../../services/patients.service';
+import { Patient } from '../../models/users.model';
 
 interface DataRow {
   id: number; // Identifiant unique pour chaque ligne
@@ -52,32 +54,7 @@ export class DpiTableauComponent implements OnInit {
     { key: 'photo', label: 'Photo' },
   ];
 
-  data: DataRow[] = [
-    {
-      id: 1,
-      qrCode: '../../../assets/qrCode.svg',
-      nom: 'Lorem ',
-      prenom: 'Ipsum',
-      nss: '123456789012',
-      photo: '../../../assets/account.svg',
-    },
-    {
-      id: 2,
-      qrCode: '../../../assets/qrCode.svg',
-      nom: 'Dolor Sit',
-      prenom: 'Amet',
-      nss: '987654321098',
-      photo: '../../../assets/account.svg',
-    },
-    {
-      id: 3,
-      qrCode: '../../../assets/qrCode.svg',
-      nom: 'Consectetur',
-      prenom: 'Adipiscing',
-      nss: '567890123456',
-      photo: '../../../assets/account.svg',
-    },
-  ];
+  data: DataRow[] = [];
 
   filteredData: DataRow[] = []; // Filtered data
   qrCodeDataset: string[] = ['12345', 'abcdef', '67890'];
@@ -86,6 +63,7 @@ export class DpiTableauComponent implements OnInit {
     private el: ElementRef,
     private router: Router,
     private globalService: GlobalService, // Combine all dependencies into one constructor
+    private patientsService: PatientsService,
   ) {}
 
   onRowClick(row: any): void {
@@ -141,8 +119,25 @@ export class DpiTableauComponent implements OnInit {
       return 'px-3 py-2 border-[1px] border-dark-blue text-center w-[80px] min-h-[4px]';
     }
   }
-
+  async fetchPatients(): Promise<void> {
+    try {
+      const patients = await this.patientsService.getPatients();
+      this.data = patients.map((patient) => ({
+        id: patient.patientId,
+        qrCode: patient.qrCode,
+        nom: patient.nom,
+        prenom: patient.prenom,
+        nss: patient.NSS,
+        photo: patient.photoProfil,
+      }));
+      this.filteredData = [...this.data];
+    } catch (error) {
+      console.error('Error fetching patients:', error);
+    }
+  }
   ngOnInit(): void {
+    this.fetchPatients();
+    this.patientsService.getPatients();
     this.applySearchFilter(); // Apply initial filter based on the search text
 
     // Close dropdown when clicking outside

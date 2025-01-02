@@ -17,11 +17,9 @@ export class LandingPageComponent {
     private router: Router,
   ) {}
   async ngOnInit(): Promise<void> {
-    await this.authService.loadUser();
     if (this.authService.isLoggedIn()) {
       const user = this.authService.getUser();
       const targetRoute = this.globalService.roleRouteMap[user.role];
-
       if (targetRoute) {
         this.router.navigate([targetRoute]);
       } else {

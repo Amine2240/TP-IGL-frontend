@@ -6,7 +6,7 @@ import { AuthService } from './services/auth.service';
 })
 export class GlobalService {
   public readonly roleRouteMap: { [key: string]: string | undefined } = {
-    administratif: 'administratiff',
+    administratif: 'pageAdministratiff',
     medecin: 'pageMedecin',
     laborantin: 'pageLaboratin',
     radiologue: 'pageRadiologue',

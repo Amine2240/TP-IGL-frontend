@@ -12,20 +12,26 @@
     class="px-4 py-2 bg-sky-blue text-white border border-dark-blue rounded-r-md hover:bg-light-blue transition"
     (click)="openFileInput()"
   >
-    <img src="../../../assets/qrCode.svg" alt="QR Code Icon" class="h-6 w-6 object-contain" />
+    <img
+      src="../../../assets/qrCode.svg"
+      alt="QR Code Icon"
+      class="h-6 w-6 object-contain"
+    />
   </button>
 
   <!-- Hidden File Input for Image Upload -->
-  <input 
-    type="file" 
-    #fileInput 
-    class="hidden" 
+  <input
+    type="file"
+    #fileInput
+    class="hidden"
     accept="image/*"
     (change)="onImageUpload($event)"
   />
 </div>
 
-<div class="flex justify-center items-center bg-white w-full max-w-5xl mx-auto p-6">
+<div
+  class="flex justify-center items-center bg-white w-full max-w-5xl mx-auto p-6"
+>
   <table class="table-auto border-collapse w-full hidden sm:table">
     <!-- Filter row with the icon -->
     <thead>
@@ -80,13 +86,32 @@
 
     <!-- Data rows -->
     <tbody *ngIf="filteredData.length > 0; else noResults">
-      <tr *ngFor="let row of filteredData" class="hover:bg-light-blue cursor-pointer transition" (click)="onRowClick(row)">
-        <td *ngFor="let column of columns" [class]="getCellClass(column.key)" class="px-4 py-2 border">
+      <tr
+        *ngFor="let row of filteredData"
+        class="hover:bg-light-blue cursor-pointer transition"
+        (click)="onRowClick(row)"
+      >
+        <td
+          *ngFor="let column of columns"
+          [class]="getCellClass(column.key)"
+          class="px-4 py-2 border"
+        >
           <ng-container [ngSwitch]="column.key">
             <!-- QR Code -->
-            <img *ngSwitchCase="'qrCode'" [src]="row.qrCode" alt="QR Code" class="h-6 w-6 mx-auto" />
+
+            <img
+              *ngSwitchCase="'qrCode'"
+              [src]="'data:image/png;base64,' + row.qrCode"
+              alt="QR Code"
+              class="h-6 w-6 mx-auto"
+            />
             <!-- Photo -->
-            <img *ngSwitchCase="'photo'" [src]="row.photo" alt="Photo" class="h-6 w-6 mx-auto rounded-full" />
+            <img
+              *ngSwitchCase="'photo'"
+              [src]="row.photo"
+              alt="Photo"
+              class="h-6 w-6 mx-auto rounded-full"
+            />
             <!-- Text -->
             <span *ngSwitchDefault>
               {{ row[column.key] }}
@@ -115,11 +140,7 @@
         (click)="toggleDropdown()"
         aria-label="Filter"
       >
-        <img
-          src="../../../assets/filter.svg"
-          alt="Filter"
-          class="h-4 w-4"
-        />
+        <img src="../../../assets/filter.svg" alt="Filter" class="h-4 w-4" />
       </button>
       <span class="ml-1 font-inter text-xs font-medium">
         {{ selectedFilter }}
@@ -140,7 +161,10 @@
     </div>
 
     <!-- No results found -->
-    <div *ngIf="filteredData.length === 0" class="text-center p-4 text-sm text-gray-500">
+    <div
+      *ngIf="filteredData.length === 0"
+      class="text-center p-4 text-sm text-gray-500"
+    >
       <p>Pas de Résultats.</p>
     </div>
 
@@ -172,17 +196,19 @@
         </div>
         <div>
           <span class="font-semibold text-sky-500">Prenom:</span>
-          <span class="text-black font-xs ml-4 break-words">{{ row.prenom }}</span>
+          <span class="text-black font-xs ml-4 break-words">{{
+            row.prenom
+          }}</span>
         </div>
       </div>
 
       <!-- QR Code (Bottom Center) -->
       <div class="flex justify-center mt-3">
         <img
-          *ngIf="row.qrCode"
-          [src]="row.qrCode"
+          [src]="'data:image/png;base64,' + row.qrCode"
           alt="QR Code"
-          class="h-10 w-10"
+          width="100"
+          height="100"
         />
       </div>
     </div>

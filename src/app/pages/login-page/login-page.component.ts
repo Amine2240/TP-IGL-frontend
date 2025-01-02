@@ -45,7 +45,6 @@ export class LoginPageComponent implements OnInit {
     this.router.navigate(['pageLanding']);
   }
   async ngOnInit(): Promise<void> {
-    await this.authService.loadUser();
     if (this.authService.isLoggedIn()) {
       const user = this.authService.getUser();
       const targetRoute = this.globalService.roleRouteMap[user.role];
