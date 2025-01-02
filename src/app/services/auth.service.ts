@@ -76,11 +76,11 @@ export class AuthService {
 
   // get ther user ( current authenticated)
   getUser(): any {
-    return this.user;
+    return JSON.parse(localStorage.getItem(this.userKey) as string);
   }
 
   isLoggedIn(): boolean {
-    return !!this.user;
+    return !!this.getUser();
   }
   async login(username: string, password: string) {
     const loginPayload = { username, password };
