@@ -23,6 +23,7 @@ export const routes: Routes = [
   // Routes for pages
   { path: 'pageAdministratiff', component: PageAdministratiffComponent },
 
+  { path: 'login', component: LoginPageComponent },
   { path: 'pageRadiologue', component: PageRadiologueComponent },
   { path: 'pageLaboratin', component: PageLaboratinComponent },
   { path: 'pageInfermier', component: PageInfirmierComponent },

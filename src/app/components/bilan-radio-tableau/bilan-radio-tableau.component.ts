@@ -58,7 +58,8 @@ export class BilanRadioTableauComponent implements OnInit {
     { key: 'observation', label: 'Observation' },
   ];
 
-  data: DataRow[] = [
+  data: DataRow[] = [];
+  /* data: DataRow[] = [
     {
       id: '1001',
       date: '25/12/2024',
@@ -89,34 +90,25 @@ export class BilanRadioTableauComponent implements OnInit {
       date: '05/12/2024',
       observation: 'Data inconclusive, retesting recommended.',
     },
-  ];
+  ];*/
 
   id: string | null = null;
-   
-    
-   
-    
+
   onButtonClick(): void {
-   console.log('am here ');
-     this.router.navigate(['ajouterBilanRadiologique',this.id]);
-  
-   }
- 
-  
-   onRowClick(row: any): void {
-    
-    
-    this.router.navigate(['/visualiserBilanRadiologique',row.id]);
- 
+    console.log('am here ');
+    this.router.navigate(['ajouterBilanRadiologique', this.id]);
   }
 
+  onRowClick(row: any): void {
+    this.router.navigate(['/visualiserBilanRadiologique', row.id]);
+  }
 
   applyFilter(): void {
     this.filteredData = [...this.data].sort((a, b) => {
       // Conversion des dates au format "jj/mm/aaaa" en objets Date pour comparer les dates
       const dateA = new Date(a.date.split('/').reverse().join('-')); // "25/12/2024" -> "2024-12-25"
       const dateB = new Date(b.date.split('/').reverse().join('-')); // "20/12/2024" -> "2024-12-20"
-  
+
       // Trier par date décroissante
       return dateB.getTime() - dateA.getTime(); // Décroissant (dateB - dateA)
     });
@@ -157,8 +149,34 @@ export class BilanRadioTableauComponent implements OnInit {
     });
     this.id = this.route.snapshot.paramMap.get('id'); // Récupérer l'ID
     console.log('ID reçu :', this.id);
+    if (this.id) {
+      this.fetchBilansRadiologique(this.id);
+    }
   }
+  async fetchBilansRadiologique(patientId: string): Promise<void> {
+    try {
+      const response = await this.authService.axiosInstance.get(
+        `/dpi/examens-patient/?patient_id=${patientId}&type=radiologique&traite=false`,
+      );
+      console.log('Response data:', response.data);
 
+      if (response.data.length > 0) {
+        this.data = response.data.map((exam: any) => ({
+          id: exam.id,
+          date: new Date(exam.date).toLocaleDateString(),
+          observation: exam.note,
+        }));
+      } else {
+        console.warn('No bilans found for the given patient.');
+        this.data = [];
+      }
+
+      this.applySearchFilter();
+    } catch (error) {
+      console.error('Error fetching bilans:', error);
+      this.data = [];
+    }
+  }
   applySearchFilter(): void {
     this.filteredData = this.data.filter(
       (row) =>
