@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { Chart, CategoryScale, LinearScale, BarController, BarElement, Title, Tooltip, Legend } from 'chart.js';
+import { ActivatedRoute } from '@angular/router';
 
 Chart.register(CategoryScale, LinearScale, BarController, BarElement, Title, Tooltip, Legend);
 
@@ -37,8 +38,12 @@ export class GraphPageComponent implements OnInit {
   @ViewChild('chartCanvas') chartCanvas!: ElementRef<HTMLCanvasElement>;
 
   private chart: Chart | undefined;
+  idBilan: string | null = null; 
+   
+  
+   
 
-  constructor(@Inject(PLATFORM_ID) private platformId: any) {}
+  constructor(@Inject(PLATFORM_ID) private platformId: any,private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
@@ -83,5 +88,8 @@ const data = state.data || [];
         }
       });
     }
+    this.idBilan = this.route.snapshot.paramMap.get('id'); // Récupérer l'ID
+    console.log('ID reçu :', this.idBilan);
+
   }
 }

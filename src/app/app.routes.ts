@@ -16,6 +16,8 @@ import { BilanBioTableauComponent } from './components/bilan-bio-tableau/bilan-b
 import { BilanRadioTableauComponent } from './components/bilan-radio-tableau/bilan-radio-tableau.component';
 import { GraphPageComponent } from './pages/graphe-page/graphe-page.component';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
+import { BilanBiologiquePageVisComponent } from './pages/bilan-biologique-page-vis/bilan-biologique-page-vis.component';
+import { BilanRadiologiqueVisPageComponent } from './pages/bilan-radiologique-vis-page/bilan-radiologique-vis-page.component';
 
 export const routes: Routes = [
   // Routes for pages
@@ -36,16 +38,15 @@ export const routes: Routes = [
   { path: 'ajouterSoin/:id', component: SoinPageComponent },
   { path: 'pageMedecin', component: PageMedecinComponent },
   { path: 'formPatient', component: FormpatientComponent },
-  {
-    path: 'pageLaboratin/bilan-bio-tableau/:id',
-    component: BilanBioTableauComponent,
-  },
-  {
-    path: 'pageRadiologue/bilan-radio-tableau/:id',
-    component: BilanRadioTableauComponent,
-  },
-  { path: 'pageGraphics/:idPatient', component: GraphPageComponent },
-  { path: 'login', component: LoginPageComponent },
+  { path: 'pageLaboratin/bilan-bio-tableau/:id', component: BilanBioTableauComponent },
+  { path: 'pageRadiologue/bilan-radio-tableau/:id', component: BilanRadioTableauComponent },
+  { path: 'pageGraphics/:idPatient',component: GraphPageComponent },
+  { path: 'visualiserBilanBiologique/:id', component:BilanBiologiquePageVisComponent },
+  { path: 'visualiserBilanRadiologique/:id', component:BilanRadiologiqueVisPageComponent },
+ 
+
+ 
+
 
   // DPI related routes with children
   {
