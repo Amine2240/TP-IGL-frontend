@@ -19,7 +19,7 @@ import { BilanRadiologiquePageComponent } from './pages/bilan-radiologique-page/
     HttpClientModule,
     CommonModule,
     RouterOutlet,
-   
+    RouterLink,
     FormsModule,
     NavbarComponent,
    // SidebarComponent,

@@ -81,7 +81,7 @@ export class ConsultationsComponent implements OnInit {
 
   logout(): void {
     console.log('Médecin déconnecté');
-    // Add logout logic here
+ 
   this.isMedecinVisible = false;}
 
 }

@@ -15,7 +15,7 @@ export class BilanRadiologiquePageComponent {
   uploadedImages: File[] = []; 
   uploadedImages2: string[] = []; 
   examenResultats: string = '';
-  pkExamen: string = "4"; // Example value (you might change this dynamically in routing)
+  pkExamen: string = "6"; // Example value (you might change this dynamically in routing)
   userId: string = ""; // Initially empty, will be set from AuthService
   private baseUrl = 'http://localhost:8000/';
 
@@ -53,6 +53,7 @@ export class BilanRadiologiquePageComponent {
       .subscribe(
         (response: any) => {
           console.log('Bilan radiologique ajouté avec succès', response);
+          alert("bilan radiologique ajouté avec succés");
           // form data reset if successful
           this.examenResultats = '';
           this.uploadedImages = [];

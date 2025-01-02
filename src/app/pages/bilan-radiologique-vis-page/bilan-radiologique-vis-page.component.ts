@@ -1,28 +1,57 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { HttpClient } from '@angular/common/http';  
+import { AuthService } from '../../services/auth.service';  
+import { HttpClientModule } from '@angular/common/http';
 @Component({
   selector: 'app-bilan-radiologique-vis-page',
   templateUrl: './bilan-radiologique-vis-page.component.html',
   styleUrls: ['./bilan-radiologique-vis-page.component.scss'],
-standalone: true,
-  imports: [CommonModule], 
+  standalone: true,
+  imports: [CommonModule,HttpClientModule],
 })
-export class BilanRadiologiqueVisPageComponent {
-  images: string[] = [
-    '../../assets/icons/user.png', 
-   '../../assets/icons/user.png',
-    '../../assets/icons/user.png'
-  ];
+export class BilanRadiologiqueVisPageComponent implements OnInit {
+  images: string[] = []; 
   selectedImage: string | null = null;
-// agrandir l'image
+  pkExamen: string = "6"; 
+  private baseUrl = 'http://localhost:8000/';  
+  userId: string = ''; 
+
+  constructor(private http: HttpClient, private authService: AuthService) {}
+
+  ngOnInit(): void {
+    this.loadUser();  
+    this.fetchBilanRadiologique(); 
+  }
+
+  loadUser(): void {
+    this.authService.loadUser();
+    const currentUser = this.authService.getUser();
+    this.userId = currentUser.id;
+  }
+
+
+  fetchBilanRadiologique(): void {
+    this.http.get(`${this.baseUrl}api/dpi/bilans/radiologique/${this.pkExamen}/`)
+      .subscribe(
+        (response: any) => {
+          console.log('Bilan radiologique retrieved successfully:', response);
+        
+          this.images = response.images_radio || []; 
+        },
+        (error) => {
+          console.error('Error retrieving bilan radiologique', error);
+        }
+      );
+  }
+
+
   openImage(image: string): void {
     this.selectedImage = image;
   }
 
+  
   closeModal(): void {
     this.selectedImage = null;
   }
- 
-
 }

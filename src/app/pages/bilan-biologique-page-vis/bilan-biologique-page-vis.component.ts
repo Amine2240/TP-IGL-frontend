@@ -17,7 +17,7 @@ export class BilanBiologiquePageVisComponent implements OnInit {
   newParametre: string = '';
   newValeur: string = '';
   newUnite: string = '';
-  bilanId: string = '3'; // Set to 3
+  bilanId: string = '4'; // Set to 3
   errorMessage: string = '';
 
   private baseUrl = 'http://localhost:8000/';

@@ -7,7 +7,9 @@ import { PageLaboratinComponent } from './pages/page-laboratin/page-laboratin.co
 import { LandingPageComponent } from './pages/landing-page/landing-page.component';
 import { FormpatientComponent } from './pages/formpatient/formpatient.component';
 import { BilanRadiologiquePageComponent } from './pages/bilan-radiologique-page/bilan-radiologique-page.component';
+import { BilanRadiologiqueVisPageComponent } from './pages/bilan-radiologique-vis-page/bilan-radiologique-vis-page.component';
 import { BilanBiologiquePageComponent } from './pages/bilan-biologique-page/bilan-biologique-page.component';
+import { BilanBiologiquePageVisComponent } from './pages/bilan-biologique-page-vis/bilan-biologique-page-vis.component';
 import { PagePatientComponent } from './pages/page-patient/page-patient.component';
 import { VisualisationBilanPatientComponent } from './pages/visualisation-bilan-patient/visualisation-bilan-patient.component';
 import { SoinPageComponent } from './pages/soin-page/soin-page.component';
@@ -26,6 +28,7 @@ export const routes: Routes = [
   
   { path: 'ajouterBilanBiologique/:id', component:BilanBiologiquePageComponent },
   { path: 'ajouterBilanRadiologique/:id', component: BilanRadiologiquePageComponent },
+  
   { path: 'ajouterSoin/:id', component: SoinPageComponent },
   { path: 'pageMedecin', component: PageMedecinComponent },
   { path: ':pageType/formPatient', component: FormpatientComponent },
@@ -34,9 +37,11 @@ export const routes: Routes = [
   { path: 'pageGraphics/:idPatient',component: GraphPageComponent },
 
  
-
- 
-
+// testing purpose
+{ path: 'bio', component: BilanBiologiquePageComponent },
+{ path: 'bio-vis', component: BilanBiologiquePageVisComponent },
+{ path: 'rad', component: BilanRadiologiquePageComponent },
+{path:"rad-vis",component:BilanRadiologiqueVisPageComponent},
 
   
   // DPI related routes with children
