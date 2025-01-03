@@ -14,7 +14,7 @@ import { AuthService } from '../../services/auth.service';
 })
 export class DpiPageComponent {
   // Define isMedecinVisible to toggle visibility of médecin's info
-  isMedecinVisible: boolean = false;
+  isUserVisible: boolean = false;
   isEditMode = false;
   // Données du patient
   dpiData = {
@@ -36,7 +36,7 @@ export class DpiPageComponent {
   };
 
   // Médecin connecté
-  medecinConnecte = {
+  userConnecte = {
     nom: 'Dupont',
     prenom: 'Alice',
     specialite: 'Cardiologie',
@@ -45,8 +45,8 @@ export class DpiPageComponent {
   constructor(private authService: AuthService) {}
 
   // Function to toggle visibility of médecin's information
-  toggleMedecinInfo() {
-    this.isMedecinVisible = !this.isMedecinVisible;
+  toggleUserInfo() {
+    this.isUserVisible = !this.isUserVisible;
   }
 
   downloadPdf() {
@@ -77,7 +77,7 @@ export class DpiPageComponent {
     console.log('Médecin déconnecté');
 
     this.authService.logout();
-    this.isMedecinVisible = false;
+    this.isUserVisible = false;
   }
 
   toggleEditMode(): void {

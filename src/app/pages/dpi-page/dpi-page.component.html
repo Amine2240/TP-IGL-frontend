@@ -22,7 +22,7 @@
           class="w-auto h-8" 
           src="assets/icons/user.png" 
           alt="user" 
-          (click)="toggleMedecinInfo()"
+          (click)="toggleUserInfo()"
         />
       </div>
     </div>
@@ -32,12 +32,11 @@
   </div>
   -->
     <div 
-      *ngIf="isMedecinVisible" 
+      *ngIf="isUserVisible" 
       class="medecin-info absolute right-6 top-16 z-50 bg-white p-4 rounded-md shadow-lg border border-gray-200 w-64">
-      <h3 class="text-lg font-bold text-gray-700">Informations du Médecin</h3>
-      <p class="mt-2"><strong>Nom :</strong> {{ medecinConnecte.nom }}</p>
-      <p><strong>Prénom :</strong> {{ medecinConnecte.prenom }}</p>
-      <p><strong>Spécialité :</strong> {{ medecinConnecte.specialite }}</p>
+      <p class="mt-2"><strong>Nom :</strong> {{ userConnecte.nom }}</p>
+      <p><strong>Prénom :</strong> {{ userConnecte.prenom }}</p>
+      <p><strong>Spécialité :</strong> {{ userConnecte.specialite }}</p>
       <button 
         class="mt-4 bg-dark-blue text-white py-1 px-4 rounded hover:bg-blue-600"
         (click)="logout()">

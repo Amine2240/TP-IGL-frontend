@@ -2,18 +2,32 @@ import { Component, ElementRef, HostListener } from '@angular/core';
 import { DpiTableauComponent } from '../../components/dpi-tableau/dpi-tableau.component';
 import { CommonModule } from '@angular/common';
 import { BilanRadioTableauComponent } from '../../components/bilan-radio-tableau/bilan-radio-tableau.component';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router ,RouterModule} from '@angular/router';
 import { GlobalService } from '../../global.service';
 import { AuthService } from '../../services/auth.service';
+import { UserComponent } from '../../components/user/user.component';
 
 @Component({
   selector: 'app-page-radiologue',
   standalone: true,
-  imports: [CommonModule, DpiTableauComponent],
+  imports: [CommonModule,RouterModule, DpiTableauComponent,UserComponent],
   templateUrl: './page-radiologue.component.html',
 })
 export class PageRadiologueComponent {
   isMenuOpen = false;
+  
+  isRadiologueVisible: boolean = false;
+  // Médecin connecté
+  radiologueConnecte = {
+    nom: 'Dupont',
+    prenom: 'Alice',
+  };
+
+
+  toggleRadiologueInfo() {
+    this.isRadiologueVisible = !this.isRadiologueVisible;
+  }
+
 
   constructor(
     private elementRef: ElementRef,
