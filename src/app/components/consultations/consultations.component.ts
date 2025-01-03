@@ -89,26 +89,6 @@ export class ConsultationsComponent implements OnInit {
   toggleMedecinInfo() {
     this.isMedecinVisible = !this.isMedecinVisible;
   }
-  ajouterConsultation() {
-    // this.globalService.setRedirectingPage();
-    // if (this.globalService.pageToRedirect === 'pageMedecin') {
-    //   // Naviguer vers '/dpi' avec l'ID en paramètre
-    //   this.router.navigate(['/dpi', this.patientId]);
-    // } else if (this.globalService.pageToRedirect === 'pageAdministratiff') {
-    //   // Naviguer vers '/pageadminnistratif' avec l'ID en paramètre
-    //   this.router.navigate(['/pageadminnistratif', this.patientId]);
-    // } else if (this.globalService.pageToRedirect === 'pageInfermier') {
-    //   // Naviguer vers '/ajouterSoin' sans inclure l'ID
-    //   this.router.navigate(['/ajouterSoin', this.patientId]);
-    // } else if (this.globalService.pageToRedirect === 'pageLaboratin') {
-    //   // Naviguer vers '/ajouterSoin' sans inclure l'ID
-    //   this.router.navigate(['pageLaboratin/bilan-bio-tableau', this.patientId]);
-    // } else if (this.globalService.pageToRedirect === 'pageRadiologue') {
-    //   // Naviguer vers '/ajouterSoin' sans inclure l'ID
-    //   this.router.navigate(['pageRadiologue/bilan-radio-tableau', this.patientId]);
-    // }
-
-  }
   logout(): void {
     console.log('Médecin déconnecté');
     this.authService.logout();
