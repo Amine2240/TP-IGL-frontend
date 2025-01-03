@@ -1,62 +1,32 @@
 <div class="min-h-screen bg-white  p-4">
-    <!-- Header -->
-    <header class="flex justify-between items-center bg-white p-4">
-      <!-- Logo -->
-      <div class="flex items-center">
-        <img src="../../../assets/logo.svg" alt="Logo" class="h-8 mr-2" />
-      </div>
-    
-      <!-- Bouton et menu utilisateur -->
-      <div class="flex items-center space-x-4">
-        <!-- Bouton Créer DPI -->
-       <!-- <button
-          
-        class="bg-dark-blue text-white text-sm px-4 py-2 rounded-lg hover:bg-light-blue hover:text-black transition"
-        (click)="onRowClick()"
-        >
-          Créer Bilan Radiologique
-        </button> -->
-    
-        <!-- Image de compte et menu -->
-        <div class="relative">
-          <!-- Icône de compte -->
-          <button
-            class="focus:outline-none"
-            (click)="toggleMenu($event)" 
-            aria-label="Account Menu"
-          >
-            <img
-              src="../../../assets/account.svg"
-              alt="account"
-              class="h-9 cursor-pointer"
-            />
-          </button>
-    
-          <!-- Menu déroulant -->
-          <div
-            *ngIf="isMenuOpen"
-            class="absolute right-0 mt-2 w-40 bg-white border border-dark-blue rounded-lg"
-          >
-            <!-- Lien Profil -->
-            <a
-              (click)="profil()"
-              class="block px-4 py-2 text-gray-900 hover:bg-light-blue transition"
-            >
-              Profil
+
+       <header class="flex justify-between items-center bg-white p-4">
+          <!-- Logo -->
+          <div class="flex items-center">
+            <a [routerLink]="['/pageLanding']">
+              <img src="../../../assets/logo.svg" alt="Logo" class="w-auto h-10" />
             </a>
-    
-            <!-- Bouton Déconnexion -->
-            <button
-              (click)="logout()"
-              class="w-full text-left px-4 py-2 text-gray-700 hover:bg-red-100 hover:text-red-600 transition focus:outline-none"
-            >
-              Déconnexion
-            </button>
           </div>
-        </div>
-      </div>
-    </header>
-    
+        
+          <!-- Bouton et menu utilisateur -->
+          <div class="flex items-center space-x-4">
+          <app-user
+          (userIconClicked)="toggleRadiologueInfo()"
+          ></app-user>
+               <!-- Médecin's Information -->
+          <div 
+          *ngIf="isRadiologueVisible" 
+          class="medecin-info absolute right-6 top-16  bg-white p-4 rounded-md shadow-lg border border-gray-200 w-64">
+          <p class="mt-2"><strong>Nom :</strong> {{ radiologueConnecte.nom }}</p>
+          <p><strong>Prénom :</strong> {{ radiologueConnecte.prenom }}</p>
+          <button 
+            class="mt-4 bg-dark-blue text-white py-1 px-4 rounded hover:bg-blue-600"
+            (click)="logout()">
+            Déconnexion
+          </button>
+          </div>
+          </div>
+        </header>
     
   
    

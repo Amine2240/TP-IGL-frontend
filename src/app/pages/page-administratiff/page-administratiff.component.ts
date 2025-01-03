@@ -4,16 +4,30 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { GlobalService } from '../../global.service';
 import { AuthService } from '../../services/auth.service';
+import { UserComponent } from '../../components/user/user.component';
+import { jsPDF } from 'jspdf';
+import html2canvas from 'html2canvas';
 
 @Component({
   selector: 'app-page-administratiff',
   standalone: true,
-  imports: [CommonModule, RouterModule, DpiTableauComponent],
+  imports: [CommonModule,  UserComponent   ,RouterModule, DpiTableauComponent],
   templateUrl: './page-administratiff.component.html',
 })
 export class PageAdministratiffComponent {
   isMenuOpen = false;
 
+  isAdministratifVisible: boolean = false;
+  // Médecin connecté
+  administratifConnecte = {
+    nom: 'Dupont',
+    prenom: 'Alice',
+  };
+ 
+
+  toggleMedecinInfo() {
+    this.isAdministratifVisible = !this.isAdministratifVisible;
+  }
   constructor(
     private elementRef: ElementRef,
     private router: Router,

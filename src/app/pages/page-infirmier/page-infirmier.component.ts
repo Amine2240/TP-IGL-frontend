@@ -7,16 +7,27 @@ import { FormsModule } from '@angular/forms';
 import { GlobalService } from '../../global.service';
 import { RouterModule, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { UserComponent } from '../../components/user/user.component';
 
 @Component({
   selector: 'app-page-infirmier',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule, DpiTableauComponent],
+  imports: [CommonModule, RouterModule, FormsModule, DpiTableauComponent,UserComponent],
   templateUrl: './page-infirmier.component.html',
 })
 export class PageInfirmierComponent {
   isMenuOpen = false;
+  isInfermierVisible: boolean = false;
+  // Médecin connecté
+  infermierConnecte = {
+    nom: 'Dupont',
+    prenom: 'Alice',
+  };
 
+
+  toggleInfermierInfo() {
+    this.isInfermierVisible = !this.isInfermierVisible;
+  }
   constructor(
     private elementRef: ElementRef,
     private globalService: GlobalService,

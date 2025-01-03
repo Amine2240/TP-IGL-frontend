@@ -22,7 +22,7 @@ export class HistoriqueMedicalePageComponent implements OnInit {
   isMedecinVisible: boolean = false;
   // Médecin connecté
   medecinConnecte = {
-    nom: 'Dupont',
+    nom: 'hmar',
     prenom: 'Alice',
     specialite: 'Cardiologie',
   };
