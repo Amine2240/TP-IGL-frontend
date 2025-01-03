@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
@@ -44,12 +45,14 @@ interface infosPatient {
 export class InformationsPatientComponent implements OnInit {
   // Données du patient
   infosPatient: any = {};
+  patientId: string | null = null;
   constructor(
     private dpiService: DpiService,
+    private route: ActivatedRoute,
     private authService: AuthService,
   ) {}
   async ngOnInit(): Promise<void> {
-    console.log('hiiiiii');
+    this.patientId = this.route.snapshot.paramMap.get('idPatient'); // Récupérer l'ID
 
     try {
       this.authService.loadUser();
@@ -68,10 +71,10 @@ export class InformationsPatientComponent implements OnInit {
           mutuelle: infosAajouter.mutuelle,
         };
       }
-      if (user.role === 'medecin') {
+      if (user.role != 'patient') {
         // get the id from list patients (roleId), 15 is just an example
-        this.infosPatient = await this.dpiService.getPatient(15);
-        const infosAajouter = await this.dpiService.getDpi(15); // contact urgence et mutuelle
+        this.infosPatient = await this.dpiService.getPatient(this.patientId);
+        const infosAajouter = await this.dpiService.getDpi(this.patientId); // contact urgence et mutuelle
         this.infosPatient = {
           ...this.infosPatient,
           contact_urgence: infosAajouter.contact_urgence,

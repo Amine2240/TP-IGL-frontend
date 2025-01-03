@@ -14,6 +14,7 @@ import { SoinPageComponent } from './pages/soin-page/soin-page.component';
 import { PageInfirmierComponent } from './pages/page-infirmier/page-infirmier.component';
 import { BilanBioTableauComponent } from './components/bilan-bio-tableau/bilan-bio-tableau.component';
 import { BilanRadioTableauComponent } from './components/bilan-radio-tableau/bilan-radio-tableau.component';
+import { InformationsPatientComponent } from './components/informations-patient/informations-patient.component';
 import { GraphPageComponent } from './pages/graphe-page/graphe-page.component';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { BilanBiologiquePageVisComponent } from './pages/bilan-biologique-page-vis/bilan-biologique-page-vis.component';
@@ -87,9 +88,9 @@ export const routes: Routes = [
       {
         path: 'page-dpi/:idPatient',
         loadComponent: () =>
-          import('./pages/dpi-page/dpi-page.component').then(
-            (m) => m.DpiPageComponent,
-          ),
+          import(
+            './components/informations-patient/informations-patient.component'
+          ).then((m) => m.InformationsPatientComponent),
       },
       {
         path: 'consultations-medicales/form-consultation/:idPatient',
@@ -148,9 +149,9 @@ export const routes: Routes = [
       {
         path: 'page-dpi/:idPatient',
         loadComponent: () =>
-          import('./pages/dpi-page/dpi-page.component').then(
-            (m) => m.DpiPageComponent,
-          ),
+          import(
+            './components/informations-patient/informations-patient.component'
+          ).then((m) => m.InformationsPatientComponent),
       },
       {
         path: 'consultations-medicales/form-consultation/:idPatient',
@@ -208,9 +209,9 @@ export const routes: Routes = [
       {
         path: 'page-dpi/:idPatient',
         loadComponent: () =>
-          import('./pages/dpi-page/dpi-page.component').then(
-            (m) => m.DpiPageComponent,
-          ),
+          import(
+            './components/informations-patient/informations-patient.component'
+          ).then((m) => m.InformationsPatientComponent),
       },
       {
         path: 'consultations-medicales/form-consultation/:idPatient',
