@@ -1,4 +1,5 @@
-import { RouterLink, RouterModule, RouterOutlet } from '@angular/router';
+import { GlobalService } from './../../global.service';
+import { ActivatedRoute, Router, RouterLink, RouterModule, RouterOutlet } from '@angular/router';
 import { CommonModule, Time } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { DpiService } from './../../services/dpi.service';
@@ -37,10 +38,14 @@ export class ConsultationsComponent implements OnInit {
   constructor(
     private dpiService: DpiService,
     private authService: AuthService,
+    private globalService : GlobalService,
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
   consultations = [];
+  patientId: string | null = null;
   async ngOnInit(): Promise<void> {
-    console.log('hiiiiii');
+    this.patientId = this.route.snapshot.paramMap.get('idPatient'); // Récupérer l'ID
 
     try {
       this.consultations = await this.dpiService.getConsultations();
@@ -84,7 +89,26 @@ export class ConsultationsComponent implements OnInit {
   toggleMedecinInfo() {
     this.isMedecinVisible = !this.isMedecinVisible;
   }
+  ajouterConsultation() {
+    // this.globalService.setRedirectingPage();
+    // if (this.globalService.pageToRedirect === 'pageMedecin') {
+    //   // Naviguer vers '/dpi' avec l'ID en paramètre
+    //   this.router.navigate(['/dpi', this.patientId]);
+    // } else if (this.globalService.pageToRedirect === 'pageAdministratiff') {
+    //   // Naviguer vers '/pageadminnistratif' avec l'ID en paramètre
+    //   this.router.navigate(['/pageadminnistratif', this.patientId]);
+    // } else if (this.globalService.pageToRedirect === 'pageInfermier') {
+    //   // Naviguer vers '/ajouterSoin' sans inclure l'ID
+    //   this.router.navigate(['/ajouterSoin', this.patientId]);
+    // } else if (this.globalService.pageToRedirect === 'pageLaboratin') {
+    //   // Naviguer vers '/ajouterSoin' sans inclure l'ID
+    //   this.router.navigate(['pageLaboratin/bilan-bio-tableau', this.patientId]);
+    // } else if (this.globalService.pageToRedirect === 'pageRadiologue') {
+    //   // Naviguer vers '/ajouterSoin' sans inclure l'ID
+    //   this.router.navigate(['pageRadiologue/bilan-radio-tableau', this.patientId]);
+    // }
 
+  }
   logout(): void {
     console.log('Médecin déconnecté');
     this.authService.logout();

@@ -3,7 +3,7 @@ import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
-import { Router, RouterLink, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink, RouterModule } from '@angular/router';
 import {
   FormBuilder,
   // FormGroup,
@@ -39,7 +39,8 @@ export class OrdonnanceComponent {
     // private fb: FormBuilder,
     private authService: AuthService,
     private dpiService: DpiService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     this.authService.loadUser();
     this.user = this.authService.getUser();
@@ -80,7 +81,8 @@ export class OrdonnanceComponent {
   }
   nivagationToFormConsultation() {
     this.dpiService.setlistOfPrescriptions(this.rows);
-    this.router.navigate(['dpi/consultations-medicales/form-consultation']);
+    alert('Ordonnance enregistrée');
+    this.router.navigate(['../../'] , {relativeTo: this.route});
   }
 
   columns: Column[] = [
