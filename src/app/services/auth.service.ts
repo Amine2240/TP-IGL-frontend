@@ -80,7 +80,7 @@ export class AuthService {
   }
 
   isLoggedIn(): boolean {
-    return !!this.getUser();
+    return !!this.getToken() && this.getUser() !== null;
   }
   async login(username: string, password: string) {
     const loginPayload = { username, password };
@@ -105,11 +105,18 @@ export class AuthService {
   }
   async logout(): Promise<void> {
     try {
-      await this.axiosInstance.post('/users/logout/');
+      if (this.isLoggedIn()) {
+        await this.axiosInstance.post('/users/logout/');
+      }
+    } catch (error: any) {
+      if (error.response && error.response.status === 400) {
+        console.log('Token expired. Proceeding with client-side logout.');
+      } else {
+        console.error('Unexpected error during logout:', error);
+      }
+    } finally {
       this.clearAuth();
       this.router.navigate(['/login']);
-    } catch (error) {
-      console.error('Error during logout:', error);
     }
   }
 }
