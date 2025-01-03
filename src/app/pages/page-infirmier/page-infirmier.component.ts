@@ -12,18 +12,20 @@ import { UserComponent } from '../../components/user/user.component';
 @Component({
   selector: 'app-page-infirmier',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule, DpiTableauComponent,UserComponent],
+  imports: [
+    CommonModule,
+    RouterModule,
+    FormsModule,
+    DpiTableauComponent,
+    UserComponent,
+  ],
   templateUrl: './page-infirmier.component.html',
 })
 export class PageInfirmierComponent {
   isMenuOpen = false;
   isInfermierVisible: boolean = false;
   // Médecin connecté
-  infermierConnecte = {
-    nom: 'Dupont',
-    prenom: 'Alice',
-  };
-
+  infermierConnecte: any = {};
 
   toggleInfermierInfo() {
     this.isInfermierVisible = !this.isInfermierVisible;
@@ -34,7 +36,17 @@ export class PageInfirmierComponent {
     private router: Router,
     private authService: AuthService,
   ) {}
-
+  ngOnInit() {
+    const user = this.authService.getUser();
+    console.log(user);
+    if (user) {
+      this.infermierConnecte = user;
+      console.log('User info:', this.infermierConnecte);
+    } else {
+      console.warn('No user is currently logged in.');
+      this.router.navigate(['/login']);
+    }
+  }
   toggleMenu(event: MouseEvent) {
     console.log('rami maftoha');
     event.stopPropagation();

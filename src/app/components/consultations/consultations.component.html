@@ -2,61 +2,75 @@
   <!-- Main Content -->
   <main class="w-full flex justify-center items-center p-6">
     <app-top-right-section
-      [qrCode]=" patientData.qrCode"
+      [qrCode]="patientData.qrCode"
       (userIconClicked)="toggleMedecinInfo()"
     ></app-top-right-section>
-  
-  <!-- Médecin's Information -->
-  <div 
-    *ngIf="isMedecinVisible" 
-    class="medecin-info absolute right-6 top-16  bg-white p-4 rounded-md shadow-lg border border-gray-200 w-64">
-    <h3 class="text-lg font-bold text-gray-700">Informations du Médecin</h3>
-    <p class="mt-2"><strong>Nom :</strong> {{ medecinConnecte.nom }}</p>
-    <p><strong>Prénom :</strong> {{ medecinConnecte.prenom }}</p>
-    <p><strong>Spécialité :</strong> {{ medecinConnecte.specialite }}</p>
-    <button 
-      class="mt-4 bg-dark-blue text-white py-1 px-4 rounded hover:bg-blue-600"
-      (click)="logout()">
-      Déconnexion
-    </button>
-  </div>
 
-
-  <div class="bg-white shadow-md rounded-md p-6 w-full max-w-5xl">
-
-    <table class="w-full border-collapse border-2 border-dark-blue text-left text-sm">
-      <!-- Column headers -->
-      <thead class=" bg-blue-400">
-        <tr class="bg-sky-blue text-black">
-          <th *ngFor="let column of columns" class="px-4 py-3 font-bold border border-dark-blue text-center">
-            {{ column.label }}
-          </th>
-        </tr>
-      </thead>
-      <!-- Data rows -->
-      <tbody>
-        <tr *ngFor="let row of rows" class="hover:bg-blue-300 transition">
-          <td *ngFor="let column of columns" class="px-4 py-2 border">
-            <ng-container [ngSwitch]="column.key">
-              <!-- Date -->
-              <span *ngSwitchCase="'date'">{{ row.date | date }}</span>
-              <!-- Heure -->
-              <span *ngSwitchCase="'heure'">{{ row.heure }}</span>
-              <!-- Ordonnance -->
-              <span *ngSwitchCase="'medecinPrincipalEmail'">{{ row.medecinPrincipalEmail }}</span>
-              <!-- Diagnostic -->
-              <span *ngSwitchCase="'medecinPrincipalTelephone'">{{ row.medecinPrincipalTelephone }}</span>
-              <!-- Resume -->
-              <span *ngSwitchCase="'hoptialNom'">{{ row.hoptialNom }}</span>
-            </ng-container>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <div class=" flex place-content-end">
-    <button [routerLink]="['form-consultation', patientId]" class=" bottom-buttond fixed bottom-8 right-28 bg-blue-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-blue-600" >
-      ajouter consultation</button>
+    <!-- Médecin's Information -->
+    <div
+      *ngIf="isMedecinVisible"
+      class="medecin-info absolute right-6 top-16 bg-white p-4 rounded-md shadow-lg border border-gray-200 w-64"
+    >
+      <h3 class="text-lg font-bold text-gray-700">Informations du Médecin</h3>
+      <p class="mt-2"><strong>Nom :</strong> {{ medecinConnecte.nom }}</p>
+      <p><strong>Prénom :</strong> {{ medecinConnecte.prenom }}</p>
+      <p><strong>Role :</strong> {{ medecinConnecte.role }}</p>
+      <button
+        class="mt-4 bg-dark-blue text-white py-1 px-4 rounded hover:bg-blue-600"
+        (click)="logout()"
+      >
+        Déconnexion
+      </button>
     </div>
-  </div>
-</main>
+
+    <div class="bg-white shadow-md rounded-md p-6 w-full max-w-5xl">
+      <table
+        class="w-full border-collapse border-2 border-dark-blue text-left text-sm"
+      >
+        <!-- Column headers -->
+        <thead class="bg-blue-400">
+          <tr class="bg-sky-blue text-black">
+            <th
+              *ngFor="let column of columns"
+              class="px-4 py-3 font-bold border border-dark-blue text-center"
+            >
+              {{ column.label }}
+            </th>
+          </tr>
+        </thead>
+        <!-- Data rows -->
+        <tbody>
+          <tr *ngFor="let row of rows" class="hover:bg-blue-300 transition">
+            <td *ngFor="let column of columns" class="px-4 py-2 border">
+              <ng-container [ngSwitch]="column.key">
+                <!-- Date -->
+                <span *ngSwitchCase="'date'">{{ row.date | date }}</span>
+                <!-- Heure -->
+                <span *ngSwitchCase="'heure'">{{ row.heure }}</span>
+                <!-- Ordonnance -->
+                <span *ngSwitchCase="'medecinPrincipalEmail'">{{
+                  row.medecinPrincipalEmail
+                }}</span>
+                <!-- Diagnostic -->
+                <span *ngSwitchCase="'medecinPrincipalTelephone'">{{
+                  row.medecinPrincipalTelephone
+                }}</span>
+                <!-- Resume -->
+                <span *ngSwitchCase="'hoptialNom'">{{ row.hoptialNom }}</span>
+              </ng-container>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="flex place-content-end">
+        <button
+          [routerLink]="['form-consultation', patientId]"
+          class="bottom-buttond fixed bottom-8 right-28 bg-blue-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-blue-600"
+        >
+          ajouter consultation
+        </button>
+      </div>
+    </div>
+  </main>
 </div>
+

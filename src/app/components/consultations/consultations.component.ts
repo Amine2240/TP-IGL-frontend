@@ -1,5 +1,11 @@
 import { GlobalService } from './../../global.service';
-import { ActivatedRoute, Router, RouterLink, RouterModule, RouterOutlet } from '@angular/router';
+import {
+  ActivatedRoute,
+  Router,
+  RouterLink,
+  RouterModule,
+  RouterOutlet,
+} from '@angular/router';
 import { CommonModule, Time } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { DpiService } from './../../services/dpi.service';
@@ -35,12 +41,13 @@ interface Column {
 })
 export class ConsultationsComponent implements OnInit {
   isMedecinVisible = true;
+  medecinConnecte: any = {};
   constructor(
     private dpiService: DpiService,
     private authService: AuthService,
-    private globalService : GlobalService,
+    private globalService: GlobalService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
   ) {}
   consultations = [];
   patientId: string | null = null;
@@ -64,6 +71,16 @@ export class ConsultationsComponent implements OnInit {
     } catch (error) {
       console.error('Error fetching consultations:', error);
     }
+
+    const user = this.authService.getUser();
+    console.log(user);
+    if (user) {
+      this.medecinConnecte = user;
+      console.log('User info:', this.medecinConnecte);
+    } else {
+      console.warn('No user is currently logged in.');
+      this.router.navigate(['/login']);
+    }
   }
 
   columns: Column[] = [
@@ -80,11 +97,6 @@ export class ConsultationsComponent implements OnInit {
     qrCode: 'assets/qrcode.png',
   };
   // Médecin connecté
-  medecinConnecte = {
-    nom: 'Dupont',
-    prenom: 'Alice',
-    specialite: 'Cardiologie',
-  };
 
   toggleMedecinInfo() {
     this.isMedecinVisible = !this.isMedecinVisible;
@@ -107,7 +119,6 @@ export class ConsultationsComponent implements OnInit {
     //   // Naviguer vers '/ajouterSoin' sans inclure l'ID
     //   this.router.navigate(['pageRadiologue/bilan-radio-tableau', this.patientId]);
     // }
-
   }
   logout(): void {
     console.log('Médecin déconnecté');

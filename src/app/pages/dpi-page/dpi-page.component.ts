@@ -36,14 +36,19 @@ export class DpiPageComponent {
   };
 
   // Médecin connecté
-  userConnecte = {
-    nom: 'Dupont',
-    prenom: 'Alice',
-    specialite: 'Cardiologie',
-  };
+  userConnecte: any = {};
   dpiId: string | null = null;
   constructor(private authService: AuthService) {}
-
+  ngOnInit() {
+    const user = this.authService.getUser();
+    console.log(user);
+    if (user) {
+      this.userConnecte = user;
+      console.log('User info:', this.userConnecte);
+    } else {
+      console.warn('No user is currently logged in.');
+    }
+  }
   // Function to toggle visibility of médecin's information
   toggleUserInfo() {
     this.isUserVisible = !this.isUserVisible;

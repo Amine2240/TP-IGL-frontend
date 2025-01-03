@@ -11,7 +11,7 @@ import html2canvas from 'html2canvas';
 @Component({
   selector: 'app-page-administratiff',
   standalone: true,
-  imports: [CommonModule,  UserComponent   ,RouterModule, DpiTableauComponent],
+  imports: [CommonModule, UserComponent, RouterModule, DpiTableauComponent],
   templateUrl: './page-administratiff.component.html',
 })
 export class PageAdministratiffComponent {
@@ -19,11 +19,7 @@ export class PageAdministratiffComponent {
 
   isAdministratifVisible: boolean = false;
   // Médecin connecté
-  administratifConnecte = {
-    nom: 'Dupont',
-    prenom: 'Alice',
-  };
- 
+  administratifConnecte: any = {};
 
   toggleMedecinInfo() {
     this.isAdministratifVisible = !this.isAdministratifVisible;
@@ -34,6 +30,17 @@ export class PageAdministratiffComponent {
     private globalService: GlobalService,
     private authService: AuthService,
   ) {}
+  ngOnInit() {
+    const user = this.authService.getUser();
+    console.log(user);
+    if (user) {
+      this.administratifConnecte = user;
+      console.log('User info:', this.administratifConnecte);
+    } else {
+      console.warn('No user is currently logged in.');
+      this.router.navigate(['/login']);
+    }
+  }
   onRowClick(): void {
     const pageType = this.globalService.pageToRedirect; // Par exemple, 'pageMedecin' ou 'pageAdministratif'
 

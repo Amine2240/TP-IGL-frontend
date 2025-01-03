@@ -12,18 +12,20 @@ import { UserComponent } from '../../components/user/user.component';
 @Component({
   selector: 'app-page-laboratin',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule, DpiTableauComponent ,UserComponent],
+  imports: [
+    CommonModule,
+    RouterModule,
+    FormsModule,
+    DpiTableauComponent,
+    UserComponent,
+  ],
   templateUrl: './page-laboratin.component.html',
 })
 export class PageLaboratinComponent {
   isMenuOpen = false;
   isLaboratinVisible: boolean = false;
   // Médecin connecté
-  laboratinConnecte = {
-    nom: 'Dupont',
-    prenom: 'Alice',
-  };
-
+  laboratinConnecte: any = {};
 
   toggleLaboratinInfo() {
     this.isLaboratinVisible = !this.isLaboratinVisible;
@@ -31,11 +33,6 @@ export class PageLaboratinComponent {
 
   id: string | null = null;
 
-  ngOnInit(): void {
-    this.id = this.route.snapshot.paramMap.get('id'); // Récupérer l'ID
-    console.log('ID reçu :', this.id);
-    // Utilisez cet ID pour charger les données ou effectuer des actions
-  }
   constructor(
     private elementRef: ElementRef,
     private globalService: GlobalService,
@@ -43,12 +40,26 @@ export class PageLaboratinComponent {
     private route: ActivatedRoute,
     private authService: AuthService,
   ) {}
-
   toggleMenu(event: MouseEvent) {
     console.log('rami maftoha');
     event.stopPropagation();
     this.isMenuOpen = !this.isMenuOpen;
     console.log('rami ta8la9t');
+  }
+  ngOnInit(): void {
+    this.id = this.route.snapshot.paramMap.get('id'); // Récupérer l'ID
+    console.log('ID reçu :', this.id);
+
+    const user = this.authService.getUser();
+    console.log(user);
+    if (user) {
+      this.laboratinConnecte = user;
+      console.log('User info:', this.laboratinConnecte);
+    } else {
+      console.warn('No user is currently logged in.');
+      this.router.navigate(['/login']);
+    }
+    // Utilisez cet ID pour charger les données ou effectuer des actions
   }
 
   profil() {

@@ -21,11 +21,7 @@ export class HistoriqueMedicalePageComponent implements OnInit {
   historiqueData: any = {};
   isMedecinVisible: boolean = false;
   // Médecin connecté
-  medecinConnecte = {
-    nom: 'hmar',
-    prenom: 'Alice',
-    specialite: 'Cardiologie',
-  };
+  medecinConnecte: any = {};
 
   constructor(
     private route: ActivatedRoute,

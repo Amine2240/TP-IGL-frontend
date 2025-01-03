@@ -1,37 +1,34 @@
-<div class="min-h-screen bg-white  p-4">
+<div class="min-h-screen bg-white p-4">
+  <header class="flex justify-between items-center bg-white p-4">
+    <!-- Logo -->
+    <div class="flex items-center">
+      <a [routerLink]="['/pageLanding']">
+        <img src="../../../assets/logo.svg" alt="Logo" class="w-auto h-10" />
+      </a>
+    </div>
 
-       <header class="flex justify-between items-center bg-white p-4">
-          <!-- Logo -->
-          <div class="flex items-center">
-            <a [routerLink]="['/pageLanding']">
-              <img src="../../../assets/logo.svg" alt="Logo" class="w-auto h-10" />
-            </a>
-          </div>
-        
-          <!-- Bouton et menu utilisateur -->
-          <div class="flex items-center space-x-4">
-          <app-user
-          (userIconClicked)="toggleRadiologueInfo()"
-          ></app-user>
-               <!-- Médecin's Information -->
-          <div 
-          *ngIf="isRadiologueVisible" 
-          class="medecin-info absolute right-6 top-16  bg-white p-4 rounded-md shadow-lg border border-gray-200 w-64">
-          <p class="mt-2"><strong>Nom :</strong> {{ radiologueConnecte.nom }}</p>
-          <p><strong>Prénom :</strong> {{ radiologueConnecte.prenom }}</p>
-          <button 
-            class="mt-4 bg-dark-blue text-white py-1 px-4 rounded hover:bg-blue-600"
-            (click)="logout()">
-            Déconnexion
-          </button>
-          </div>
-          </div>
-        </header>
-    
-  
-   
-  
-    <!-- Tableau -->
-    <app-dpi-tableau></app-dpi-tableau>
-  </div>
-  
+    <!-- Bouton et menu utilisateur -->
+    <div class="flex items-center space-x-4">
+      <app-user (userIconClicked)="toggleRadiologueInfo()"></app-user>
+      <!-- Médecin's Information -->
+      <div
+        *ngIf="isRadiologueVisible"
+        class="medecin-info absolute right-6 top-16 bg-white p-4 rounded-md shadow-lg border border-gray-200 w-64"
+      >
+        <p class="mt-2"><strong>Nom :</strong> {{ radiologueConnecte.nom }}</p>
+        <p><strong>Prénom :</strong> {{ radiologueConnecte.prenom }}</p>
+        <p><strong>Role :</strong> {{ radiologueConnecte.role }}</p>
+        <button
+          class="mt-4 bg-dark-blue text-white py-1 px-4 rounded hover:bg-blue-600"
+          (click)="logout()"
+        >
+          Déconnexion
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Tableau -->
+  <app-dpi-tableau></app-dpi-tableau>
+</div>
+

@@ -11,18 +11,14 @@ import { AuthService } from '../../services/auth.service';
 @Component({
   selector: 'app-page-medecin',
   standalone: true,
-  imports: [CommonModule, RouterModule, UserComponent,DpiTableauComponent],
+  imports: [CommonModule, RouterModule, UserComponent, DpiTableauComponent],
   templateUrl: './page-medecin.component.html',
 })
 export class PageMedecinComponent {
   isMenuOpen = false;
   isMedecinVisible: boolean = false;
   // Médecin connecté
-  medecinConnecte = {
-    nom: 'Dupont',
-    prenom: 'Alice',
-  };
-
+  medecinConnecte: any = {};
 
   toggleMedecinInfo() {
     this.isMedecinVisible = !this.isMedecinVisible;
@@ -34,6 +30,17 @@ export class PageMedecinComponent {
     private globalService: GlobalService,
     private authService: AuthService,
   ) {}
+  ngOnInit() {
+    const user = this.authService.getUser();
+    console.log(user);
+    if (user) {
+      this.medecinConnecte = user;
+      console.log('User info:', this.medecinConnecte);
+    } else {
+      console.warn('No user is currently logged in.');
+      this.router.navigate(['/login']);
+    }
+  }
   onRowClick(): void {
     const pageType = this.globalService.pageToRedirect; // Par exemple, 'pageMedecin' ou 'pageAdministratif'
 

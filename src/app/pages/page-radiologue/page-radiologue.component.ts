@@ -2,7 +2,7 @@ import { Component, ElementRef, HostListener } from '@angular/core';
 import { DpiTableauComponent } from '../../components/dpi-tableau/dpi-tableau.component';
 import { CommonModule } from '@angular/common';
 import { BilanRadioTableauComponent } from '../../components/bilan-radio-tableau/bilan-radio-tableau.component';
-import { ActivatedRoute, Router ,RouterModule} from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { GlobalService } from '../../global.service';
 import { AuthService } from '../../services/auth.service';
 import { UserComponent } from '../../components/user/user.component';
@@ -10,24 +10,19 @@ import { UserComponent } from '../../components/user/user.component';
 @Component({
   selector: 'app-page-radiologue',
   standalone: true,
-  imports: [CommonModule,RouterModule, DpiTableauComponent,UserComponent],
+  imports: [CommonModule, RouterModule, DpiTableauComponent, UserComponent],
   templateUrl: './page-radiologue.component.html',
 })
 export class PageRadiologueComponent {
   isMenuOpen = false;
-  
+
   isRadiologueVisible: boolean = false;
   // Médecin connecté
-  radiologueConnecte = {
-    nom: 'Dupont',
-    prenom: 'Alice',
-  };
-
+  radiologueConnecte: any = {};
 
   toggleRadiologueInfo() {
     this.isRadiologueVisible = !this.isRadiologueVisible;
   }
-
 
   constructor(
     private elementRef: ElementRef,
@@ -37,10 +32,19 @@ export class PageRadiologueComponent {
   ) {}
 
   id: string | null = null;
-
   ngOnInit(): void {
     this.id = this.route.snapshot.paramMap.get('id'); // Récupérer l'ID
     console.log('ID reçu :', this.id);
+
+    const user = this.authService.getUser();
+    console.log(user);
+    if (user) {
+      this.radiologueConnecte = user;
+      console.log('User info:', this.radiologueConnecte);
+    } else {
+      console.warn('No user is currently logged in.');
+      this.router.navigate(['/login']);
+    }
     // Utilisez cet ID pour charger les données ou effectuer des actions
   }
 

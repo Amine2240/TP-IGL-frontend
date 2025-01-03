@@ -87,18 +87,22 @@ export class InformationsPatientComponent implements OnInit {
     } catch (error) {
       console.error('Error fetching consultations:', error);
     }
-  }
 
+    const user = this.authService.getUser();
+    console.log(user);
+    if (user) {
+      this.medecinConnecte = user;
+      console.log('User info:', this.medecinConnecte);
+    } else {
+      console.warn('No user is currently logged in.');
+    }
+  }
   // Define isMedecinVisible to toggle visibility of médecin's info
   isMedecinVisible: boolean = false;
   isEditMode = false;
 
   // Médecin connecté
-  medecinConnecte = {
-    nom: 'Dupont',
-    prenom: 'Alice',
-    specialite: 'Cardiologie',
-  };
+  medecinConnecte: any = {};
 
   // Function to toggle visibility of médecin's information
   toggleMedecinInfo() {
