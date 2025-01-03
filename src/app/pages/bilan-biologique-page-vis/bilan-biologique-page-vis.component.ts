@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { AuthService } from '../../services/auth.service';
+import {  ActivatedRoute, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-bilan-biologique-page',
@@ -25,7 +26,8 @@ export class BilanBiologiquePageVisComponent implements OnInit {
   constructor(
     private router: Router,
     private http: HttpClient,
-    private authService: AuthService
+    private authService: AuthService,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {

@@ -3,10 +3,10 @@ import { Component } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
-
+import {  ActivatedRoute, RouterOutlet } from '@angular/router';
 @Component({
   selector: 'app-bilan-radiologique-page',
-  imports: [CommonModule, HttpClientModule, FormsModule],
+  imports: [CommonModule, HttpClientModule, FormsModule,RouterOutlet],
   templateUrl: './bilan-radiologique-page.component.html',
   styleUrls: ['./bilan-radiologique-page.component.scss']
 })
@@ -15,12 +15,17 @@ export class BilanRadiologiquePageComponent {
   uploadedImages: File[] = []; 
   uploadedImages2: string[] = []; 
   examenResultats: string = '';
-  pkExamen: string = "6"; // Example value (you might change this dynamically in routing)
+  pkExamen: string|null = "6"; // Example value (you might change this dynamically in routing)
   userId: string = ""; // Initially empty, will be set from AuthService
   private baseUrl = 'http://localhost:8000/';
 
-  constructor(private http: HttpClient, private authService: AuthService) {}
+  constructor(private http: HttpClient, private authService: AuthService,private route: ActivatedRoute) {}
+  ngOnInit(): void {
+  
+    this.pkExamen = this.route.snapshot.paramMap.get('id');
+   
 
+  }
   // Handle image file uploads
   onImageUpload(event: any): void {
     const files = event.target.files;
