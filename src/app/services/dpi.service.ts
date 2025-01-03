@@ -23,7 +23,7 @@ export class DpiService {
             'Content-Type': 'application/json',
             // Authorization: `Token ${token}`,
           },
-        }
+        },
       );
       console.log('response fetching user dpi serviiicic:', response);
       return response.data;
@@ -37,14 +37,12 @@ export class DpiService {
       const user = this.authService.getUser();
       if (user.role == 'patient') {
         // const response = await this.authService.axiosInstance.get(`/dpi/consultations/${user.id}`);
-        const response = await this.authService.axiosInstance.get(
-          `/dpi/consultations/`
-        );
+        const response =
+          await this.authService.axiosInstance.get(`/dpi/consultations/`);
         return response.data;
       }
-      const response = await this.authService.axiosInstance.get(
-        `/dpi/consultations/`
-      );
+      const response =
+        await this.authService.axiosInstance.get(`/dpi/consultations/`);
       return response.data;
     } catch (error) {
       console.log('error :', error);
@@ -54,7 +52,7 @@ export class DpiService {
     try {
       const response = await this.authService.axiosInstance.post(
         '/dpi/consultations/create/',
-        params
+        params,
       );
       return response.data;
     } catch (error) {
@@ -78,13 +76,13 @@ export class DpiService {
         //   `/dpi/${user.id}/`
         // );
         const response = await this.authService.axiosInstance.get(
-          `/dpi/${user.roleId}/`
+          `/dpi/${user.roleId}/`,
         );
         return response.data;
       }
 
       const response = await this.authService.axiosInstance.get(
-        `/dpi/${params}/`
+        `/dpi/${params}/`,
       ); // if the user is a patient get that id from loaduser, if the user is a medecin get that id from patiens page
       return response.data;
     } catch (error) {
@@ -93,30 +91,28 @@ export class DpiService {
   }
   async getPatient(patientId: any) {
     try {
-        const response = await this.authService.axiosInstance.get(
-            `/users/patients`
-        );
+      const response =
+        await this.authService.axiosInstance.get(`/users/patients/`);
+      // Filter the results and store the filtered list
+      const filteredData = response.data.filter(
+        (item: { patientId: any }) => item.patientId == patientId,
+      );
 
-        // Filter the results and store the filtered list
-        const filteredData = response.data.filter(
-            (item: { patientId: any }) => item.patientId === patientId
-        );
+      console.log('response getPatient:', filteredData);
 
-        console.log('response getPatient:', filteredData);
-
-        // Assuming you want to return the first item of the filtered list
-        return filteredData[0];
+      // Assuming you want to return the first item of the filtered list
+      return filteredData[0];
     } catch (error) {
-        console.log('error getPatient:', error);
+      console.log('error getPatient:', error);
     }
-}
+  }
   listPrescriptions: any = [];
   setlistOfPrescriptions(list: any) {
     this.removeLastPrescription(list);
     this.listPrescriptions = list;
     console.log(
       'list of prescriptions from dpi service:',
-      this.listPrescriptions
+      this.listPrescriptions,
     );
   }
   removeLastPrescription(list: []) {
@@ -141,11 +137,11 @@ export class DpiService {
   // }
   async ajouterPhotoPatient(patientId: number, file: File) {
     try {
-      const formdata = new FormData(); 
+      const formdata = new FormData();
       formdata.append('profilePicture', file);
       const response = await this.authService.axiosInstance.post(
         `users/patients/${patientId}/update-profile-picture/`,
-        formdata
+        formdata,
       );
       return response.data;
     } catch (error) {

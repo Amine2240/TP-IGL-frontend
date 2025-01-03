@@ -5,7 +5,8 @@ import { BilanRadioTableauComponent } from '../../components/bilan-radio-tableau
 import { BilanBioTableauComponent } from '../../components/bilan-bio-tableau/bilan-bio-tableau.component';
 import { FormsModule } from '@angular/forms';
 import { GlobalService } from '../../global.service';
-import { RouterModule ,Router, ActivatedRoute } from '@angular/router';
+import { RouterModule, Router, ActivatedRoute } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-page-laboratin',
@@ -16,17 +17,20 @@ import { RouterModule ,Router, ActivatedRoute } from '@angular/router';
 export class PageLaboratinComponent {
   isMenuOpen = false;
 
-  id: string | null = null; 
-
+  id: string | null = null;
 
   ngOnInit(): void {
     this.id = this.route.snapshot.paramMap.get('id'); // Récupérer l'ID
     console.log('ID reçu :', this.id);
     // Utilisez cet ID pour charger les données ou effectuer des actions
   }
-   constructor(private elementRef: ElementRef,private globalService: GlobalService, private router: Router,private route: ActivatedRoute) {}
-  
-  
+  constructor(
+    private elementRef: ElementRef,
+    private globalService: GlobalService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private authService: AuthService,
+  ) {}
 
   toggleMenu(event: MouseEvent) {
     console.log('rami maftoha');
@@ -41,8 +45,7 @@ export class PageLaboratinComponent {
   }
 
   logout() {
-    console.log('Logging out...');
-    // Add logout logic here
+    this.authService.logout();
   }
 
   // Close the menu if clicked outside of the menu and button

@@ -49,7 +49,7 @@ export class FormconsultationComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private dpiService: DpiService,
-    private authService: AuthService
+    private authService: AuthService,
   ) {
     this.consultationForm = this.fb.group({
       // Date input
@@ -100,12 +100,10 @@ export class FormconsultationComponent implements OnInit {
 
   addSymptome() {
     this.symptomes.push(this.fb.group({ symptome: '' }));
-    
   }
 
   addMesure() {
     this.mesures.push(this.fb.group({ mesure: '' }));
-    
   }
 
   removeSymptome(index: number) {
@@ -124,7 +122,7 @@ export class FormconsultationComponent implements OnInit {
       formArray.push(this.fb.control(value));
     } else {
       const index = formArray.controls.findIndex(
-        (control) => control.value === value
+        (control) => control.value === value,
       );
       if (index !== -1) {
         formArray.removeAt(index);
@@ -141,7 +139,7 @@ export class FormconsultationComponent implements OnInit {
     if (this.consultationForm.valid) {
       console.log(
         'list presecripitions from formconsultation',
-        this.dpiService.getlistOfPrescriptions()
+        this.dpiService.getlistOfPrescriptions(),
       );
       this.prescriptionsPayload = this.dpiService
         .getlistOfPrescriptions()
@@ -158,14 +156,14 @@ export class FormconsultationComponent implements OnInit {
         });
       console.log(
         'list presecripitionspayload from formconsultation',
-        this.prescriptionsPayload
+        this.prescriptionsPayload,
       );
       const ordonnancePayload = {
         // date_de_creation: '2024-12-22',
         prescriptions: this.prescriptionsPayload,
       };
       const consultationPayload = {
-        dpi: 6, // it will be replaced by the dpi id of the patient that is being consulted (le choisir de la liste des patients)
+        dpi: 3, // it will be replaced by the dpi id of the patient that is being consulted (le choisir de la liste des patients)
         hopital: 1,
         ordonnances: [ordonnancePayload],
         examens: [
@@ -185,9 +183,9 @@ export class FormconsultationComponent implements OnInit {
           },
         ],
         outils: this.consultationForm.value.outils.map(
-          (outil: Outil) => outil.id
+          (outil: Outil) => outil.id,
         ),
-        diagnostic : this.consultationForm.value.diagnostic,
+        diagnostic: this.consultationForm.value.diagnostic,
         // outils: [1,2],
       };
       console.log('Payload being sent:', consultationPayload);

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { AuthService } from '../../services/auth.service';
 import {  ActivatedRoute, RouterOutlet } from '@angular/router';
@@ -30,9 +30,16 @@ export class BilanBiologiquePageVisComponent implements OnInit {
     private route: ActivatedRoute
   ) {}
 
+
+ 
+ 
+
+ 
   ngOnInit() {
     this.authService.loadUser(); 
     this.recuperer(); 
+    this.idBilan = this.route.snapshot.paramMap.get('id'); // Récupérer l'ID
+    console.log('ID reçu :', this.idBilan);
   }
 
   recuperer() {
@@ -48,7 +55,7 @@ export class BilanBiologiquePageVisComponent implements OnInit {
     };
 
     this.http
-      .get(`${this.baseUrl}api/dpi/bilans/biologique/${this.bilanId}/graph-values/`, {
+      .get(`${this.baseUrl}api/dpi/bilans/biologique/${this.idBilan}/graph-values/`, {
         headers,
       })
       .subscribe(

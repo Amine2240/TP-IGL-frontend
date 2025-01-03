@@ -11,12 +11,12 @@ import { FormsModule } from '@angular/forms';
 import jsQR from 'jsqr';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { GlobalService } from '../../global.service';
+import { AuthService } from '../../services/auth.service';
 
 interface DataRow {
   id: string;
   date: string;
   observation: string;
-  
 }
 
 interface Column {
@@ -27,28 +27,27 @@ interface Column {
 @Component({
   selector: 'app-bilan-radio-tableau',
   standalone: true,
-  imports: [FormsModule, CommonModule,RouterLink],
+  imports: [FormsModule, CommonModule, RouterLink],
   templateUrl: './bilan-radio-tableau.component.html',
   //styleUrls: ['./dpi-tableau.component.css'],
 })
 export class BilanRadioTableauComponent implements OnInit {
-  toggleFilterDropdown: boolean = false; 
-  selectedFilter: string = 'Date'; 
+  toggleFilterDropdown: boolean = false;
+  selectedFilter: string = 'Date';
   filterBy: keyof DataRow = 'date';
   filteredData: DataRow[] = [];
   isMenuOpen = false;
- 
+
   constructor(
-      private renderer: Renderer2,
-      private elementRef: ElementRef,
-      private router: Router,
-      
-      private route: ActivatedRoute,  // Combine all dependencies into one constructor
-    ) {}
+    private renderer: Renderer2,
+    private elementRef: ElementRef,
+    private router: Router,
+    private authService: AuthService,
+    private route: ActivatedRoute, // Combine all dependencies into one constructor
+  ) {}
   filterableKeys: { key: keyof DataRow; label: string }[] = [
     { key: 'id', label: 'Bilan_Id' },
     { key: 'date', label: 'Date' },
-   
   ];
   @ViewChild('fileInput') fileInput: any;
   searchText: string = '';
@@ -57,10 +56,10 @@ export class BilanRadioTableauComponent implements OnInit {
     { key: 'id', label: 'Bilan_Id' },
     { key: 'date', label: 'Date' },
     { key: 'observation', label: 'Observation' },
-   
   ];
 
-  data: DataRow[] = [
+  data: DataRow[] = [];
+  /* data: DataRow[] = [
     {
       id: '1001',
       date: '25/12/2024',
@@ -91,35 +90,28 @@ export class BilanRadioTableauComponent implements OnInit {
       date: '05/12/2024',
       observation: 'Data inconclusive, retesting recommended.',
     },
-  ];
+  ];*/
 
-  id: string | null = null; 
-    
-  
-    
-    
-   
-    
+  id: string | null = null;
+
   onButtonClick(): void {
-   console.log('am here ');
-     this.router.navigate(['ajouterBilanRadiologique',this.id]);
-  
-   }
- 
-  
-  onRowClick(row: any): void {
-    
-    
-    this.router.navigate(['/visualisationBilanRadiologique',row.id]);
- 
+    console.log('am here ');
+    this.router.navigate(['ajouterBilanRadiologique', this.id]);
   }
 
- 
-  
+  onRowClick(row: any): void {
+    this.router.navigate(['/visualiserBilanRadiologique', row.id]);
+  }
+
   applyFilter(): void {
-    this.filteredData = [...this.data].sort((a, b) =>
-      a[this.filterBy].localeCompare(b[this.filterBy])
-    );
+    this.filteredData = [...this.data].sort((a, b) => {
+      // Conversion des dates au format "jj/mm/aaaa" en objets Date pour comparer les dates
+      const dateA = new Date(a.date.split('/').reverse().join('-')); // "25/12/2024" -> "2024-12-25"
+      const dateB = new Date(b.date.split('/').reverse().join('-')); // "20/12/2024" -> "2024-12-20"
+
+      // Trier par date décroissante
+      return dateB.getTime() - dateA.getTime(); // Décroissant (dateB - dateA)
+    });
   }
 
   toggleDropdown(): void {
@@ -134,7 +126,7 @@ export class BilanRadioTableauComponent implements OnInit {
   }
 
   getCellClass(key: string): string {
-    if (key === 'observation' ) {
+    if (key === 'observation') {
       // Specific classes for 'nom' and 'prenom'
       return 'px-4 py-2 border-[1px] border-dark-blue text-center break-words max-w-[150px] min-h-[4px] truncate whitespace-normal';
     } else {
@@ -145,53 +137,77 @@ export class BilanRadioTableauComponent implements OnInit {
 
   ngOnInit(): void {
     this.applySearchFilter();
+    this.applyFilter();
 
     this.renderer.listen('document', 'click', (event: Event) => {
-      const clickedInside = this.elementRef.nativeElement.contains(event.target);
+      const clickedInside = this.elementRef.nativeElement.contains(
+        event.target,
+      );
       if (!clickedInside) {
         this.toggleFilterDropdown = false;
       }
     });
     this.id = this.route.snapshot.paramMap.get('id'); // Récupérer l'ID
     console.log('ID reçu :', this.id);
+    if (this.id) {
+      this.fetchBilansRadiologique(this.id);
+    }
   }
+  async fetchBilansRadiologique(patientId: string): Promise<void> {
+    try {
+      const response = await this.authService.axiosInstance.get(
+        `/dpi/examens-patient/?patient_id=${patientId}&type=radiologique&traite=false`,
+      );
+      console.log('Response data:', response.data);
 
- 
+      if (response.data.length > 0) {
+        this.data = response.data.map((exam: any) => ({
+          id: exam.id,
+          date: new Date(exam.date).toLocaleDateString(),
+          observation: exam.note,
+        }));
+      } else {
+        console.warn('No bilans found for the given patient.');
+        this.data = [];
+      }
 
+      this.applySearchFilter();
+    } catch (error) {
+      console.error('Error fetching bilans:', error);
+      this.data = [];
+    }
+  }
   applySearchFilter(): void {
     this.filteredData = this.data.filter(
       (row) =>
         row.date.toLowerCase().includes(this.searchText.toLowerCase()) ||
-      
-        row.id.toLowerCase().startsWith(this.searchText.toLowerCase()) //beh nkoun sur yebda de droite a gauche
+        row.id.toLowerCase().startsWith(this.searchText.toLowerCase()), //beh nkoun sur yebda de droite a gauche
     );
   }
 
- toggleMenu(event: MouseEvent) {
-      console.log('rami maftoha');
-      event.stopPropagation();
-      this.isMenuOpen = !this.isMenuOpen;
-      console.log('rami ta8la9t');
-    }
-  
-    profil() {
-      console.log('Navigating to profile...');
-      // Add profile navigation logic here
-    }
-  
-    logout() {
-      console.log('Logging out...');
-      // Add logout logic here
-    }
-  
-    // Close the menu if clicked outside of the menu and button
-    @HostListener('document:click', ['$event'])
-    onClickOutside(event: MouseEvent) {
-      const clickedInside = this.elementRef.nativeElement.contains(event.target);
-      if (!clickedInside) {
-        this.isMenuOpen = false;
-      }
-    }
+  toggleMenu(event: MouseEvent) {
+    console.log('rami maftoha');
+    event.stopPropagation();
+    this.isMenuOpen = !this.isMenuOpen;
+    console.log('rami ta8la9t');
+  }
 
-  
+  profil() {
+    console.log('Navigating to profile...');
+    // Add profile navigation logic here
+  }
+
+  logout() {
+    console.log('Logging out...');
+    this.authService.logout();
+  }
+
+  // Close the menu if clicked outside of the menu and button
+  @HostListener('document:click', ['$event'])
+  onClickOutside(event: MouseEvent) {
+    const clickedInside = this.elementRef.nativeElement.contains(event.target);
+    if (!clickedInside) {
+      this.isMenuOpen = false;
+    }
+  }
 }

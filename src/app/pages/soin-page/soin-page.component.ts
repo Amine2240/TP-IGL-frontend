@@ -5,10 +5,10 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import axios from 'axios';
 
 @Component({
-    selector: 'app-soin-page',
-    imports: [CommonModule, FormsModule,RouterModule],
-    templateUrl: './soin-page.component.html',
-    styleUrls: ['./soin-page.component.scss']
+  selector: 'app-soin-page',
+  imports: [CommonModule, FormsModule, RouterModule],
+  templateUrl: './soin-page.component.html',
+  styleUrls: ['./soin-page.component.scss'],
 })
 export class SoinPageComponent {
   tableData: { soin: string; type: string; observation: string }[] = [];
@@ -22,7 +22,7 @@ export class SoinPageComponent {
       this.tableData.push({
         soin: this.newSoin,
         type: this.newType,
-        observation: this.newObservation
+        observation: this.newObservation,
       });
       // Réinitialiser les champs
       this.newSoin = '';
@@ -31,37 +31,37 @@ export class SoinPageComponent {
     }
   }
 
-  constructor(private router: Router,private route: ActivatedRoute) {}
-    id: string | null = null; 
-    
-  
-    ngOnInit(): void {
-      this.id = this.route.snapshot.paramMap.get('id'); // Récupérer l'ID
-      console.log('ID reçu :', this.id);
-      // Utilisez cet ID pour charger les données ou effectuer des actions
-    }
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+  ) {}
+  id: string | null = null;
+
+  ngOnInit(): void {
+    this.id = this.route.snapshot.paramMap.get('id'); // Récupérer l'ID
+    console.log('ID reçu :', this.id);
+    // Utilisez cet ID pour charger les données ou effectuer des actions
+  }
   // Sauvegarder les entrées
- async saveEntries() {
-    const entriesToSend = this.tableData.map(data => ({
+  async saveEntries() {
+    const entriesToSend = this.tableData.map((data) => ({
       type: data.type,
       nom: data.soin,
       observation: data.observation,
     }));
     const data = {
-      soins: entriesToSend ,
-      hopital_id : 1 ,
-      dpi_id : 2 
-    }
+      soins: entriesToSend,
+      hopital_id: 1,
+      dpi_id: 2,
+    };
     try {
-     
-     const response = await axios.post(this.apiUrl, data ,{
-        withCredentials: true
+      const response = await axios.post(this.apiUrl, data, {
+        withCredentials: true,
       });
-      console.log(response.data.message)
+      console.log(response.data.message);
     } catch (error) {
       console.error('Erreur lors de la sauvegarde:', error);
     }
-    this.router.navigate(['/pageInfermier']);  
+    this.router.navigate(['/pageInfermier']);
   }
-
 }

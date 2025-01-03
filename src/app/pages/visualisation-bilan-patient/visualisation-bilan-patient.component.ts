@@ -9,10 +9,10 @@ import {
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-
+import { AuthService } from '../../services/auth.service';
 
 interface DataRow {
-  idBilan:number;
+  idBilan: number;
   date: string;
   type: string;
   statut: string;
@@ -47,7 +47,8 @@ export class VisualisationBilanPatientComponent implements OnInit {
     { key: 'graphique', label: 'Graphique' },
   ];
 
-  data: DataRow[] = [
+  data: DataRow[] = [];
+  /* data: DataRow[] = [
     {
       idBilan: 1, // Identifiant unique
       date: '25/12/2024',
@@ -81,7 +82,7 @@ export class VisualisationBilanPatientComponent implements OnInit {
       graphique: '',
     },
   ];
-  
+*/
   onDownload(row: DataRow): void {
     console.log('Download clicked for:', row);
     // Implement the download functionality here
@@ -94,9 +95,8 @@ export class VisualisationBilanPatientComponent implements OnInit {
 
   onViewGraph(row: DataRow): void {
     console.log('View Graph clicked for:', row);
-   this.router.navigate(['/pageGraphics',row.idBilan])
+    this.router.navigate(['/pageGraphics', row.idBilan]);
   }
-  
 
   filterableKeys: { key: keyof DataRow; label: string }[] = [
     { key: 'date', label: 'Date' },
@@ -107,86 +107,114 @@ export class VisualisationBilanPatientComponent implements OnInit {
   @ViewChild('fileInput') fileInput: any;
   elementRef: any;
 
-  constructor(private renderer: Renderer2, private el: ElementRef,private route: ActivatedRoute,private router :Router) {
+  constructor(
+    private renderer: Renderer2,
+    private el: ElementRef,
+    private route: ActivatedRoute,
+    private router: Router,
+    private authService: AuthService,
+  ) {
     this.renderer.listen('document', 'click', (event: Event) => {
       const clickedInside = this.el.nativeElement.contains(event.target);
       if (!clickedInside) {
         this.toggleFilterDropdown = false;
       }
     });
-    
   }
-  
+
   idPatient: string | null = null;
-  
- 
+
   ngOnInit(): void {
     this.applySearchFilter();
-
     this.renderer.listen('document', 'click', (event: Event) => {
       const clickedInside = this.el.nativeElement.contains(event.target);
       if (!clickedInside) {
         this.toggleFilterDropdown = false;
       }
     });
-    this.idPatient = this.route.snapshot.paramMap.get('id'); // Récupérer l'ID
-  console.log('ID reçu dans sideBar :', this.idPatient);
+    this.idPatient = this.route.snapshot.paramMap.get('idPatient'); // Récupérer l'ID
+    console.log('ID reçu dans sideBar :', this.idPatient);
+    if (this.idPatient) {
+      this.fetchBilans(this.idPatient);
+    }
   }
-  isMenuOpen = false;
-  
-   
-  
-    toggleMenu(event: MouseEvent) {
-      console.log('rami maftoha');
-      event.stopPropagation();
-      this.isMenuOpen = !this.isMenuOpen;
-      console.log('rami ta8la9t');
-    }
-  
-    profil() {
-      console.log('Navigating to profile...');
-      // Add profile navigation logic here
-    }
-  
-    logout() {
-      console.log('Logging out...');
-      // Add logout logic here
-    }
-  
-    // Close the menu if clicked outside of the menu and button
-    
-    
-    onRowClick(row: any): void {
-      console.log('ID de la ligne sélectionnée :', row.id); // Affiche l'ID dans la console pour debug
-    
-      if (row.type.toLowerCase.equals("biologique")) {
-        // Naviguer vers '/dpi' avec l'ID en paramètre
-        this.router.navigate(['/visualiserBilanBiologique', row.id]);
-      } else  
-      {this.router.navigate(['/visualiserBilanBiologique', row.id]);
-      }
-    }
 
-    applyFilter(): void {
-      this.filteredData = [...this.data].sort((a, b) => {
-        // Exclude 'idBilan' from sorting
-        if (this.filterBy === 'idBilan') {
-          return 0;
-        }
-    
-        const valueA = a[this.filterBy];
-        const valueB = b[this.filterBy];
-    
-        // Check if values are numbers
-        if (typeof valueA === 'number' && typeof valueB === 'number') {
-          return valueA - valueB; // Sort numerically
-        }
-    
-        // Otherwise, sort as strings
-        return String(valueA).localeCompare(String(valueB));
-      });
+  async fetchBilans(patientId: string): Promise<void> {
+    try {
+      const response = await this.authService.axiosInstance.get(
+        `/dpi/examens-patient/?patient_id=${patientId}`,
+      );
+      console.log('Response data:', response.data);
+
+      if (response.data.length > 0) {
+        this.data = response.data.map((exam: any) => ({
+          idBilan: exam.id,
+          date: new Date(exam.date).toLocaleDateString(),
+          type: exam.type,
+          statut: exam.traite ? 'Traité' : 'En attente',
+        }));
+      } else {
+        console.warn('No bilans found for the given patient.');
+        this.data = [];
+      }
+
+      this.applySearchFilter();
+    } catch (error) {
+      console.error('Error fetching bilans:', error);
+      this.data = [];
     }
-    
+  }
+
+  isMenuOpen = false;
+
+  toggleMenu(event: MouseEvent) {
+    console.log('rami maftoha');
+    event.stopPropagation();
+    this.isMenuOpen = !this.isMenuOpen;
+    console.log('rami ta8la9t');
+  }
+
+  profil() {
+    console.log('Navigating to profile...');
+    // Add profile navigation logic here
+  }
+
+  logout() {
+    this.authService.logout();
+  }
+
+  // Close the menu if clicked outside of the menu and button
+
+  onRowClick(row: any): void {
+    console.log('ID de la ligne sélectionnée :', row.id); // Affiche l'ID dans la console pour debug
+
+    if (row.type.toLowerCase.equals('biologique')) {
+      // Naviguer vers '/dpi' avec l'ID en paramètre
+      this.router.navigate(['/visualiserBilanBiologique', row.id]);
+    } else {
+      this.router.navigate(['/visualiserBilanBiologique', row.id]);
+    }
+  }
+
+  applyFilter(): void {
+    this.filteredData = [...this.data].sort((a, b) => {
+      // Exclude 'idBilan' from sorting
+      if (this.filterBy === 'idBilan') {
+        return 0;
+      }
+
+      const valueA = a[this.filterBy];
+      const valueB = b[this.filterBy];
+
+      // Check if values are numbers
+      if (typeof valueA === 'number' && typeof valueB === 'number') {
+        return valueA - valueB; // Sort numerically
+      }
+
+      // Otherwise, sort as strings
+      return String(valueA).localeCompare(String(valueB));
+    });
+  }
 
   toggleDropdown(): void {
     this.toggleFilterDropdown = !this.toggleFilterDropdown;
