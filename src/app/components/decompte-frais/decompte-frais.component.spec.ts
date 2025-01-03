@@ -1,86 +1,39 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { SoinPageComponent } from '../../components//';
+
+<<<<<<<< HEAD:src/app/pages/soin-page/soin-page.component.spec.ts
+import { SoinPageComponent } from './soin-page.component';
+
+describe('SoinPageComponent', () => {
+  let component: SoinPageComponent;
+  let fixture: ComponentFixture<SoinPageComponent>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [SoinPageComponent]
+    })
+    .compileComponents();
+
+    fixture = TestBed.createComponent(SoinPageComponent);
+========
 import { DecompteFraisComponent } from './decompte-frais.component';
 
-describe('Component Tests', () => {
-  describe('SoinPageComponent', () => {
-    let component: SoinPageComponent;
-    let fixture: ComponentFixture<SoinPageComponent>;
+describe('DecompteFraisComponent', () => {
+  let component: DecompteFraisComponent;
+  let fixture: ComponentFixture<DecompteFraisComponent>;
 
-    beforeEach(async () => {
-      await TestBed.configureTestingModule({
-        imports: [SoinPageComponent],
-      }).compileComponents();
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [DecompteFraisComponent]
+    })
+    .compileComponents();
 
-      fixture = TestBed.createComponent(SoinPageComponent);
-      component = fixture.componentInstance;
-      fixture.detectChanges();
-    });
-
-    it('should create SoinPageComponent', () => {
-      import { ComponentFixture, TestBed } from '@angular/core/testing';
-      import { SoinPageComponent } from './soin-page.component';
-      import { DecompteFraisComponent } from './decompte-frais.component';
-
-      describe('Component Tests', () => {
-        describe('SoinPageComponent', () => {
-          let component: SoinPageComponent;
-          let fixture: ComponentFixture<SoinPageComponent>;
-
-          beforeEach(async () => {
-            await TestBed.configureTestingModule({
-              imports: [SoinPageComponent],
-            }).compileComponents();
-
-            fixture = TestBed.createComponent(SoinPageComponent);
-            component = fixture.componentInstance;
-            fixture.detectChanges();
-          });
-
-          it('should create SoinPageComponent', () => {
-            expect(component).toBeTruthy();
-          });
-        });
-
-        describe('DecompteFraisComponent', () => {
-          let component: DecompteFraisComponent;
-          let fixture: ComponentFixture<DecompteFraisComponent>;
-
-          beforeEach(async () => {
-            await TestBed.configureTestingModule({
-              imports: [DecompteFraisComponent],
-            }).compileComponents();
-
-            fixture = TestBed.createComponent(DecompteFraisComponent);
-            component = fixture.componentInstance;
-            fixture.detectChanges();
-          });
-
-          it('should create DecompteFraisComponent', () => {
-            expect(component).toBeTruthy();
-          });
-        });
-      });
-      expect(component).toBeTruthy();
-    });
+    fixture = TestBed.createComponent(DecompteFraisComponent);
+>>>>>>>> amine:src/app/components/decompte-frais/decompte-frais.component.spec.ts
+    component = fixture.componentInstance;
+    fixture.detectChanges();
   });
 
-  describe('DecompteFraisComponent', () => {
-    let component: DecompteFraisComponent;
-    let fixture: ComponentFixture<DecompteFraisComponent>;
-
-    beforeEach(async () => {
-      await TestBed.configureTestingModule({
-        imports: [DecompteFraisComponent],
-      }).compileComponents();
-
-      fixture = TestBed.createComponent(DecompteFraisComponent);
-      component = fixture.componentInstance;
-      fixture.detectChanges();
-    });
-
-    it('should create DecompteFraisComponent', () => {
-      expect(component).toBeTruthy();
-    });
+  it('should create', () => {
+    expect(component).toBeTruthy();
   });
 });
