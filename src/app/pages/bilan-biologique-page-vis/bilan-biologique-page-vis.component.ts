@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { AuthService } from '../../services/auth.service';
+import {  ActivatedRoute, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-bilan-biologique-page',
@@ -17,7 +18,7 @@ export class BilanBiologiquePageVisComponent implements OnInit {
   newParametre: string = '';
   newValeur: string = '';
   newUnite: string = '';
-  idBilan: string | null = null; 
+  bilanId: string = '4'; // Set to 3
   errorMessage: string = '';
 
   private baseUrl = 'http://localhost:8000/';

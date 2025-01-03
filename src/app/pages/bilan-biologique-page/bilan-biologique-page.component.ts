@@ -51,7 +51,7 @@ export class BilanBiologiquePageComponent {
       }
   
       // Prepare the data for the request
-      const examen_id = 3; 
+      const examen_id = 5; 
       const resultats = 'Résumé des résultats';
       const resultats_details = this.tableData.map((item) => ({
         parametre: item.parametre,
