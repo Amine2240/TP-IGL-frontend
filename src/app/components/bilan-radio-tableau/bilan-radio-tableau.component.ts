@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import jsQR from 'jsqr';
+// import jsQR from 'jsqr';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { GlobalService } from '../../global.service';
 import { AuthService } from '../../services/auth.service';
