@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { AuthService } from '../../services/auth.service';
-
+import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-bilan-biologique-page',
   imports: [CommonModule, FormsModule,RouterLink, HttpClientModule],
@@ -17,11 +17,15 @@ export class BilanBiologiquePageComponent {
   newParametre: string = '';
   newValeur: string = '';
   newUnite: string = '';
-
+   examenId : string|null ='';
   private baseUrl = 'http://localhost:8000/'; // Replace with your base URL
 
-  constructor(private router: Router, private http: HttpClient,private authService: AuthService) {}
-  
+  constructor(private router: Router, private http: HttpClient,private authService: AuthService, private route: ActivatedRoute) {}
+  ngOnInit() {
+    this.authService.loadUser(); 
+    this.examenId = this.route.snapshot.paramMap.get('id'); // Récupérer l'ID
+  }
+
 
   // Add an entry to the tableData
   ajouterEntree() {
@@ -99,12 +103,13 @@ export class BilanBiologiquePageComponent {
 
   // Generate the graph and pass data to the graph page
   genererGraph() {
-    const labels = this.tableData.map((item) => item.parametre);
-    const data = this.tableData.map((item) => parseFloat(item.valeur));
-    console.log(data);
+    const labels = this.tableData.map((item) => item.parametre || 'Unknown');
+    const data = this.tableData.map((item) =>
+      parseFloat(item.valeur) || 0
+    );
 
-    this.router.navigate(['/graphe'], {
-      state: { labels, data },
+    this.router.navigate([`/pageGraphics/${this.examenId}`], {
+      state: { labels, data }
     });
   }
 }

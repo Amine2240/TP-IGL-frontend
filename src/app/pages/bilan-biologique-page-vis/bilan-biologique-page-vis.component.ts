@@ -81,8 +81,8 @@ idBilan: string|null = '4'; // Set to 3
       parseFloat(item.valeur) || 0
     );
 
-    this.router.navigate(['/graphe'], {
-      state: { labels, data },
+    this.router.navigate([`/pageGraphics/${this.idBilan}`], {
+      state: { labels, data }
     });
   }
 }

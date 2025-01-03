@@ -48,7 +48,7 @@ export const routes: Routes = [
     path: 'pageRadiologue/bilan-radio-tableau/:id',
     component: BilanRadioTableauComponent,
   },
-  { path: 'pageGraphics/:idPatient', component: GraphPageComponent },
+  { path: 'pageGraphics/:idBilan', component: GraphPageComponent },
   {
     path: 'visualiserBilanBiologique/:id',
     component: BilanBiologiquePageVisComponent,
