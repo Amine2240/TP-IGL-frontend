@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import axios from 'axios';
+import { AuthService } from './auth.service';
 
 export interface Patient {
   patientId: number;
@@ -22,15 +23,14 @@ export interface Patient {
   providedIn: 'root',
 })
 export class PatientsService {
-  private apiUrl = 'http://localhost:8000/api/users/patients/';
+  private apiUrl = '/users/patients/';
 
-  constructor() {}
+  constructor(private authService: AuthService) {}
 
   async getPatients(): Promise<Patient[]> {
+    this.authService.getUser();
     try {
-      const response = await axios.get(this.apiUrl, {
-        withCredentials: true,
-      });
+      const response = await this.authService.axiosInstance.get(this.apiUrl);
       return response.data;
     } catch (error) {
       console.error('Error fetching patients:', error);

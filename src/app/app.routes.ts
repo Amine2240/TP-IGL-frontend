@@ -23,6 +23,7 @@ export const routes: Routes = [
   // Routes for pages
   { path: 'pageAdministratiff', component: PageAdministratiffComponent },
 
+  { path: 'login', component: LoginPageComponent },
   { path: 'pageRadiologue', component: PageRadiologueComponent },
   { path: 'pageLaboratin', component: PageLaboratinComponent },
   { path: 'pageInfermier', component: PageInfirmierComponent },
@@ -38,15 +39,23 @@ export const routes: Routes = [
   { path: 'ajouterSoin/:id', component: SoinPageComponent },
   { path: 'pageMedecin', component: PageMedecinComponent },
   { path: 'formPatient', component: FormpatientComponent },
-  { path: 'pageLaboratin/bilan-bio-tableau/:id', component: BilanBioTableauComponent },
-  { path: 'pageRadiologue/bilan-radio-tableau/:id', component: BilanRadioTableauComponent },
-  { path: 'pageGraphics/:idPatient',component: GraphPageComponent },
-  { path: 'visualiserBilanBiologique/:id', component:BilanBiologiquePageVisComponent },
-  { path: 'visualiserBilanRadiologique/:id', component:BilanRadiologiqueVisPageComponent },
- 
-
- 
-
+  {
+    path: 'pageLaboratin/bilan-bio-tableau/:id',
+    component: BilanBioTableauComponent,
+  },
+  {
+    path: 'pageRadiologue/bilan-radio-tableau/:id',
+    component: BilanRadioTableauComponent,
+  },
+  { path: 'pageGraphics/:idPatient', component: GraphPageComponent },
+  {
+    path: 'visualiserBilanBiologique/:id',
+    component: BilanBiologiquePageVisComponent,
+  },
+  {
+    path: 'visualiserBilanRadiologique/:id',
+    component: BilanRadiologiqueVisPageComponent,
+  },
 
   // DPI related routes with children
   {
@@ -68,7 +77,13 @@ export const routes: Routes = [
             (m) => m.ConsultationsComponent,
           ),
       },
-      // { path: 'page-historique/:idPatient', loadComponent: () => import('./pages/historique-medicale-page/historique-medicale-page.component').then(m => m.HistoriqueMedicalePageComponent) },
+      {
+        path: 'page-historique/:idPatient',
+        loadComponent: () =>
+          import(
+            './components/historique-medicale/historique-medicale.component'
+          ).then((m) => m.HistoriqueMedicalePageComponent),
+      },
       {
         path: 'page-dpi/:idPatient',
         loadComponent: () =>
@@ -122,7 +137,14 @@ export const routes: Routes = [
             (m) => m.ConsultationsComponent,
           ),
       },
-      //{ path: 'page-historique/:idPatient', loadComponent: () => import('./pages/historique-medicale-page/historique-medicale-page.component').then(m => m.HistoriqueMedicalePageComponent) },
+
+      {
+        path: 'page-historique/:idPatient',
+        loadComponent: () =>
+          import(
+            './components/historique-medicale/historique-medicale.component'
+          ).then((m) => m.HistoriqueMedicalePageComponent),
+      },
       {
         path: 'page-dpi/:idPatient',
         loadComponent: () =>
@@ -176,7 +198,13 @@ export const routes: Routes = [
             (m) => m.ConsultationsComponent,
           ),
       },
-      //{ path: 'page-historique/:idPatient', loadComponent: () => import('./pages/historique-medicale-page/historique-medicale-page.component').then(m => m.HistoriqueMedicalePageComponent) },
+      {
+        path: 'page-historique/:idPatient',
+        loadComponent: () =>
+          import(
+            './components/historique-medicale/historique-medicale.component'
+          ).then((m) => m.HistoriqueMedicalePageComponent),
+      },
       {
         path: 'page-dpi/:idPatient',
         loadComponent: () =>

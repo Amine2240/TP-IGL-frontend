@@ -59,7 +59,8 @@ export class BilanBioTableauComponent implements OnInit {
     { key: 'date', label: 'Date' },
   ];
 
-  data: DataRow[] = [
+  data: DataRow[] = [];
+  /*  data: DataRow[] = [
     {
       id: '1001',
       date: '25/12/2024',
@@ -84,7 +85,7 @@ export class BilanBioTableauComponent implements OnInit {
       id: '1006',
       date: '05/12/2024',
     },
-  ];
+  ];*/
 
   ngOnInit(): void {
     this.applySearchFilter();
@@ -101,26 +102,48 @@ export class BilanBioTableauComponent implements OnInit {
 
     this.id = this.route.snapshot.paramMap.get('id'); // Récupérer l'ID
     console.log('ID reçu :', this.id);
+    if (this.id) {
+      this.fetchBilansBiologique(this.id);
+    }
   }
- 
+  async fetchBilansBiologique(patientId: string): Promise<void> {
+    try {
+      const response = await this.authService.axiosInstance.get(
+        `/dpi/examens-patient/?patient_id=${patientId}&type=biologique&traite=false`,
+      );
+      console.log('Response data:', response.data);
+
+      if (response.data.length > 0) {
+        this.data = response.data.map((exam: any) => ({
+          id: exam.id,
+          date: new Date(exam.date).toLocaleDateString(),
+        }));
+      } else {
+        console.warn('No bilans found for the given patient.');
+        this.data = [];
+      }
+
+      this.applySearchFilter();
+    } catch (error) {
+      console.error('Error fetching bilans:', error);
+      this.data = [];
+    }
+  }
+
   onRowClick(row: any): void {
-    
-    
-      this.router.navigate(['/visualiserBilanBiologique',row.id]);
-   
-    }
-  
-  
-    applyFilter(): void {
-      this.filteredData = [...this.data].sort((a, b) => {
-        // Conversion des dates au format "jj/mm/aaaa" en objets Date pour comparer les dates
-        const dateA = new Date(a.date.split('/').reverse().join('-')); // "25/12/2024" -> "2024-12-25"
-        const dateB = new Date(b.date.split('/').reverse().join('-')); // "20/12/2024" -> "2024-12-20"
-    
-        // Trier par date décroissante
-        return dateB.getTime() - dateA.getTime(); // Décroissant (dateB - dateA)
-      });
-    }
+    this.router.navigate(['/visualiserBilanBiologique', row.id]);
+  }
+
+  applyFilter(): void {
+    this.filteredData = [...this.data].sort((a, b) => {
+      // Conversion des dates au format "jj/mm/aaaa" en objets Date pour comparer les dates
+      const dateA = new Date(a.date.split('/').reverse().join('-')); // "25/12/2024" -> "2024-12-25"
+      const dateB = new Date(b.date.split('/').reverse().join('-')); // "20/12/2024" -> "2024-12-20"
+
+      // Trier par date décroissante
+      return dateB.getTime() - dateA.getTime(); // Décroissant (dateB - dateA)
+    });
+  }
 
   toggleDropdown(): void {
     this.toggleFilterDropdown = !this.toggleFilterDropdown;
@@ -147,8 +170,6 @@ export class BilanBioTableauComponent implements OnInit {
   }
 
   isMenuOpen = false;
-  
-
 
   onButtonClick(): void {
     console.log('am here ');
