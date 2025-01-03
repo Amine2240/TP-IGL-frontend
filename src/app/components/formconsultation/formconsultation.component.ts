@@ -9,7 +9,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Outil } from '../../models/dpi.model';
-import { RouterLink, RouterModule, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, RouterLink, RouterModule, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
 
@@ -50,6 +50,7 @@ export class FormconsultationComponent implements OnInit {
     private fb: FormBuilder,
     private dpiService: DpiService,
     private authService: AuthService,
+    private route : ActivatedRoute
   ) {
     this.consultationForm = this.fb.group({
       // Date input
@@ -81,7 +82,9 @@ export class FormconsultationComponent implements OnInit {
     // this.authService.loadUser();
     //  this.user = this.authService.getUser();
   }
+  patientId: string | null = null;
   async ngOnInit(): Promise<void> {
+    this.patientId = this.route.snapshot.paramMap.get('idPatient'); // Récupérer l'ID
     try {
       this.outils = await this.dpiService.getOutils();
       console.log('outils from backnnn', this.outils);

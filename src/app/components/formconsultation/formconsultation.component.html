@@ -98,7 +98,7 @@
     <button type="button" (click)="addMesure()" class=" text-white bg-blue-500 p-3 rounded-lg">Add Mesure</button>
   </div>
       <div class=" flex place-content-end">
-        <button routerLink="ordonnance"
+        <button [routerLink]="['ordonnance', patientId]"
           class=" text-center text-nowrap disabled:bg-blue-300 bg-blue-500 text-white capitalize px-5 py-3 m-3 rounded-lg ">
           ajouter ordonnance
         </button>
