@@ -7,15 +7,27 @@ import { FormsModule } from '@angular/forms';
 import { GlobalService } from '../../global.service';
 import { RouterModule, Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { UserComponent } from '../../components/user/user.component';
 
 @Component({
   selector: 'app-page-laboratin',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule, DpiTableauComponent],
+  imports: [CommonModule, RouterModule, FormsModule, DpiTableauComponent ,UserComponent],
   templateUrl: './page-laboratin.component.html',
 })
 export class PageLaboratinComponent {
   isMenuOpen = false;
+  isLaboratinVisible: boolean = false;
+  // Médecin connecté
+  laboratinConnecte = {
+    nom: 'Dupont',
+    prenom: 'Alice',
+  };
+
+
+  toggleLaboratinInfo() {
+    this.isLaboratinVisible = !this.isLaboratinVisible;
+  }
 
   id: string | null = null;
 

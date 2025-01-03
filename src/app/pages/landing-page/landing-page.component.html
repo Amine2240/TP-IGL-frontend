@@ -1,107 +1,208 @@
-<div class="min-h-screen bg-gray-50">
-  <!-- Header -->
+<!-- app.component.html -->
+<div class="homepage-container">
+  <!-- Header Section -->
   <header class="bg-light-blue shadow">
     <div class="container mx-auto flex justify-between items-center py-4 px-6">
-      <img src="../../../assets/logo.svg" alt="Logo" class="w-auto h-10" />
 
+          <img src="../../../assets/logo.svg" alt="Logo" class="w-auto h-12" />
+     
       <nav>
-        <ul class="flex space-x-6 text-gray-600">
-          <li><a href="#" class="hover:text-blue-600">Home</a></li>
-          <li><a href="#" class="hover:text-blue-600">About</a></li>
-          <li><a href="#" class="hover:text-blue-600">Contact Us</a></li>
+        <ul class="flex space-x-6 text-dark-blue">
+          <li><a href="#Acceuil" class="hover:text-sky-blue font-bold hover:underline">Acceuil</a></li>
+          <li><a href="#Fonctionnalite" class="hover:text-sky-blue font-bold hover:underline">Fonctionnalités</a></li>
+          <li><a href="#Utilisateurs" class="hover:text-sky-blue font-bold hover:underline">Utilisateurs</a></li>
+          <li><a href="#contact" class="hover:text-sky-blue font-bold hover:underline">Contact Us</a></li>
         </ul>
       </nav>
       <div class="space-x-4">
-        <button
-          class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-          (click)="onButtonClick()"
-        >
-          Login
-        </button>
+          <button class="primary-btn bg-dark-blue text-white py-2 px-6 rounded-full shadow-lg hover:shadow-2xl transform hover:scale-105 transition-all duration-300" (click)="onButtonClick()">
+            Se connecter</button>
       </div>
     </div>
   </header>
+<!-- <canvas id="dotlottie-canvas" style="width: 300px; height: 300px;"></canvas>-->
 
-  <!-- Hero Section -->
-  <section class="bg-blue-50 py-12">
-    <div class="container mx-auto flex flex-col lg:flex-row items-center">
-      <div class="text-center lg:text-left lg:w-1/2 space-y-4 lg:pl-12">
-        <h1 class="text-4xl font-bold">
-          Bienvenue dans le système de gestion du
-          <span class="text-blue-600">Dossier Patient Informatisé</span>
-        </h1>
-        <p class="text-gray-600">
-          Lorem ipsum dolor sit amet consectetur adipiscing elit. Sit amet
-          vivamus amet faucibus faucibus.
-        </p>
+<!-- Hero Section -->
+<section id="Acceuil" class="bg-blue-50 py-12">
+  <div class="container mx-auto flex flex-col lg:flex-row items-center">
+    
+    <!-- Text Section -->
+    <div class="text-center lg:text-left lg:w-1/2 space-y-4 lg:pl-12 ml-10">
+      <h1 class="text-5xl font-bold typing">
+        Bienvenue dans le système de gestion du
+        <span class="text-dark-blue">Dossier Patient Informatisé</span>
+      </h1>
+      <p class="mt-4 text-lg leading-relaxed max-w-5xl">
+        Une application innovante pour centraliser les informations médicales, simplifier la gestion des soins et améliorer la collaboration entre patients et professionnels de santé.
+      </p>
+    </div>
+    
+    <!-- Image Section -->
+    <div class="lg:w-1/2 flex justify-center lg:justify-end mt-2 lg:mt-0 mr-40 mt-0">
+      <img src="../../../assets/images/pi.png" alt="Medical Animation" class="animate-bounce" style="max-width: 80%; height: auto;">
+    </div>
+    
+  </div>
+</section>
+
+
+
+
+<!-- Features Overview -->
+<section id="Fonctionnalite" class="features-section p-8 bg-white">
+  <h2 class="text-4xl font-bold text-center mb-6 text-dark-blue animate-pulse">Fonctionnalités</h2>
+  <div class="features-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate-slideUp">
+    <div class="feature-card p-6 bg-gradient-to-r from-sky-blue to-light-blue rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
+      <h3 class="text-xl font-bold text-center animate-bounce">Création du DPI :</h3>
+      <p class="text-lg text-center animate-fadeIn">Créez des dossiers complets avec les informations du patient, antécédents médicaux, allergies et maladies chroniques. Ajoutez facilement des documents liés pour un suivi optimal.</p>
+    </div>
+    <div class="feature-card p-6 bg-gradient-to-r from-sky-blue to-light-blue rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
+      <h3 class="text-xl font-bold text-center animate-bounce">Recherche :</h3>
+      <p class="text-lg text-center animate-fadeIn">Recherchez rapidement les dossiers des patients via le NSS ou un QR Code. Affichez les données dans un tableau de bord clair et intuitif.</p>
+    </div>
+    <div class="feature-card p-6 bg-gradient-to-r from-sky-blue to-light-blue rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
+      <h3 class="text-xl font-bold text-center animate-bounce">Ordonnances :</h3>
+      <p class="text-lg text-center animate-fadeIn">Créez et gérez les prescriptions. Ajoutez des instructions de posologie, suivez les traitements, et validez les ordonnances en ligne.</p>
+    </div>
+    <div class="feature-card p-6 bg-gradient-to-r from-sky-blue to-light-blue rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
+      <h3 class="text-xl font-bold text-center animate-bounce">Bilans biologiques :</h3>
+      <p class="text-lg text-center animate-fadeIn">Gérez les analyses médicales comme les tests sanguins ou urinaires. Affichez des graphiques pour suivre les tendances de santé des patients.</p>
+    </div>
+    <div class="feature-card p-6 bg-gradient-to-r from-sky-blue to-light-blue rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
+      <h3 class="text-xl font-bold text-center animate-bounce">Bilans radiologiques :</h3>
+      <p class="text-lg text-center animate-fadeIn">Stockez et consultez des images radiologiques comme des radiographies, IRM ou scanners, avec commentaires des radiologues.</p>
+    </div>
+    <div class="feature-card p-6 bg-gradient-to-r from-sky-blue to-light-blue rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
+      <h3 class="text-xl font-bold text-center animate-bounce">Historique médical :</h3>
+      <p class="text-lg text-center animate-fadeIn">Consultez les antécédents, vaccinations et consultations passées pour un suivi précis de la santé des patients.</p>
+    </div>
+  </div>
+</section>
+
+  <!-- Add border below this section -->
+  <div class="border-t-4 border-dark-blue w-2/3 mx-auto"></div>
+<!-- Professionals Section -->
+<section  id="Utilisateurs" class="roles-section bg-light-blue p-8">
+  <h2 class="text-3xl font-bold text-dark-blue text-center mb-6 animate-pulse">Pour les professionnels de santé</h2>
+  <div class="roles-grid space-y-12 animate-fadeIn">
+    <!-- Professional 1 -->
+    <div class="flex flex-col lg:flex-row items-center lg:space-x-6">
+      <div class="w-full lg:w-1/2 flex justify-center">
+        <img src="../../../assets/images/inferm.png" alt="Médecin" class="h-96 w-96 object-cover rounded-lg">
       </div>
-      <div class="mt-8 lg:mt-0 lg:w-1/2">
-        <img
-          src="../../../assets/images/Group 30.png"
-          alt="Doctor"
-          class="rounded shadow-lg mx-auto max-w-sm"
-        />
+      <div class="w-full lg:w-1/2 text-center lg:text-left mt-4 lg:mt-0">
+        <h3 class="text-2xl font-semibold text-dark-blue">Médecins</h3>
+        <ul class="text-sm list-inside space-y-2 mt-4">
+          <li>🔍 Gestion de l'historique médical</li>
+          <li>💊 Création et gestion des ordonnances</li>
+          <li>💻 Consultations et diagnostics en ligne</li>
+          <li>📋 Gestion des prescriptions et suivis médicaux</li>
+          <li>📝 Consultation des résultats d'examens</li>
+          <li>💬 Communication avec les patients et l'équipe médicale</li>
+        </ul>
       </div>
     </div>
-  </section>
 
-  <!-- About Section -->
-  <section class="py-12">
-    <div class="container mx-auto text-center">
-      <h2 class="text-3xl font-bold text-blue-600">
-        Apprenez à nous connaître
-      </h2>
-      <ul class="mt-6 space-y-4 text-left max-w-3xl mx-auto">
-        <li class="flex items-start space-x-2">
-          <span class="text-blue-600">✅</span>
-          <p>
-            Plateforme Innovante : MediCare est dédiée à la gestion des dossiers
-            médicaux informatisés, simplifiant le travail des professionnels de
-            santé.
-          </p>
-        </li>
-        <li class="flex items-start space-x-2">
-          <span class="text-blue-600">✅</span>
-          <p>
-            Amélioration de la qualité des soins : Conçue pour optimiser les
-            processus et garantir une prise en charge efficace des patients.
-          </p>
-        </li>
-        <li class="flex items-start space-x-2">
-          <span class="text-blue-600">✅</span>
-          <p>
-            Mission Principale : Fournir une solution fiable et sécurisée qui
-            centralise les informations médicales pour un accès rapide et
-            pratique.
-          </p>
-        </li>
-        <li class="flex items-start space-x-2">
-          <span class="text-blue-600">✅</span>
-          <p>
-            Objectif : Transformer la gestion des données médicales en une
-            expérience fluide et efficace.
-          </p>
-        </li>
-        <li class="flex items-start space-x-2">
-          <span class="text-blue-600">✅</span>
-          <p>
-            Valeurs Fondamentales : Sécurité et confidentialité des données
-            placées au cœur des priorités.
-          </p>
-        </li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="bg-gray-100 py-4">
-    <div class="container mx-auto flex justify-between items-center">
-      <p class="text-gray-600">&copy; 2024 MediCare - Tous droits réservés</p>
-      <div class="flex space-x-4">
-        <a href="#" class="text-blue-600">LinkedIn</a>
-        <a href="#" class="text-blue-600">Facebook</a>
-        <a href="#" class="text-blue-600">Contact</a>
+    <!-- Professional 2 -->
+    <div class="flex flex-col lg:flex-row-reverse items-center lg:space-x-6">
+      <div class="w-full lg:w-1/2 flex justify-center">
+        <img src="../../../assets/images/final.svg" alt="Infirmier" class="h-96 w-96 object-cover rounded-lg">
       </div>
+      <div class="w-full lg:w-1/2 text-center lg:text-right mt-4 lg:mt-0">
+        <h3 class="text-2xl font-semibold text-left text-dark-blue ml-80 ">Infirmiers </h3>
+        <ul class="text-sm text-left list-inside space-y-2 mt-4 ml-80">
+          <li>📝 Saisie des soins des patients</li>
+          <li>👨‍⚕️ Observation et suivi des états de santé</li>
+          <li>💉 Administration des traitements</li>
+          <li>📋 Mise à jour des dossiers médicaux</li>
+          <li>💬 Communication avec les médecins et les patients</li>
+        </ul>
+      </div>
+    </div>
+
+      <!-- Professional 3 -->
+      <div class="flex flex-col lg:flex-row items-center lg:space-x-6">
+        <div class="w-full lg:w-1/2 flex justify-center">
+          <img src="../../../assets/images/laboratin.png" alt="Pharmacien" class="h-96 w-96 object-cover rounded-lg">
+        </div>
+        <div class="w-full lg:w-1/2 text-center lg:text-left mt-4 lg:mt-0">
+          <h3 class="text-2xl font-semibold text-dark-blue text-left">Laboratins</h3>
+          <ul class="text-sm text-left list-inside space-y-2 mt-4 ">
+            <li>✅ Validation des ordonnances</li>
+            <li>🔬 Traçabilité des traitements</li>
+            <li>💉 Tests et analyses de laboratoire</li>
+            <li>📊 Suivi des résultats des patients</li>
+            <li>📋 Gestion des rapports médicaux</li>
+            <li>📝 Collaboration avec les médecins et infirmiers</li>
+          </ul>
+        </div>
+      </div>
+    <!-- Professional 4 -->
+    <div class="flex flex-col lg:flex-row-reverse items-center lg:space-x-6">
+      <div class="w-full lg:w-1/2 flex justify-center">
+        <img src="../../../assets/images/radiol.png" alt="Technicien" class="h-96 w-96 object-cover rounded-lg">
+      </div>
+      <div class="w-full lg:w-1/2 text-center lg:text-right mt-4 lg:mt-0">
+        <h3 class="text-2xl font-semibold text-dark-blue text-left ml-80">Radiologues</h3>
+        <ul class="text-sm text-left list-inside space-y-2 mt-4 ml-6 ml-80">
+          <li>✅ Validation des ordonnances</li>
+          <li>🔬 Traçabilité des traitements</li>
+          <li>💉 Tests et analyses de laboratoire</li>
+          <li>📊 Suivi des résultats des patients</li>
+          <li>📋 Gestion des rapports médicaux</li>
+          <li>📝 Collaboration avec les médecins et infirmiers</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+    
+</section>
+
+
+  <div class="border-t-4 border-dark-blue w-2/3 mx-auto"></div>
+
+<!-- Patients Section -->
+<section id="Utilisateurs" class="roles-section bg-white p-8">
+  <h2 class="text-4xl font-bold text-center mb-6 text-dark-blue animate-pulse">Pour les patients</h2>
+  <div class="roles-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate-fadeIn">
+    <div class="role-card p-6 bg-white border border-blue-500 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 aspect-w-1 aspect-h-1 max-w-[300px] mx-auto">
+      <h3 class="text-xl font-semibold text-center">Accès aux dossiers</h3>
+      <p class="text-sm text-center">Consultez vos dossiers médicaux en toute sécurité.</p>
+    </div>
+    <div class="role-card p-6 bg-white border border-blue-500 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 aspect-w-1 aspect-h-1 max-w-[300px] mx-auto">
+      <h3 class="text-xl font-semibold text-center">Demandes administratives</h3>
+      <p class="text-sm text-center">Demandez des certificats médicaux et des documents administratifs en ligne.</p>
+    </div>
+    <div class="role-card p-6 bg-white border border-blue-500 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 aspect-w-1 aspect-h-1 max-w-[300px] mx-auto">
+      <h3 class="text-xl font-semibold text-center">Suivi des traitements</h3>
+      <p class="text-sm text-center">Accédez aux ordonnances et suivez vos plans de soins facilement.</p>
+    </div>
+    <div class="role-card p-6 bg-white border border-blue-500 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 aspect-w-1 aspect-h-1 max-w-[300px] mx-auto">
+      <h3 class="text-xl font-semibold text-center">Rendez-vous médicaux</h3>
+      <p class="text-sm text-center">Prenez ou modifiez vos rendez-vous avec simplicité.</p>
+    </div>
+    <div class="role-card p-6 bg-white border border-blue-500 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 aspect-w-1 aspect-h-1 max-w-[300px] mx-auto">
+      <h3 class="text-xl font-semibold text-center">Résultats de laboratoire</h3>
+      <p class="text-sm text-center">Consultez rapidement vos résultats d'analyses.</p>
+    </div>
+    <div class="role-card p-6 bg-white border border-blue-500 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 aspect-w-1 aspect-h-1 max-w-[300px] mx-auto">
+      <h3 class="text-xl font-semibold text-center">Informations de contact</h3>
+      <p class="text-sm text-center">Trouvez les coordonnées de vos médecins et établissements.</p>
+    </div>
+  </div>
+</section>
+
+
+
+
+  <!-- Footer Section -->
+  <footer id="contact" class="footer bg-gradient-to-r from-dark-blue to-sky-blue text-white p-6 text-center animate-fadeIn">
+    <p>&copy; 2025 Gestion DPI | Tous droits réservés.</p>
+    <div class="footer-links flex justify-center space-x-4 mt-4">
+      <a href="/documentation" class="hover:text-purple-200">Documentation</a>
+      <a href="/support" class="hover:text-purple-200">Code</a>
+      <a href="mc_chaker@esi.dz?subject=Contact&body=Hello%20there!" class="hover:text-purple-200">Contactez-nous</a>
     </div>
   </footer>
 </div>

@@ -1,18 +1,32 @@
 import { Component, ElementRef, HostListener, NgModule } from '@angular/core';
 import { DpiTableauComponent } from '../../components/dpi-tableau/dpi-tableau.component';
 import { CommonModule } from '@angular/common';
+import { UserComponent } from '../../components/user/user.component';
+
 import { RouterModule, Router } from '@angular/router';
+
 import { GlobalService } from '../../global.service';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-page-medecin',
   standalone: true,
-  imports: [CommonModule, RouterModule, DpiTableauComponent],
+  imports: [CommonModule, RouterModule, UserComponent,DpiTableauComponent],
   templateUrl: './page-medecin.component.html',
 })
 export class PageMedecinComponent {
   isMenuOpen = false;
+  isMedecinVisible: boolean = false;
+  // Médecin connecté
+  medecinConnecte = {
+    nom: 'Dupont',
+    prenom: 'Alice',
+  };
+
+
+  toggleMedecinInfo() {
+    this.isMedecinVisible = !this.isMedecinVisible;
+  }
 
   constructor(
     private elementRef: ElementRef,
