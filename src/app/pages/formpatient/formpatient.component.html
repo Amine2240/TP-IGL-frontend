@@ -2,7 +2,7 @@
   <div class=" text-white bg-blue-600 mb-3 p-5 rounded-lg">
     <p class=" text-center text-xl capitalize font-semibold">
       formulaire patient
-    <p>
+    </p>
 
 
   </div>
@@ -28,7 +28,7 @@
           </p>
           <div class=" flex mb-3 ">
             <p class=" font-semibold">date de naissance: </p>
-            <input type="date" formControlName="dateNaissance" name="" id=""
+            <input type="date" formControlName="dateNaissance" name="" id="dateNaissance"
               class=" w-full ml-3 border-b-2 focus:outline-none border-blue-300 h-7">
           </div>
           <p *ngIf="patientForm.get('nss')?.invalid && patientForm.get('nss')?.touched" class="text-red-500">
@@ -36,7 +36,7 @@
           </p>
           <div class=" flex mb-3 ">
             <p class=" font-semibold">Numéro de sécurité sociale (NSS): </p>
-            <input type="text" formControlName="nss" name="" id=""
+            <input type="text" formControlName="nss" name="" id="nss"
               class=" w-full ml-3 border-b-2 focus:outline-none border-blue-300 h-7">
           </div>
         </div>
@@ -46,7 +46,7 @@
           </p>
           <div class=" flex w-full mb-3">
             <p class=" font-semibold text-nowrap">Prénom : </p>
-            <input type="text" formControlName="prenom" name="" id=""
+            <input type="text" formControlName="prenom" name="" id="prenom"
               class=" w-full ml-3 border-b-2 focus:outline-none border-blue-300 h-7">
           </div>
           <p *ngIf="patientForm.get('adresse')?.invalid && patientForm.get('adresse')?.touched" class="text-red-500">
@@ -54,7 +54,7 @@
           </p>
           <div class=" flex w-full mb-3 ">
             <p class=" font-semibold text-nowrap">Adresse email : </p>
-            <input type="email" formControlName="adresse" name="" id=""
+            <input type="email" formControlName="adresse" name="" id="adresse"
               class=" w-full ml-3 border-b-2 focus:outline-none border-blue-300 h-7">
           </div>
           <p *ngIf="patientForm.get('telephone')?.invalid && patientForm.get('telephone')?.touched"
@@ -63,7 +63,7 @@
           </p>
           <div class=" flex w-full mb-3">
             <p class=" font-semibold text-nowrap">Telephone : </p>
-            <input type="text" formControlName="telephone" name="" id=""
+            <input type="text" formControlName="telephone" name="" id="telephone"
               class=" w-full ml-3 border-b-2 focus:outline-none border-blue-300 h-7">
           </div>
         </div>
@@ -80,7 +80,7 @@
         </p>
         <div class=" flex mb-3 md:w-[50%] w-full lg:flex-grow-0 flex-grow">
           <p class=" font-semibold">Nom de la mutuelle : </p>
-          <input type="text" formControlName="mutuelle" name="" id=""
+          <input type="text" formControlName="mutuelle" name="" id="mutuelle"
             class=" w-full ml-3 border-b-2 focus:outline-none border-blue-300 h-7">
         </div>
         <p *ngIf="patientForm.get('numIdentification')?.invalid && patientForm.get('numIdentification')?.touched"
@@ -89,7 +89,7 @@
         </p>
         <div class=" flex mb-3 sm:w-fit w-full flex-grow">
           <p class=" font-semibold">Numéro identification : </p>
-          <input type="number" formControlName="numIdentification" name="" id=""
+          <input type="number" formControlName="numIdentification" name="" id="numIdentification"
             class=" w-full ml-3 border-b-2 focus:outline-none border-blue-300 h-7">
         </div>
       </div>
@@ -108,7 +108,7 @@
         </p>
         <div class=" flex mb-3 md:w-[50%] w-full ">
           <p class=" font-semibold ">Nom: </p>
-          <input type="text" formControlName="personneAconntacterNom" name="" id=""
+          <input type="text" formControlName="personneAconntacterNom" name="" id="personneAconntacterNom"
             class=" w-full ml-3 border-b-2 focus:outline-none border-blue-300 h-7">
         </div>
         <p *ngIf="patientForm.get('personneAconntacterPrenom')?.invalid && patientForm.get('personneAconntacterPrenom')?.touched"
@@ -117,7 +117,7 @@
         </p>
         <div class=" flex mb-3 md:w-[50%] w-full">
           <p class=" font-semibold ">Prénom: </p>
-          <input type="text" formControlName="personneAconntacterPrenom" name="" id=""
+          <input type="text" formControlName="personneAconntacterPrenom" name="" id="personneAconntacterPrenom"
             class="w-full ml-3 border-b-2 focus:outline-none border-blue-300 h-7">
         </div>
         <p *ngIf="patientForm.get('personneAconntacterEmail')?.invalid && patientForm.get('personneAconntacterEmail')?.touched" class="text-red-500">
@@ -125,7 +125,7 @@
         </p>
         <div class=" flex w-full mb-3 ">
           <p class=" font-semibold text-nowrap">Adresse email : </p>
-          <input type="email" formControlName="personneAconntacterEmail" name="" id=""
+          <input type="email" formControlName="personneAconntacterEmail" name="" id="personneAconntacterEmail"
             class=" w-full ml-3 border-b-2 focus:outline-none border-blue-300 h-7">
         </div>
       </div>
@@ -135,7 +135,7 @@
       </p>
       <div class=" flex mb-3 w-full ">
         <p class=" font-semibold ">Téléphone: </p>
-        <input type="text" formControlName="personneAconntacterTelephone" name="" id=""
+        <input type="text" formControlName="personneAconntacterTelephone" name="" id="personneAconntacterTelephone"
           class=" w-full ml-3 border-b-2 focus:outline-none border-blue-300 h-7">
       </div>
 
