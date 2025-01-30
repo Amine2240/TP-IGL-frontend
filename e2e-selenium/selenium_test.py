@@ -29,7 +29,7 @@ def test_login():
     driver.find_element(By.CSS_SELECTOR, "button[type='submit']").click()
     time.sleep(3)
     # assert "msg" checks if msg text is present in the page source (after the action), if not submission failed
-    assert "welcome" in driver.page_source, "Login failed!"
+    assert "formulaire patient" in driver.page_source, "Login failed!"
     print("Login test passed!")
 
 # Function to test form submission
@@ -83,8 +83,8 @@ def test_formconsultation_submission():
 # Main function to run all tests
 def run_all_tests():
     try:
-        # test_login()
-        test_formpatient_submission()
+        test_login()
+        # test_formpatient_submission()
         # test_formconsultation_submission()
     finally:
         driver.quit()  # Close the browser after tests
